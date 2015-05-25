@@ -7,11 +7,11 @@
 //
 
 #if os(OSX)
-    import AppKit
+import AppKit
 #endif
 
 #if os(iOS)
-    import UIKit
+import UIKit
 #endif
 
 
@@ -22,7 +22,7 @@ public enum LineJoinStyle {
     case Round
     case Bevel
 
-    var cgLineJoin:CGLineJoin {
+    public var cgLineJoin:CGLineJoin {
         switch self {
         case .Miter:
             return kCGLineJoinMiter
@@ -33,7 +33,7 @@ public enum LineJoinStyle {
         }
     }
 
-    init?(cgLineJoin:CGLineJoin) {
+    public init?(cgLineJoin:CGLineJoin) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
         if cgLineJoin.value == kCGLineJoinMiter.value {
             self = .Miter
@@ -47,7 +47,7 @@ public enum LineJoinStyle {
     }
 
     #if os(OSX)
-    init?(nsLineJoin:NSLineJoinStyle) {
+    public init?(nsLineJoin:NSLineJoinStyle) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
         switch nsLineJoin {
         case .MiterLineJoinStyle:
@@ -61,7 +61,7 @@ public enum LineJoinStyle {
         }
     }
 
-    var nsLineJoin:NSLineJoinStyle {
+    public var nsLineJoin:NSLineJoinStyle {
         switch self {
         case .Miter:
             return NSLineJoinStyle.MiterLineJoinStyle
@@ -93,55 +93,50 @@ public protocol BezierPathType {
 }
 
 #if os(iOS)
-    extension UIBezierPath : BezierPathType {
+extension UIBezierPath : BezierPathType {
     public var bezierLineJoinStyle:LineJoinStyle {
-    get {
-    return LineJoinStyle(cgLineJoin: lineJoinStyle)!
-    } set(value) {
-    self.lineJoinStyle = value.cgLineJoin
-    }
+        get {
+            return LineJoinStyle(cgLineJoin: lineJoinStyle)!
+        }
+        set(value) {
+            self.lineJoinStyle = value.cgLineJoin
+        }
     }
 
     public static func scrubClockwiseValue(value: Bool) -> Bool {
-    return value
+        return value
     }
-    }
+}
 #endif
 
 #if os(OSX)
-    extension NSBezierPath : BezierPathType {
-        public var usesEvenOddFillRule:Bool {
-            get {
-                return windingRule == NSWindingRule.EvenOddWindingRule
-            }
-            set(value) {
-                windingRule = value ? NSWindingRule.EvenOddWindingRule : NSWindingRule.NonZeroWindingRule
-            }
+extension NSBezierPath : BezierPathType {
+    public var usesEvenOddFillRule:Bool {
+        get {
+            return windingRule == NSWindingRule.EvenOddWindingRule
         }
-        public var bezierLineJoinStyle:LineJoinStyle {
-            get {
-                return LineJoinStyle(nsLineJoin: lineJoinStyle)!
-            } set(value) {
-                self.lineJoinStyle = value.nsLineJoin
-            }
-        }
-
-        public func addLineToPoint(point: NSPoint) {
-            lineToPoint(point)
-        }
-
-        public func addArcWithCenter(center: NSPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool) {
-            appendBezierPathWithArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
-        }
-        
-        public static func scrubClockwiseValue(value: Bool) -> Bool {
-            return !value
+        set(value) {
+            windingRule = value ? NSWindingRule.EvenOddWindingRule : NSWindingRule.NonZeroWindingRule
         }
     }
-    
-    
-#endif
+    public var bezierLineJoinStyle:LineJoinStyle {
+        get {
+            return LineJoinStyle(nsLineJoin: lineJoinStyle)!
+        } set(value) {
+            self.lineJoinStyle = value.nsLineJoin
+        }
+    }
 
-struct BezierPath<BezierPathType> {
+    public func addLineToPoint(point: NSPoint) {
+        lineToPoint(point)
+    }
+
+    public func addArcWithCenter(center: NSPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool) {
+        appendBezierPathWithArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
+    }
     
+    public static func scrubClockwiseValue(value: Bool) -> Bool {
+        return !value
+    }
 }
+#endif

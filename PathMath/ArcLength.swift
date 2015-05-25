@@ -10,29 +10,29 @@ public enum ArcLength {
     case Degrees(CGFloat)
     case Radians(CGFloat)
 
-    var inDegrees:CGFloat {
+    public var inDegrees:CGFloat {
         switch self {
         case let .Degrees(value):
             return value
         case let .Radians(value):
-            return radiansToDegrees(value)
+            return ArcLength.radiansToDegrees(value)
         }
     }
 
-    var inRadians:CGFloat {
+    public var inRadians:CGFloat {
         switch self {
         case let .Degrees(value):
-            return degreesToRadians(value)
+            return ArcLength.degreesToRadians(value)
         case let .Radians(value):
             return value
         }
     }
 
-    init(degrees value:CGFloat) {
+    public init(degrees value:CGFloat) {
         self = .Degrees(value)
     }
 
-    init(radians value:CGFloat) {
+    public init(radians value:CGFloat) {
         self = .Radians(value)
     }
 
@@ -45,11 +45,11 @@ public enum ArcLength {
         }
     }
 
-    private func degreesToRadians(degrees:CGFloat) -> CGFloat {
+    public static func degreesToRadians(degrees:CGFloat) -> CGFloat {
         return degrees * (CGFloat(M_PI) / 180.0)
     }
 
-    private func radiansToDegrees(radians:CGFloat) -> CGFloat {
+    public static func radiansToDegrees(radians:CGFloat) -> CGFloat {
         return radians * (180.0 / CGFloat(M_PI))
     }
 
@@ -61,7 +61,7 @@ public enum ArcLength {
 
     #if os(iOS)
     public var apiValue:CGFloat {
-    return inRadians
+        return inRadians
     }
     #endif
 }

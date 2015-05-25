@@ -10,11 +10,11 @@ import Foundation
 
 public struct CogIcon<BezierPath: BezierPathType> {
 
-    let holeRadius:CGFloat
-    let bodyRadius:CGFloat
-    let spokeHeight:CGFloat
-    let toothCount:Int
-    let rotation:ArcLength
+    public let holeRadius:CGFloat
+    public let bodyRadius:CGFloat
+    public let spokeHeight:CGFloat
+    public let toothCount:Int
+    public let rotation:ArcLength
 
     public var radius:CGFloat {
         return bodyRadius + spokeHeight
@@ -24,7 +24,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
         return CGPointMake(radius, radius)
     }
 
-    func path()-> BezierPath {
+    public func path()-> BezierPath {
 
         let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
         let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
@@ -71,7 +71,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
     }
 
 
-    init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, teethCount:Int = 6, rotation:ArcLength? = nil) {
+    public init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, teethCount:Int = 6, rotation:ArcLength? = nil) {
         self.holeRadius = holeRadius
         self.bodyRadius = bodyRadius
         self.spokeHeight = spokeHeight
