@@ -11,13 +11,13 @@ import Foundation
 public struct CogIcon<BezierPath: BezierPathType> {
 
     public let holeRadius:CGFloat
-    public let bodyRadius:CGFloat
+    public let radius:CGFloat
     public let spokeHeight:CGFloat
     public let toothCount:Int
     public let rotation:ArcLength
 
-    public var radius:CGFloat {
-        return bodyRadius + spokeHeight
+    private var bodyRadius:CGFloat {
+        return radius - spokeHeight
     }
 
     private var center:CGPoint {
@@ -71,9 +71,9 @@ public struct CogIcon<BezierPath: BezierPathType> {
     }
 
 
-    public init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, teethCount:Int = 6, rotation:ArcLength? = nil) {
+    public init(holeRadius:CGFloat = 20, radius:CGFloat = 60, spokeHeight:CGFloat = 10, teethCount:Int = 6, rotation:ArcLength? = nil) {
         self.holeRadius = holeRadius
-        self.bodyRadius = bodyRadius
+        self.radius = radius
         self.spokeHeight = spokeHeight
         self.toothCount = teethCount
         if let theRotation = rotation {
