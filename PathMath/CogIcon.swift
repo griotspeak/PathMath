@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Buttons and Lights LLC. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 public struct CogIcon<BezierPath: BezierPathType> {
 
@@ -16,6 +16,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
     public let toothCount:Int
     public let rotation:ArcLength
 
+
     private var bodyRadius:CGFloat {
         return radius - spokeHeight
     }
@@ -23,8 +24,70 @@ public struct CogIcon<BezierPath: BezierPathType> {
     private var center:CGPoint {
         return CGPointMake(radius, radius)
     }
+    public var diameter:CGFloat {
+        return radius * 2.0
+    }
 
-    public func path()-> BezierPath {
+    public var bounds:CGRect {
+        return CGRect(x: 0, y: 0, width: diameter, height: diameter)
+    }
+
+    public var path:CGPathRef {
+
+        let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
+        let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
+        let toothPadding:ArcLength = imageHalfArcLength.divide(8.0)
+
+        let foo = ArcLength(radians: imageHalfArcLength.inRadians / 8.0)
+
+        var thePath = CGPathCreateMutable()
+
+        thePath.moveToPoint(pointInCircle(center, bodyRadius, rotation))
+
+        for i in 0..<toothCount {
+            let iImageOrigin = ArcLength(degrees: CGFloat(i) * imageArcLength.inDegrees) + rotation
+
+            // tooth
+            thePath.addLineToPoint(pointInCircle(center, radius, iImageOrigin))
+            thePath.addArcWithCenter(center,
+                radius: radius,
+                startAngle: iImageOrigin.inRadians,
+                endAngle: (iImageOrigin + imageHalfArcLength).inRadians,
+                rightwise: true)
+
+            thePath.addLineToPoint(pointInCircle(center, bodyRadius, iImageOrigin + imageHalfArcLength))
+            // trough
+            thePath.addArcWithCenter(center,
+                radius: bodyRadius,
+                startAngle: (iImageOrigin + imageHalfArcLength).inRadians,
+                endAngle: (iImageOrigin + imageArcLength).inRadians,
+                rightwise: true)
+        }
+
+        thePath.closePath()
+
+
+        thePath.moveToPoint(pointInCircle(center, holeRadius, ArcLength(radians: 0)))
+        thePath.addArcWithCenter(center,
+            radius: holeRadius,
+            startAngle: ArcLength(degrees:0).inRadians,
+            endAngle: ArcLength(degrees:360).inRadians,
+            rightwise: true)
+        return thePath
+    }
+
+    public var shapeLayer:CAShapeLayer {
+        let theLayer = CAShapeLayer()
+        theLayer.fillRule = kCAFillRuleEvenOdd
+        let thePath = path
+        theLayer.path = thePath
+        return theLayer
+    }
+
+
+    // begin delete
+    @availability(*, deprecated=0.0.1, message="Use path")
+    public func bezierPath()-> BezierPath {
 
         let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
         let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
@@ -69,6 +132,8 @@ public struct CogIcon<BezierPath: BezierPathType> {
             clockwise: BezierPath.scrubClockwiseValue(true))
         return path
     }
+
+    // end delete
 
 
     public init(holeRadius:CGFloat = 20, radius:CGFloat = 60, spokeHeight:CGFloat = 10, teethCount:Int = 6, rotation:ArcLength? = nil) {

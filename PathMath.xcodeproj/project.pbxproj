@@ -13,6 +13,7 @@
 		324D6B281B135DCA007C1B9C /* ArcLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B271B135DCA007C1B9C /* ArcLength.swift */; };
 		324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B291B135DD2007C1B9C /* BezierPath.swift */; };
 		324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B511B13635B007C1B9C /* CogIcon.swift */; };
+		329E57451B155805002B2114 /* CGMutablePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329E57441B155805002B2114 /* CGMutablePath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		324D6B271B135DCA007C1B9C /* ArcLength.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcLength.swift; sourceTree = "<group>"; };
 		324D6B291B135DD2007C1B9C /* BezierPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPath.swift; sourceTree = "<group>"; };
 		324D6B511B13635B007C1B9C /* CogIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CogIcon.swift; sourceTree = "<group>"; };
+		329E57441B155805002B2114 /* CGMutablePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMutablePath.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				324D6B271B135DCA007C1B9C /* ArcLength.swift */,
 				324D6B291B135DD2007C1B9C /* BezierPath.swift */,
 				324D6B511B13635B007C1B9C /* CogIcon.swift */,
+				329E57441B155805002B2114 /* CGMutablePath.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				324D6B281B135DCA007C1B9C /* ArcLength.swift in Sources */,
 				324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */,
 				324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */,
+				329E57451B155805002B2114 /* CGMutablePath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -83,12 +83,12 @@ public protocol BezierPathType {
     var bezierLineJoinStyle:LineJoinStyle { get set }
 
     // Path construction
-    func moveToPoint(point: CGPoint)
+    mutating func moveToPoint(point: CGPoint)
 
-    func addLineToPoint(point: CGPoint)
-    func addArcWithCenter(center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool)
+    mutating func addLineToPoint(point: CGPoint)
+    mutating func addArcWithCenter(center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool)
 
-    func closePath()
+    mutating func closePath()
     static func scrubClockwiseValue(value:Bool) -> Bool
 }
 
