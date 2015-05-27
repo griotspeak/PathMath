@@ -8,10 +8,10 @@
 
 import CoreGraphics
 
-public struct CogIcon<BezierPath: BezierPathType> {
+public struct CogIcon {
 
     public let holeRadius:CGFloat
-    public let radius:CGFloat
+    public let diameter:CGFloat
     public let spokeHeight:CGFloat
     public let toothCount:Int
     public let rotation:ArcLength
@@ -24,8 +24,8 @@ public struct CogIcon<BezierPath: BezierPathType> {
     private var center:CGPoint {
         return CGPointMake(radius, radius)
     }
-    public var diameter:CGFloat {
-        return radius * 2.0
+    public var radius:CGFloat {
+        return diameter * 0.5
     }
 
     public var bounds:CGRect {
@@ -84,61 +84,9 @@ public struct CogIcon<BezierPath: BezierPathType> {
         return theLayer
     }
 
-
-    // begin delete
-    @availability(*, deprecated=0.0.1, message="Use path")
-    public func bezierPath()-> BezierPath {
-
-        let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
-        let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
-        let toothPadding:ArcLength = imageHalfArcLength.divide(8.0)
-
-        let foo = ArcLength(radians: imageHalfArcLength.inRadians / 8.0)
-
-        var path = BezierPath()
-        path.bezierLineJoinStyle = .Round
-        path.usesEvenOddFillRule = true
-
-        path.moveToPoint(pointInCircle(center, bodyRadius, rotation))
-
-        for i in 0..<toothCount {
-            let iImageOrigin = ArcLength(degrees: CGFloat(i) * imageArcLength.inDegrees) + rotation
-
-            // tooth
-            path.addLineToPoint(pointInCircle(center, radius, iImageOrigin))
-            path.addArcWithCenter(center,
-                radius: radius,
-                startAngle: iImageOrigin.apiValue,
-                endAngle: (iImageOrigin + imageHalfArcLength).apiValue,
-                clockwise: BezierPath.scrubClockwiseValue(true))
-
-            path.addLineToPoint(pointInCircle(center, bodyRadius, iImageOrigin + imageHalfArcLength))
-            // trough
-            path.addArcWithCenter(center,
-                radius: bodyRadius,
-                startAngle: (iImageOrigin + imageHalfArcLength).apiValue,
-                endAngle: (iImageOrigin + imageArcLength).apiValue,
-                clockwise: BezierPath.scrubClockwiseValue(true))
-        }
-
-        path.closePath()
-
-
-        path.moveToPoint(pointInCircle(center, holeRadius, ArcLength(radians: 0)))
-        path.addArcWithCenter(center,
-            radius: holeRadius,
-            startAngle: ArcLength(degrees:0).apiValue,
-            endAngle: ArcLength(degrees:360).apiValue,
-            clockwise: BezierPath.scrubClockwiseValue(true))
-        return path
-    }
-
-    // end delete
-
-
-    public init(holeRadius:CGFloat = 20, radius:CGFloat = 60, spokeHeight:CGFloat = 10, teethCount:Int = 6, rotation:ArcLength? = nil) {
+    public init(holeRadius:CGFloat = 20, diameter:CGFloat = 60, spokeHeight:CGFloat = 10, teethCount:Int = 6, rotation:ArcLength? = nil) {
         self.holeRadius = holeRadius
-        self.radius = radius
+        self.diameter = diameter
         self.spokeHeight = spokeHeight
         self.toothCount = teethCount
         if let theRotation = rotation {
