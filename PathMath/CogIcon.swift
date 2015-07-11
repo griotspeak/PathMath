@@ -36,26 +36,23 @@ public struct CogIcon {
 
         let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
         let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
-        let toothPadding:ArcLength = imageHalfArcLength.divide(8.0)
 
-        let foo = ArcLength(radians: imageHalfArcLength.inRadians / 8.0)
+        let thePath = CGPathCreateMutable()
 
-        var thePath = CGPathCreateMutable()
-
-        thePath.moveToPoint(pointInCircle(center, bodyRadius, rotation))
+        thePath.moveToPoint(pointInCircle(center, radius: bodyRadius, arcLength: rotation))
 
         for i in 0..<toothCount {
             let iImageOrigin = ArcLength(degrees: CGFloat(i) * imageArcLength.inDegrees) + rotation
 
             // tooth
-            thePath.addLineToPoint(pointInCircle(center, radius, iImageOrigin))
+            thePath.addLineToPoint(pointInCircle(center, radius: radius, arcLength: iImageOrigin))
             thePath.addArcWithCenter(center,
                 radius: radius,
                 startAngle: iImageOrigin.inRadians,
                 endAngle: (iImageOrigin + imageHalfArcLength).inRadians,
                 rightwise: true)
 
-            thePath.addLineToPoint(pointInCircle(center, bodyRadius, iImageOrigin + imageHalfArcLength))
+            thePath.addLineToPoint(pointInCircle(center, radius: bodyRadius, arcLength: iImageOrigin + imageHalfArcLength))
             // trough
             thePath.addArcWithCenter(center,
                 radius: bodyRadius,
@@ -67,7 +64,7 @@ public struct CogIcon {
         thePath.closePath()
 
 
-        thePath.moveToPoint(pointInCircle(center, holeRadius, ArcLength(radians: 0)))
+        thePath.moveToPoint(pointInCircle(center, radius: holeRadius, arcLength: ArcLength(radians: 0)))
         thePath.addArcWithCenter(center,
             radius: holeRadius,
             startAngle: ArcLength(degrees:0).inRadians,

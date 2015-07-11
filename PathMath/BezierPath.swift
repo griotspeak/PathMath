@@ -25,21 +25,21 @@ public enum LineJoinStyle {
     public var cgLineJoin:CGLineJoin {
         switch self {
         case .Miter:
-            return kCGLineJoinMiter
+            return CGLineJoin.Miter
         case .Round:
-            return kCGLineJoinRound
+            return CGLineJoin.Round
         case .Bevel:
-            return kCGLineJoinBevel
+            return CGLineJoin.Bevel
         }
     }
 
     public init?(cgLineJoin:CGLineJoin) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
-        if cgLineJoin.value == kCGLineJoinMiter.value {
+        if cgLineJoin.rawValue == CGLineJoin.Miter.rawValue {
             self = .Miter
-        } else if cgLineJoin.value == kCGLineJoinRound.value {
+        } else if cgLineJoin.rawValue == CGLineJoin.Round.rawValue {
             self = .Round
-        } else if cgLineJoin.value == kCGLineJoinBevel.value {
+        } else if cgLineJoin.rawValue == CGLineJoin.Bevel.rawValue {
             self = .Bevel
         } else {
             return nil
@@ -47,7 +47,7 @@ public enum LineJoinStyle {
     }
 
     #if os(OSX)
-    public init?(nsLineJoin:NSLineJoinStyle) {
+    public init(nsLineJoin:NSLineJoinStyle) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
         switch nsLineJoin {
         case .MiterLineJoinStyle:
@@ -56,8 +56,6 @@ public enum LineJoinStyle {
             self = .Round
         case .BevelLineJoinStyle:
             self = .Bevel
-        default:
-            return nil
         }
     }
 
@@ -121,7 +119,7 @@ extension NSBezierPath : BezierPathType {
     }
     public var bezierLineJoinStyle:LineJoinStyle {
         get {
-            return LineJoinStyle(nsLineJoin: lineJoinStyle)!
+            return LineJoinStyle(nsLineJoin: lineJoinStyle)
         } set(value) {
             self.lineJoinStyle = value.nsLineJoin
         }
