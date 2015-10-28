@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Buttons and Lights LLC. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for PathMath.
 FOUNDATION_EXPORT double PathMathVersionNumber;

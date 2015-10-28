@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Buttons and Lights LLC. All rights reserved.
 //
 
-import CoreGraphics
+import QuartzCore
 
 public struct CogIcon {
 

@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "324D6B0A1B135CF8007C1B9C"
                BuildableName = "PathMath.framework"
-               BlueprintName = "PathMath"
+               BlueprintName = "PathMath_OSX"
                ReferencedContainer = "container:PathMath.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "324D6B151B135CF8007C1B9C"
-               BuildableName = "PathMathTests.xctest"
-               BlueprintName = "PathMathTests"
+               BuildableName = "PathMath_OSXTests.xctest"
+               BlueprintName = "PathMath_OSXTests"
                ReferencedContainer = "container:PathMath.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "324D6B151B135CF8007C1B9C"
-               BuildableName = "PathMathTests.xctest"
-               BlueprintName = "PathMathTests"
+               BuildableName = "PathMath_OSXTests.xctest"
+               BlueprintName = "PathMath_OSXTests"
                ReferencedContainer = "container:PathMath.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -58,7 +58,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "324D6B0A1B135CF8007C1B9C"
             BuildableName = "PathMath.framework"
-            BlueprintName = "PathMath"
+            BlueprintName = "PathMath_OSX"
             ReferencedContainer = "container:PathMath.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -80,7 +80,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "324D6B0A1B135CF8007C1B9C"
             BuildableName = "PathMath.framework"
-            BlueprintName = "PathMath"
+            BlueprintName = "PathMath_OSX"
             ReferencedContainer = "container:PathMath.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -98,7 +98,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "324D6B0A1B135CF8007C1B9C"
             BuildableName = "PathMath.framework"
-            BlueprintName = "PathMath"
+            BlueprintName = "PathMath_OSX"
             ReferencedContainer = "container:PathMath.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

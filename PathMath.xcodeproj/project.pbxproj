@@ -30,7 +30,7 @@
 		324D6B0B1B135CF8007C1B9C /* PathMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PathMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		324D6B0F1B135CF8007C1B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		324D6B101B135CF8007C1B9C /* PathMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathMath.h; sourceTree = "<group>"; };
-		324D6B161B135CF8007C1B9C /* PathMathTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathMathTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		324D6B161B135CF8007C1B9C /* PathMath_OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathMath_OSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		324D6B1C1B135CF8007C1B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathMathTests.swift; sourceTree = "<group>"; };
 		324D6B271B135DCA007C1B9C /* ArcLength.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcLength.swift; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				324D6B0B1B135CF8007C1B9C /* PathMath.framework */,
-				324D6B161B135CF8007C1B9C /* PathMathTests.xctest */,
+				324D6B161B135CF8007C1B9C /* PathMath_OSXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,9 +128,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		324D6B0A1B135CF8007C1B9C /* PathMath */ = {
+		324D6B0A1B135CF8007C1B9C /* PathMath_OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 324D6B211B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath" */;
+			buildConfigurationList = 324D6B211B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath_OSX" */;
 			buildPhases = (
 				324D6B061B135CF8007C1B9C /* Sources */,
 				324D6B071B135CF8007C1B9C /* Frameworks */,
@@ -141,14 +141,14 @@
 			);
 			dependencies = (
 			);
-			name = PathMath;
+			name = PathMath_OSX;
 			productName = PathMath;
 			productReference = 324D6B0B1B135CF8007C1B9C /* PathMath.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		324D6B151B135CF8007C1B9C /* PathMathTests */ = {
+		324D6B151B135CF8007C1B9C /* PathMath_OSXTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 324D6B241B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMathTests" */;
+			buildConfigurationList = 324D6B241B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath_OSXTests" */;
 			buildPhases = (
 				324D6B121B135CF8007C1B9C /* Sources */,
 				324D6B131B135CF8007C1B9C /* Frameworks */,
@@ -159,9 +159,9 @@
 			dependencies = (
 				324D6B191B135CF8007C1B9C /* PBXTargetDependency */,
 			);
-			name = PathMathTests;
+			name = PathMath_OSXTests;
 			productName = PathMathTests;
-			productReference = 324D6B161B135CF8007C1B9C /* PathMathTests.xctest */;
+			productReference = 324D6B161B135CF8007C1B9C /* PathMath_OSXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -195,8 +195,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				324D6B0A1B135CF8007C1B9C /* PathMath */,
-				324D6B151B135CF8007C1B9C /* PathMathTests */,
+				324D6B0A1B135CF8007C1B9C /* PathMath_OSX */,
+				324D6B151B135CF8007C1B9C /* PathMath_OSXTests */,
 			);
 		};
 /* End PBXProject section */
@@ -243,7 +243,7 @@
 /* Begin PBXTargetDependency section */
 		324D6B191B135CF8007C1B9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 324D6B0A1B135CF8007C1B9C /* PathMath */;
+			target = 324D6B0A1B135CF8007C1B9C /* PathMath_OSX */;
 			targetProxy = 324D6B181B135CF8007C1B9C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -348,7 +348,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -368,7 +368,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -419,7 +419,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		324D6B211B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath" */ = {
+		324D6B211B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath_OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				324D6B221B135CF8007C1B9C /* Debug */,
@@ -428,7 +428,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		324D6B241B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMathTests" */ = {
+		324D6B241B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath_OSXTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				324D6B251B135CF8007C1B9C /* Debug */,
