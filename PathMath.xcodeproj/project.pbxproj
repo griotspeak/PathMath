@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3212D6E61BE0980600D175D7 /* PathMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212D6DC1BE0980500D175D7 /* PathMath.framework */; };
+		3212D6F31BE098B400D175D7 /* ArcLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B271B135DCA007C1B9C /* ArcLength.swift */; };
+		3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B291B135DD2007C1B9C /* BezierPath.swift */; };
+		3212D6F51BE098B400D175D7 /* CogIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B511B13635B007C1B9C /* CogIcon.swift */; };
+		3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329E57441B155805002B2114 /* CGMutablePath.swift */; };
+		3212D6F71BE098B900D175D7 /* PathMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 324D6B101B135CF8007C1B9C /* PathMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3212D6F81BE098BF00D175D7 /* PathMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */; };
 		324D6B111B135CF8007C1B9C /* PathMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 324D6B101B135CF8007C1B9C /* PathMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		324D6B171B135CF8007C1B9C /* PathMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324D6B0B1B135CF8007C1B9C /* PathMath.framework */; };
 		324D6B1E1B135CF8007C1B9C /* PathMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */; };
@@ -17,6 +24,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3212D6E71BE0980600D175D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 324D6B021B135CF8007C1B9C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3212D6DB1BE0980500D175D7;
+			remoteInfo = PathMath_iOS;
+		};
 		324D6B181B135CF8007C1B9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 324D6B021B135CF8007C1B9C /* Project object */;
@@ -27,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3212D6DC1BE0980500D175D7 /* PathMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PathMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3212D6E51BE0980600D175D7 /* PathMath_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathMath_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		324D6B0B1B135CF8007C1B9C /* PathMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PathMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		324D6B0F1B135CF8007C1B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		324D6B101B135CF8007C1B9C /* PathMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathMath.h; sourceTree = "<group>"; };
@@ -40,6 +56,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3212D6D81BE0980500D175D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3212D6E21BE0980600D175D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3212D6E61BE0980600D175D7 /* PathMath.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		324D6B071B135CF8007C1B9C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +103,8 @@
 			children = (
 				324D6B0B1B135CF8007C1B9C /* PathMath.framework */,
 				324D6B161B135CF8007C1B9C /* PathMath_OSXTests.xctest */,
+				3212D6DC1BE0980500D175D7 /* PathMath.framework */,
+				3212D6E51BE0980600D175D7 /* PathMath_iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,6 +150,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		3212D6D91BE0980500D175D7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3212D6F71BE098B900D175D7 /* PathMath.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		324D6B081B135CF8007C1B9C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +169,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		3212D6DB1BE0980500D175D7 /* PathMath_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3212D6F11BE0980600D175D7 /* Build configuration list for PBXNativeTarget "PathMath_iOS" */;
+			buildPhases = (
+				3212D6D71BE0980500D175D7 /* Sources */,
+				3212D6D81BE0980500D175D7 /* Frameworks */,
+				3212D6D91BE0980500D175D7 /* Headers */,
+				3212D6DA1BE0980500D175D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PathMath_iOS;
+			productName = PathMath_iOS;
+			productReference = 3212D6DC1BE0980500D175D7 /* PathMath.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3212D6E41BE0980600D175D7 /* PathMath_iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3212D6F21BE0980600D175D7 /* Build configuration list for PBXNativeTarget "PathMath_iOSTests" */;
+			buildPhases = (
+				3212D6E11BE0980600D175D7 /* Sources */,
+				3212D6E21BE0980600D175D7 /* Frameworks */,
+				3212D6E31BE0980600D175D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3212D6E81BE0980600D175D7 /* PBXTargetDependency */,
+			);
+			name = PathMath_iOSTests;
+			productName = PathMath_iOSTests;
+			productReference = 3212D6E51BE0980600D175D7 /* PathMath_iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		324D6B0A1B135CF8007C1B9C /* PathMath_OSX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 324D6B211B135CF8007C1B9C /* Build configuration list for PBXNativeTarget "PathMath_OSX" */;
@@ -171,10 +248,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Buttons and Lights LLC";
 				TargetAttributes = {
+					3212D6DB1BE0980500D175D7 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					3212D6E41BE0980600D175D7 = {
+						CreatedOnToolsVersion = 7.1;
+					};
 					324D6B0A1B135CF8007C1B9C = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -197,11 +280,27 @@
 			targets = (
 				324D6B0A1B135CF8007C1B9C /* PathMath_OSX */,
 				324D6B151B135CF8007C1B9C /* PathMath_OSXTests */,
+				3212D6DB1BE0980500D175D7 /* PathMath_iOS */,
+				3212D6E41BE0980600D175D7 /* PathMath_iOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3212D6DA1BE0980500D175D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3212D6E31BE0980600D175D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		324D6B091B135CF8007C1B9C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +318,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3212D6D71BE0980500D175D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3212D6F31BE098B400D175D7 /* ArcLength.swift in Sources */,
+				3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */,
+				3212D6F51BE098B400D175D7 /* CogIcon.swift in Sources */,
+				3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3212D6E11BE0980600D175D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3212D6F81BE098BF00D175D7 /* PathMathTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		324D6B061B135CF8007C1B9C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -241,6 +359,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3212D6E81BE0980600D175D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3212D6DB1BE0980500D175D7 /* PathMath_iOS */;
+			targetProxy = 3212D6E71BE0980600D175D7 /* PBXContainerItemProxy */;
+		};
 		324D6B191B135CF8007C1B9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 324D6B0A1B135CF8007C1B9C /* PathMath_OSX */;
@@ -249,6 +372,74 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		3212D6ED1BE0980600D175D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/PathMath/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.PathMath-iOS";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3212D6EE1BE0980600D175D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/PathMath/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.PathMath-iOS";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3212D6EF1BE0980600D175D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = PathMathTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.PathMath-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3212D6F01BE0980600D175D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = PathMathTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.PathMath-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		324D6B1F1B135CF8007C1B9C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -410,6 +601,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3212D6F11BE0980600D175D7 /* Build configuration list for PBXNativeTarget "PathMath_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3212D6ED1BE0980600D175D7 /* Debug */,
+				3212D6EE1BE0980600D175D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3212D6F21BE0980600D175D7 /* Build configuration list for PBXNativeTarget "PathMath_iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3212D6EF1BE0980600D175D7 /* Debug */,
+				3212D6F01BE0980600D175D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		324D6B051B135CF8007C1B9C /* Build configuration list for PBXProject "PathMath" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

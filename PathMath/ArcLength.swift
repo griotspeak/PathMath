@@ -5,6 +5,13 @@
 //  Created by TJ Usiyan on 5/25/15.
 //  Copyright (c) 2015 Buttons and Lights LLC. All rights reserved.
 //
+#if os(OSX)
+    import AppKit
+#endif
+
+#if os(iOS)
+    import UIKit
+#endif
 
 public enum ArcLength {
     case Degrees(CGFloat)
