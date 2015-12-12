@@ -14,6 +14,8 @@
 		3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329E57441B155805002B2114 /* CGMutablePath.swift */; };
 		3212D6F71BE098B900D175D7 /* PathMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 324D6B101B135CF8007C1B9C /* PathMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3212D6F81BE098BF00D175D7 /* PathMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */; };
+		3221F4FB1C1C3F2F0057CCF7 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */; };
+		3221F4FC1C1C3F350057CCF7 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */; };
 		324D6B111B135CF8007C1B9C /* PathMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 324D6B101B135CF8007C1B9C /* PathMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		324D6B171B135CF8007C1B9C /* PathMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324D6B0B1B135CF8007C1B9C /* PathMath.framework */; };
 		324D6B1E1B135CF8007C1B9C /* PathMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */; };
@@ -43,6 +45,7 @@
 /* Begin PBXFileReference section */
 		3212D6DC1BE0980500D175D7 /* PathMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PathMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3212D6E51BE0980600D175D7 /* PathMath_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathMath_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		324D6B0B1B135CF8007C1B9C /* PathMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PathMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		324D6B0F1B135CF8007C1B9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		324D6B101B135CF8007C1B9C /* PathMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathMath.h; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 				324D6B291B135DD2007C1B9C /* BezierPath.swift */,
 				324D6B511B13635B007C1B9C /* CogIcon.swift */,
 				329E57441B155805002B2114 /* CGMutablePath.swift */,
+				3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -324,6 +328,7 @@
 			files = (
 				3212D6F31BE098B400D175D7 /* ArcLength.swift in Sources */,
 				3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */,
+				3221F4FC1C1C3F350057CCF7 /* CGRect.swift in Sources */,
 				3212D6F51BE098B400D175D7 /* CogIcon.swift in Sources */,
 				3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */,
 			);
@@ -343,6 +348,7 @@
 			files = (
 				324D6B281B135DCA007C1B9C /* ArcLength.swift in Sources */,
 				324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */,
+				3221F4FB1C1C3F2F0057CCF7 /* CGRect.swift in Sources */,
 				324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */,
 				329E57451B155805002B2114 /* CGMutablePath.swift in Sources */,
 			);
@@ -608,6 +614,7 @@
 				3212D6EE1BE0980600D175D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3212D6F21BE0980600D175D7 /* Build configuration list for PBXNativeTarget "PathMath_iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -616,6 +623,7 @@
 				3212D6F01BE0980600D175D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		324D6B051B135CF8007C1B9C /* Build configuration list for PBXProject "PathMath" */ = {
 			isa = XCConfigurationList;

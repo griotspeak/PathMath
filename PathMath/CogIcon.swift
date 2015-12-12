@@ -7,6 +7,14 @@
 //
 
 import QuartzCore
+#if os(OSX)
+    import AppKit
+#endif
+
+#if os(iOS)
+    import UIKit
+#endif
+
 
 public struct CogIcon {
 
@@ -15,6 +23,8 @@ public struct CogIcon {
     public let spokeHeight:CGFloat
     public let toothCount:Int
     public let rotation:ArcLength
+    public let fillColor: CGColorRef
+    public let strokeColor: CGColorRef
 
 
     private var bodyRadius:CGFloat {
@@ -32,7 +42,7 @@ public struct CogIcon {
         return CGRect(x: 0, y: 0, width: diameter, height: diameter)
     }
 
-    public var path:CGPathRef {
+    public func createPath() -> CGPathRef {
 
         let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
         let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
@@ -73,24 +83,62 @@ public struct CogIcon {
         return thePath
     }
 
-    public var shapeLayer:CAShapeLayer {
+    public func createShapeLayer() -> CAShapeLayer {
         let theLayer = CAShapeLayer()
         theLayer.fillRule = kCAFillRuleEvenOdd
-        let thePath = path
+        theLayer.fillColor = fillColor
+        theLayer.strokeColor = strokeColor
+        let thePath = createPath()
         theLayer.path = thePath
         return theLayer
     }
 
-    public init(holeRadius:CGFloat = 20, diameter:CGFloat = 60, spokeHeight:CGFloat = 10, teethCount:Int = 6, rotation:ArcLength? = nil) {
-        self.holeRadius = holeRadius
-        self.diameter = diameter
-        self.spokeHeight = spokeHeight
-        self.toothCount = teethCount
-        if let theRotation = rotation {
-            self.rotation = theRotation
-        } else {
-            self.rotation = ArcLength(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
-        }
-        
+    public init(holeRadius:CGFloat = 20
+        , diameter:CGFloat = 60
+        , spokeHeight:CGFloat = 10
+        , teethCount:Int = 6
+        , fillColor: CGColorRef = UIColor.whiteColor().CGColor
+        , strokeColor: CGColorRef = UIColor.blackColor().CGColor
+        , rotation:ArcLength? = nil) {
+            self.holeRadius = holeRadius
+            self.diameter = diameter
+            self.spokeHeight = spokeHeight
+            self.fillColor = fillColor
+            self.toothCount = teethCount
+            self.strokeColor = strokeColor
+            if let theRotation = rotation {
+                self.rotation = theRotation
+            } else {
+                self.rotation = ArcLength(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
+            }
     }
+}
+
+
+extension CogIcon {
+    #if os(OSX)
+
+    #endif
+
+    #if os(iOS)
+
+    public func createView(size inSize: CGSize?, offset: CGPoint = CGPoint.zero) -> UIView {
+        let size = inSize ?? CGSize(width: diameter, height: diameter)
+
+        let view = UIView(frame: CGRect(origin: CGPoint.zero, size: size))
+
+        let iconLayer = createShapeLayer()
+
+        let iconDiameter = diameter
+        let uncenteredFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: iconDiameter, height: iconDiameter))
+        let unshiftedFrame = CGRect(rect: uncenteredFrame, centeredIn: size)
+        let iconFrame = CGRect(origin: CGPoint(x: unshiftedFrame.origin.x + offset.x, y: unshiftedFrame.origin.y + offset.y), size: unshiftedFrame.size)
+        iconLayer.frame = iconFrame
+        view.layer.addSublayer(iconLayer)
+        
+        return view
+    }
+    
+    
+    #endif
 }
