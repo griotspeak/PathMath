@@ -25,8 +25,8 @@ public struct CogIcon {
     public let spokeHeight:CGFloat
     public let toothCount:Int
     public let rotation:ArcLength
-    public let fillColor: CGColorRef
-    public let strokeColor: CGColorRef
+    public let fillColor: CGColorRef?
+    public let strokeColor: CGColorRef?
 
 
     private var bodyRadius:CGFloat {
@@ -99,8 +99,8 @@ public struct CogIcon {
         , diameter:CGFloat = 60
         , spokeHeight:CGFloat = 10
         , teethCount:Int = 6
-        , fillColor: CGColorRef = ColorClass.whiteColor().CGColor
-        , strokeColor: CGColorRef = ColorClass.blackColor().CGColor
+        , fillColor: CGColorRef? = nil
+        , strokeColor: CGColorRef? = nil
         , rotation:ArcLength? = nil) {
             self.holeRadius = holeRadius
             self.diameter = diameter
@@ -140,7 +140,6 @@ extension CogIcon {
         
         return view
     }
-    
     
     #endif
 }
