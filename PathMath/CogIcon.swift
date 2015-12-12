@@ -6,16 +6,14 @@
 //  Copyright (c) 2015 Buttons and Lights LLC. All rights reserved.
 //
 
-import QuartzCore
 #if os(OSX)
     import AppKit
-    private typealias ColorClass = NSColor
 #endif
 
 #if os(iOS)
     import UIKit
-        private typealias ColorClass = UIColor
 #endif
+import QuartzCore
 
 
 public struct CogIcon {
@@ -118,9 +116,6 @@ public struct CogIcon {
 
 
 extension CogIcon {
-    #if os(OSX)
-
-    #endif
 
     #if os(iOS)
 
