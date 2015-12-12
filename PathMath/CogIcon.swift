@@ -9,10 +9,12 @@
 import QuartzCore
 #if os(OSX)
     import AppKit
+    private typealias ColorClass = NSColor
 #endif
 
 #if os(iOS)
     import UIKit
+        private typealias ColorClass = UIColor
 #endif
 
 
@@ -97,8 +99,8 @@ public struct CogIcon {
         , diameter:CGFloat = 60
         , spokeHeight:CGFloat = 10
         , teethCount:Int = 6
-        , fillColor: CGColorRef = UIColor.whiteColor().CGColor
-        , strokeColor: CGColorRef = UIColor.blackColor().CGColor
+        , fillColor: CGColorRef = ColorClass.whiteColor().CGColor
+        , strokeColor: CGColorRef = ColorClass.blackColor().CGColor
         , rotation:ArcLength? = nil) {
             self.holeRadius = holeRadius
             self.diameter = diameter
