@@ -84,9 +84,23 @@ public protocol BezierPathType {
     mutating func addLineToPoint(point: CGPoint)
     mutating func addArcWithCenter(center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool)
 
+    mutating func addCircleWithCenter(center: CGPoint, radius: CGFloat, clockwise: Bool)
+
     mutating func closePath()
     static func scrubClockwiseValue(value:Bool) -> Bool
 }
+
+extension BezierPathType {
+    mutating public func addCircleWithCenter(center: CGPoint, radius: CGFloat, clockwise: Bool = Self.scrubClockwiseValue(true)) {
+        moveToPoint(center)
+        addArcWithCenter(center,
+            radius: radius,
+            startAngle: ArcLength(degrees:0).apiValue,
+            endAngle: ArcLength(degrees:360).apiValue,
+            clockwise: clockwise)
+    }
+}
+
 
 #if os(iOS)
     extension UIBezierPath : BezierPathType {

@@ -68,14 +68,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
         }
 
         path.closePath()
-
-
-        path.moveToPoint(CogIcon.pointInCircle(center, radius: holeRadius, arcLength: ArcLength(radians: 0)))
-        path.addArcWithCenter(center,
-            radius: holeRadius,
-            startAngle: ArcLength(degrees:0).apiValue,
-            endAngle: ArcLength(degrees:360).apiValue,
-            clockwise: BezierPath.scrubClockwiseValue(true))
+        path.addCircleWithCenter(center, radius: holeRadius)
         return path
     }
 
