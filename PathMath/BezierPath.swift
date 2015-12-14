@@ -7,11 +7,11 @@
 //
 
 #if os(OSX)
-import AppKit
+    import AppKit
 #endif
 
 #if os(iOS)
-import UIKit
+    import UIKit
 #endif
 
 
@@ -25,24 +25,22 @@ public enum LineJoinStyle {
     public var cgLineJoin:CGLineJoin {
         switch self {
         case .Miter:
-            return CGLineJoin.Miter
+            return .Miter
         case .Round:
-            return CGLineJoin.Round
+            return .Round
         case .Bevel:
-            return CGLineJoin.Bevel
+            return .Bevel
         }
     }
 
-    public init?(cgLineJoin:CGLineJoin) {
-        /* @todo add `==` to CGLineJoin 2015-05-24 */
-        if cgLineJoin.rawValue == CGLineJoin.Miter.rawValue {
+    public init(cgLineJoin:CGLineJoin) {
+        switch cgLineJoin {
+        case .Miter:
             self = .Miter
-        } else if cgLineJoin.rawValue == CGLineJoin.Round.rawValue {
+        case .Round:
             self = .Round
-        } else if cgLineJoin.rawValue == CGLineJoin.Bevel.rawValue {
+        case .Bevel:
             self = .Bevel
-        } else {
-            return nil
         }
     }
 
@@ -73,7 +71,7 @@ public enum LineJoinStyle {
 }
 
 public protocol BezierPathType {
-    //    var CGPath: CGPath
+    var quartzPath: CGPathRef? { get }
 
     init()
 
@@ -91,50 +89,99 @@ public protocol BezierPathType {
 }
 
 #if os(iOS)
-extension UIBezierPath : BezierPathType {
-    public var bezierLineJoinStyle:LineJoinStyle {
-        get {
-            return LineJoinStyle(cgLineJoin: lineJoinStyle)!
+    extension UIBezierPath : BezierPathType {
+        public var quartzPath: CGPathRef? {
+            return self.CGPath
         }
-        set(value) {
-            self.lineJoinStyle = value.cgLineJoin
-        }
-    }
 
-    public static func scrubClockwiseValue(value: Bool) -> Bool {
-        return value
+        public var bezierLineJoinStyle:LineJoinStyle {
+            get {
+                return LineJoinStyle(cgLineJoin: lineJoinStyle)
+            } set(value) {
+                self.lineJoinStyle = value.cgLineJoin
+            }
+        }
+
+        public static func scrubClockwiseValue(value: Bool) -> Bool {
+            return value
+        }
     }
-}
 #endif
 
 #if os(OSX)
-extension NSBezierPath : BezierPathType {
-    public var usesEvenOddFillRule:Bool {
-        get {
-            return windingRule == NSWindingRule.EvenOddWindingRule
+    extension NSBezierPath : BezierPathType {
+        public var usesEvenOddFillRule:Bool {
+            get {
+                return windingRule == NSWindingRule.EvenOddWindingRule
+            }
+            set(value) {
+                windingRule = value ? NSWindingRule.EvenOddWindingRule : NSWindingRule.NonZeroWindingRule
+            }
         }
-        set(value) {
-            windingRule = value ? NSWindingRule.EvenOddWindingRule : NSWindingRule.NonZeroWindingRule
+        public var bezierLineJoinStyle:LineJoinStyle {
+            get {
+                return LineJoinStyle(nsLineJoin: lineJoinStyle)
+            } set(value) {
+                self.lineJoinStyle = value.nsLineJoin
+            }
         }
-    }
-    public var bezierLineJoinStyle:LineJoinStyle {
-        get {
-            return LineJoinStyle(nsLineJoin: lineJoinStyle)
-        } set(value) {
-            self.lineJoinStyle = value.nsLineJoin
+
+        public func addLineToPoint(point: NSPoint) {
+            lineToPoint(point)
+        }
+
+        public func addArcWithCenter(center: NSPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool) {
+            appendBezierPathWithArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
+        }
+
+        public static func scrubClockwiseValue(value: Bool) -> Bool {
+            return !value
         }
     }
 
-    public func addLineToPoint(point: NSPoint) {
-        lineToPoint(point)
+    extension NSBezierPath /* [QuartzUtilities](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CocoaDrawingGuide/Paths/Paths.html#//apple_ref/doc/uid/TP40003290-CH206-SW2) */ {
+        public var quartzPath: CGPathRef? {
+            let numElements = elementCount
+            guard numElements > 0 else { return nil }
+
+            var pointArray = UnsafeMutablePointer<NSPoint>.alloc(3)
+            let arrayPointer = UnsafeBufferPointer<NSPoint>(start: pointArray, count: 3)
+            defer { pointArray.dealloc(3) }
+
+            var didClosePath:Bool = true
+            let immutablePath: CGPathRef?
+            let mutablePath = CGPathCreateMutable()
+
+            for i in 0..<numElements {
+                switch elementAtIndex(i, associatedPoints:pointArray) {
+                case .MoveToBezierPathElement:
+                    if !didClosePath {
+                        CGPathCloseSubpath(mutablePath)
+                        didClosePath = true
+                    }
+                    CGPathMoveToPoint(mutablePath, nil, arrayPointer[0].x, arrayPointer[0].y)
+                case .LineToBezierPathElement:
+                    CGPathAddLineToPoint(mutablePath, nil, arrayPointer[0].x, arrayPointer[0].y)
+                    didClosePath = false
+                case .CurveToBezierPathElement:
+                                    CGPathAddCurveToPoint(mutablePath, nil, arrayPointer[0].x, arrayPointer[0].y,
+                                        arrayPointer[1].x, arrayPointer[1].y,
+                                        arrayPointer[2].x, arrayPointer[2].y)
+                                    didClosePath = false
+                case .ClosePathBezierPathElement:
+                    CGPathCloseSubpath(mutablePath)
+                    didClosePath = true
+                }
+
+            }
+            if !didClosePath {
+                CGPathCloseSubpath(mutablePath)
+            }
+
+            immutablePath = CGPathCreateCopy(mutablePath)
+            return immutablePath
+        }
     }
 
-    public func addArcWithCenter(center: NSPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool) {
-        appendBezierPathWithArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
-    }
-    
-    public static func scrubClockwiseValue(value: Bool) -> Bool {
-        return !value
-    }
-}
+
 #endif

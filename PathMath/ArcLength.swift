@@ -22,14 +22,14 @@ public enum ArcLength {
         case let .Degrees(value):
             return value
         case let .Radians(value):
-            return ArcLength.radiansToDegrees(value)
+            return radiansToDegrees(value)
         }
     }
 
     public var inRadians:CGFloat {
         switch self {
         case let .Degrees(value):
-            return ArcLength.degreesToRadians(value)
+            return degreesToRadians(value)
         case let .Radians(value):
             return value
         }
@@ -43,7 +43,7 @@ public enum ArcLength {
         self = .Radians(value)
     }
 
-    public func divide(divisor: CGFloat) -> ArcLength {
+    private func divide(divisor: CGFloat) -> ArcLength {
         switch self {
         case let .Degrees(value):
             return ArcLength(degrees: value / divisor)
@@ -52,11 +52,11 @@ public enum ArcLength {
         }
     }
 
-    public static func degreesToRadians(degrees:CGFloat) -> CGFloat {
+    private func degreesToRadians(degrees:CGFloat) -> CGFloat {
         return degrees * (CGFloat(M_PI) / 180.0)
     }
 
-    public static func radiansToDegrees(radians:CGFloat) -> CGFloat {
+    private func radiansToDegrees(radians:CGFloat) -> CGFloat {
         return radians * (180.0 / CGFloat(M_PI))
     }
 
@@ -73,7 +73,7 @@ public enum ArcLength {
     #endif
 }
 
-public func +(first:ArcLength, second:ArcLength) -> ArcLength {
+internal func +(first:ArcLength, second:ArcLength) -> ArcLength {
     switch first {
     case let .Degrees(value):
         return ArcLength(degrees: value + second.inDegrees)
@@ -82,7 +82,7 @@ public func +(first:ArcLength, second:ArcLength) -> ArcLength {
     }
 }
 
-public func -(first:ArcLength, second:ArcLength) -> ArcLength {
+internal func -(first:ArcLength, second:ArcLength) -> ArcLength {
     switch first {
     case let .Degrees(value):
         return ArcLength(degrees: value - second.inDegrees)
@@ -90,9 +90,3 @@ public func -(first:ArcLength, second:ArcLength) -> ArcLength {
         return ArcLength(radians: value - second.inRadians)
     }
 }
-
-public func pointInCircle(center:CGPoint, radius:CGFloat, arcLength:ArcLength) -> CGPoint {
-    let angleInRadians:CGFloat = arcLength.inRadians
-    return CGPointMake(center.x + (radius * cos(angleInRadians)), center.y + (radius * sin(angleInRadians)))
-}
-

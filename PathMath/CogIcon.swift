@@ -16,125 +16,148 @@
 import QuartzCore
 
 
-public struct CogIcon {
+public struct CogIcon<BezierPath: BezierPathType> {
 
     public let holeRadius:CGFloat
-    public let diameter:CGFloat
+    public let bodyRadius:CGFloat
     public let spokeHeight:CGFloat
     public let toothCount:Int
     public let rotation:ArcLength
-    public let fillColor: CGColorRef?
-    public let strokeColor: CGColorRef?
 
-
-    private var bodyRadius:CGFloat {
-        return radius - spokeHeight
+    public var radius:CGFloat {
+        return bodyRadius + spokeHeight
     }
 
-    private var center:CGPoint {
+    public var diameter: CGFloat {
+        return radius * 2
+    }
+
+    public var center:CGPoint {
         return CGPointMake(radius, radius)
     }
-    public var radius:CGFloat {
-        return diameter * 0.5
-    }
 
-    public var bounds:CGRect {
-        return CGRect(x: 0, y: 0, width: diameter, height: diameter)
-    }
-
-    public func createPath() -> CGPathRef {
+    public func createPath()-> BezierPath {
 
         let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
         let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
 
-        let thePath = CGPathCreateMutable()
+        var path = BezierPath()
+        path.bezierLineJoinStyle = .Round
+        path.usesEvenOddFillRule = true
 
-        thePath.moveToPoint(pointInCircle(center, radius: bodyRadius, arcLength: rotation))
+        path.moveToPoint(CogIcon.pointInCircle(center, radius: bodyRadius, arcLength: rotation))
 
         for i in 0..<toothCount {
             let iImageOrigin = ArcLength(degrees: CGFloat(i) * imageArcLength.inDegrees) + rotation
 
             // tooth
-            thePath.addLineToPoint(pointInCircle(center, radius: radius, arcLength: iImageOrigin))
-            thePath.addArcWithCenter(center,
+            path.addLineToPoint(CogIcon.pointInCircle(center, radius: radius, arcLength: iImageOrigin))
+            path.addArcWithCenter(center,
                 radius: radius,
-                startAngle: iImageOrigin.inRadians,
-                endAngle: (iImageOrigin + imageHalfArcLength).inRadians,
-                rightwise: true)
+                startAngle: iImageOrigin.apiValue,
+                endAngle: (iImageOrigin + imageHalfArcLength).apiValue,
+                clockwise: BezierPath.scrubClockwiseValue(true))
 
-            thePath.addLineToPoint(pointInCircle(center, radius: bodyRadius, arcLength: iImageOrigin + imageHalfArcLength))
+            path.addLineToPoint(CogIcon.pointInCircle(center, radius: bodyRadius, arcLength: iImageOrigin + imageHalfArcLength))
             // trough
-            thePath.addArcWithCenter(center,
+            path.addArcWithCenter(center,
                 radius: bodyRadius,
-                startAngle: (iImageOrigin + imageHalfArcLength).inRadians,
-                endAngle: (iImageOrigin + imageArcLength).inRadians,
-                rightwise: true)
+                startAngle: (iImageOrigin + imageHalfArcLength).apiValue,
+                endAngle: (iImageOrigin + imageArcLength).apiValue,
+                clockwise: BezierPath.scrubClockwiseValue(true))
         }
 
-        thePath.closePath()
+        path.closePath()
 
 
-        thePath.moveToPoint(pointInCircle(center, radius: holeRadius, arcLength: ArcLength(radians: 0)))
-        thePath.addArcWithCenter(center,
+        path.moveToPoint(CogIcon.pointInCircle(center, radius: holeRadius, arcLength: ArcLength(radians: 0)))
+        path.addArcWithCenter(center,
             radius: holeRadius,
-            startAngle: ArcLength(degrees:0).inRadians,
-            endAngle: ArcLength(degrees:360).inRadians,
-            rightwise: true)
-        return thePath
+            startAngle: ArcLength(degrees:0).apiValue,
+            endAngle: ArcLength(degrees:360).apiValue,
+            clockwise: BezierPath.scrubClockwiseValue(true))
+        return path
     }
 
-    public func createShapeLayer() -> CAShapeLayer {
+    public func createShapeLayer(fillColor: CGColorRef? = nil, strokeColor: CGColorRef? = nil) -> CAShapeLayer {
         let theLayer = CAShapeLayer()
         theLayer.fillRule = kCAFillRuleEvenOdd
         theLayer.fillColor = fillColor
         theLayer.strokeColor = strokeColor
-        let thePath = createPath()
-        theLayer.path = thePath
+        theLayer.path = createPath().quartzPath
         return theLayer
     }
 
-    public init(holeRadius:CGFloat = 20
-        , diameter:CGFloat = 60
-        , spokeHeight:CGFloat = 10
-        , teethCount:Int = 6
-        , fillColor: CGColorRef? = nil
-        , strokeColor: CGColorRef? = nil
-        , rotation:ArcLength? = nil) {
-            self.holeRadius = holeRadius
-            self.diameter = diameter
-            self.spokeHeight = spokeHeight
-            self.fillColor = fillColor
-            self.toothCount = teethCount
-            self.strokeColor = strokeColor
-            if let theRotation = rotation {
-                self.rotation = theRotation
-            } else {
-                self.rotation = ArcLength(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
-            }
+    public init(diameter: CGFloat, relativeHoleDiameter: CGFloat, relativeSpokeHeight: CGFloat, toothCount: Int, rotation:ArcLength? = nil) {
+        let radius = diameter * 0.5
+        let holeRadius = radius * relativeHoleDiameter
+        let spokeHeight = radius * relativeSpokeHeight
+        self.init(holeRadius: holeRadius, bodyRadius: (radius - spokeHeight), spokeHeight: spokeHeight, toothCount: toothCount)
     }
+
+    public init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, toothCount:Int = 6, rotation:ArcLength? = nil) {
+        self.holeRadius = holeRadius
+        self.bodyRadius = bodyRadius
+        self.spokeHeight = spokeHeight
+        self.toothCount = toothCount
+        if let theRotation = rotation {
+            self.rotation = theRotation
+        } else {
+            self.rotation = ArcLength(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
+        }
+    }
+
+    private static func pointInCircle(center:CGPoint, radius:CGFloat, arcLength:ArcLength) -> CGPoint {
+        let angleInRadians:CGFloat = arcLength.inRadians
+        return CGPointMake(center.x + (radius * cos(angleInRadians)), center.y + (radius * sin(angleInRadians)))
+    }
+
+}
+
+public protocol LayerBackedViewType {
+    init(frame: CGRect)
+    mutating func backingLayer() -> CALayer?
 }
 
 
-extension CogIcon {
-
-    #if os(iOS)
-
-    public func createView(size inSize: CGSize?, offset: CGPoint = CGPoint.zero) -> UIView {
-        let size = inSize ?? CGSize(width: diameter, height: diameter)
-
-        let view = UIView(frame: CGRect(origin: CGPoint.zero, size: size))
-
-        let iconLayer = createShapeLayer()
-
-        let iconDiameter = diameter
-        let uncenteredFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: iconDiameter, height: iconDiameter))
-        let unshiftedFrame = CGRect(rect: uncenteredFrame, centeredIn: size)
-        let iconFrame = CGRect(origin: CGPoint(x: unshiftedFrame.origin.x + offset.x, y: unshiftedFrame.origin.y + offset.y), size: unshiftedFrame.size)
-        iconLayer.frame = iconFrame
-        view.layer.addSublayer(iconLayer)
-        
-        return view
+#if os(iOS)
+    extension UIView : LayerBackedViewType {
+        public func backingLayer() -> CALayer? {
+            return layer
+        }
     }
-    
-    #endif
+#endif
+
+#if os(OSX)
+    extension NSView : LayerBackedViewType {
+        public func backingLayer() -> CALayer? {
+            wantsLayer = true
+            return layer
+        }
+    }
+#endif
+
+
+extension CogIcon {
+    public func createView<ViewType : LayerBackedViewType>(frame: CGRect? = nil
+        , fillColor: CGColorRef? = nil
+        , strokeColor: CGColorRef? = nil) -> ViewType? {
+            let size = frame?.size ?? CGSize(width: diameter, height: diameter)
+            let offset = frame?.origin ?? CGPoint.zero
+
+            var view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
+
+            let iconLayer = createShapeLayer()
+            iconLayer.fillColor = fillColor
+            iconLayer.strokeColor = strokeColor
+
+            let iconDiameter = diameter
+            let uncenteredFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: iconDiameter, height: iconDiameter))
+            let unshiftedFrame = CGRect(rect: uncenteredFrame, centeredIn: size)
+            let iconFrame = CGRect(origin: CGPoint(x: unshiftedFrame.origin.x + offset.x, y: unshiftedFrame.origin.y + offset.y), size: unshiftedFrame.size)
+            iconLayer.frame = iconFrame
+            view.backingLayer()?.addSublayer(iconLayer)
+
+            return view
+    }
 }
