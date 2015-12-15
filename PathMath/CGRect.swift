@@ -34,7 +34,7 @@ public struct CGRect2DGrid {
         case UpperLeft
 
         #if os(OSX)
-        public static let defaultSystemLocation:OriginLocation = .LowerLeft
+        public static let defaultPlatformLocation:OriginLocation = .LowerLeft
         #endif
 
         #if os(iOS)
