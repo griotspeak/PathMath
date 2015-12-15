@@ -104,14 +104,12 @@ public struct CogIcon<BezierPath: BezierPathType> {
         let angleInRadians:CGFloat = arcLength.inRadians
         return CGPointMake(center.x + (radius * cos(angleInRadians)), center.y + (radius * sin(angleInRadians)))
     }
-
 }
 
 public protocol LayerBackedViewType {
     init(frame: CGRect)
     mutating func backingLayer() -> CALayer?
 }
-
 
 #if os(iOS)
     extension UIView : LayerBackedViewType {
@@ -129,7 +127,6 @@ public protocol LayerBackedViewType {
         }
     }
 #endif
-
 
 extension CogIcon {
     public func createView<ViewType : LayerBackedViewType>(frame: CGRect? = nil
