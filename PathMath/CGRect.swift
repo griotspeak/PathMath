@@ -8,7 +8,6 @@
 
 import QuartzCore
 
-
 extension CGRect {
     init(rect: CGRect, centeredIn outerSize: CGSize) {
         let xOffset = (outerSize.width - rect.size.width) * 0.5
@@ -33,10 +32,19 @@ public struct CGRect2DGrid {
     public enum OriginLocation {
         case LowerLeft
         case UpperLeft
+
+        #if os(OSX)
+        public static let defaultSystemLocation:OriginLocation = .LowerLeft
+        #endif
+
+        #if os(iOS)
+        public static let defaultPlatformLocation:OriginLocation = .UpperLeft
+        #endif
+
     }
 
 
-    public init(width: CGFloat, height: CGFloat, columns: Int, rows: Int, originLocation: OriginLocation = .UpperLeft) throws {
+    public init(width: CGFloat, height: CGFloat, columns: Int, rows: Int, originLocation: OriginLocation = CGRect2DGrid.OriginLocation.defaultPlatformLocation) throws {
         guard width > 0 && height > 0 && columns > 0 && rows > 0 else { throw Error.InvalidArgument("all parameters must be greater than 0") }
 
         self.width = width
