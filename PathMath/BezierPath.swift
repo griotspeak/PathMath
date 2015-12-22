@@ -8,10 +8,12 @@
 
 #if os(OSX)
     import AppKit
+    public typealias PlatformBezierPath = NSBezierPath
 #endif
 
 #if os(iOS)
     import UIKit
+    public typealias PlatformBezierPath = UIBezierPath
 #endif
 
 
@@ -88,9 +90,18 @@ public protocol BezierPathType {
 
     mutating func closePath()
     static func scrubClockwiseValue(value:Bool) -> Bool
+    mutating func removeAllPoints()
 }
 
 extension BezierPathType {
+    mutating public func moveToPoint(x x: CGFloat, y: CGFloat) {
+        moveToPoint(CGPoint(x: x, y: y))
+    }
+
+    mutating public func addLineToPoint(x x: CGFloat, y: CGFloat) {
+        addLineToPoint(CGPoint(x: x, y: y))
+    }
+
     mutating public func addCircleWithCenter(center: CGPoint, radius: CGFloat, clockwise: Bool = Self.scrubClockwiseValue(true)) {
         moveToPoint(center)
         addArcWithCenter(center,
@@ -98,6 +109,44 @@ extension BezierPathType {
             startAngle: ArcLength(degrees:0).apiValue,
             endAngle: ArcLength(degrees:360).apiValue,
             clockwise: clockwise)
+    }
+}
+extension BezierPathType {
+
+    mutating public func addRect(rect: CGRect, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
+        let corners = rect.corners(originLocation)
+
+        moveToPoint(corners.topLeft)
+        addLineToPoint(corners.topRight)
+        addLineToPoint(corners.bottomRight)
+        addLineToPoint(corners.bottomLeft)
+        closePath()
+
+    }
+    
+    mutating public func addRoundedRect(rect: CGRect, cornerRadius: CGFloat, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
+        let innerRect = rect.insetBy(dx: cornerRadius, dy: cornerRadius)
+        let inner = innerRect.edgeDescription(originLocation)
+        let innerCorners = innerRect.corners(originLocation)
+        let outer = rect.edgeDescription(originLocation)
+
+        moveToPoint(x: inner.left, y: outer.top)
+        addLineToPoint(x: inner.right, y: outer.top)
+        addArcWithCenter(innerCorners.topRight, radius: cornerRadius, startAngle: ArcLength(degrees: 270).apiValue, endAngle: ArcLength(degrees: 360).apiValue, clockwise: true)
+
+        addLineToPoint(x: outer.right, y: inner.top)
+        addLineToPoint(x: outer.right, y: inner.bottom)
+        addArcWithCenter(innerCorners.bottomRight, radius: cornerRadius, startAngle: ArcLength(degrees: 0).apiValue, endAngle: ArcLength(degrees: 90).apiValue, clockwise: true)
+
+        addLineToPoint(x: inner.right, y: outer.bottom)
+        addLineToPoint(x: inner.left, y: outer.bottom)
+        addArcWithCenter(innerCorners.bottomLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 90).apiValue, endAngle: ArcLength(degrees: 180).apiValue, clockwise: true)
+
+        addLineToPoint(x: outer.left, y: inner.bottom)
+        addLineToPoint(x: outer.left, y: inner.top)
+        addArcWithCenter(innerCorners.topLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 180).apiValue, endAngle: ArcLength(degrees: 270).apiValue, clockwise: true)
+
+        closePath()
     }
 }
 
