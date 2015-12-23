@@ -9,13 +9,6 @@
 import QuartzCore
 
 extension CGRect {
-    init(rect: CGRect, centeredIn outerSize: CGSize) {
-        let xOffset = (outerSize.width - rect.size.width) * 0.5
-        let yOffset = (outerSize.height - rect.size.height) * 0.5
-
-        self = CGRectIntegral(CGRect(origin: CGPoint(x: xOffset, y: yOffset), size: rect.size))
-    }
-
     public typealias EdgeDescription = (top: CGFloat, right: CGFloat, bottom: CGFloat, left: CGFloat)
 
     func edgeDescription(originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) -> EdgeDescription {
@@ -47,6 +40,29 @@ extension CGRect {
         )
     }
 }
+
+extension CGRect {
+    public var center: CGPoint {
+        return CGPoint(x: origin.x + (size.width * 0.5), y: origin.y + (size.height * 0.5))
+    }
+
+    public init(center: CGPoint, size: CGSize) {
+        let origin = CGPoint(x: center.x - size.width * 0.5, y: center.y - size.height * 0.5)
+        self.init(origin: origin, size: size)
+    }
+
+    public init(size innerSize: CGSize, centeredInRect outerRect: CGRect) {
+        self.init(center: outerRect.center, size: innerSize)
+    }
+
+    public init(size innerSize: CGSize, centeredInSize outerSize: CGSize) {
+        self.init(size: innerSize, centeredInRect: CGRect(origin: CGPoint.zero, size: outerSize))
+    }
+
+
+}
+
+// MARK: - 2D grid
 
 public struct CGRect2DGrid {
     public let size: CGSize

@@ -73,6 +73,13 @@ public enum ArcLength {
     #endif
 }
 
+extension ArcLength {
+    public func pointInCircle(center:CGPoint, radius:CGFloat) -> CGPoint {
+        let angleInRadians:CGFloat = inRadians
+        return CGPointMake(center.x + (radius * cos(angleInRadians)), center.y + (radius * sin(angleInRadians)))
+    }
+}
+
 internal func +(first:ArcLength, second:ArcLength) -> ArcLength {
     switch first {
     case let .Degrees(value):

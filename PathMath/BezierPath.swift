@@ -72,7 +72,7 @@ public enum LineJoinStyle {
     #endif
 }
 
-public protocol BezierPathType {
+public protocol BezierPathType /* TODO: `class`? since none of these return anything, I am obviously assuming side effects (mutability).  2015-12-22 */ {
     var quartzPath: CGPathRef? { get }
 
     init()
@@ -103,7 +103,9 @@ extension BezierPathType {
     }
 
     mutating public func addCircleWithCenter(center: CGPoint, radius: CGFloat, clockwise: Bool = Self.scrubClockwiseValue(true)) {
-        moveToPoint(center)
+        let start = ArcLength(degrees:0)
+
+        moveToPoint(start.pointInCircle(center, radius: radius))
         addArcWithCenter(center,
             radius: radius,
             startAngle: ArcLength(degrees:0).apiValue,
