@@ -18,26 +18,23 @@ import QuartzCore
 public final class Icon<BezierPath: BezierPathType> {
     public typealias PathSetup = Void -> BezierPath
     public typealias FillRule = String
-    public static func createShapeLayer(fillRule: FillRule = kCAFillRuleEvenOdd, fillColor: CGColorRef? = nil, strokeColor: CGColorRef? = nil, pathSetup:PathSetup) -> CAShapeLayer {
+    public static func createShapeLayer(pathSetup pathSetup:PathSetup) -> CAShapeLayer {
         let theLayer = CAShapeLayer()
-        theLayer.fillRule = fillRule
-        theLayer.fillColor = fillColor
-        theLayer.strokeColor = strokeColor
         let path = pathSetup()
         theLayer.path = path.quartzPath
         return theLayer
     }
 
-    public static func createView<ViewType : LayerBackedViewType>(frame: CGRect
-        , pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
+    public static func createView<ViewType : LayerBackedViewType>(frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
+        let iconFrame = CGRect(center: frame.center, size: iconSize)
+        let size = frame.size
+        let view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
+        let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup: pathSetup)
+        iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
+        iconLayer.position = iconFrame.center
 
-            let size = frame.size
-            let view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
-            let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup: pathSetup)
-
-            return (view, iconLayer)
+        return (view, iconLayer)
     }
-
 }
 
 public struct CogIcon<BezierPath: BezierPathType> {
@@ -142,22 +139,13 @@ public protocol LayerBackedViewType {
 #endif
 
 extension CogIcon {
-    public func createView<ViewType : LayerBackedViewType>(frame: CGRect? = nil
-        , fillRule: Icon<BezierPath>.FillRule = kCAFillRuleEvenOdd
-        , fillColor: CGColorRef? = nil
-        , strokeColor: CGColorRef? = nil) -> ViewType {
-            let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
-            let iconFrame = CGRect(size: CGSize(width: diameter, height: diameter), centeredInRect: viewFrame)
+    public func createView<ViewType : LayerBackedViewType>(frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
+        let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
 
-            var (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, pathSetup: createPath)
-            iconLayer.fillRule = kCAFillRuleEvenOdd
-            iconLayer.strokeColor = strokeColor
-            iconLayer.fillColor = fillColor
-
-            iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
-            iconLayer.position = iconFrame.center
-            view.backingLayer()?.addSublayer(iconLayer)
-
-            return view
+        var (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)
+        iconLayer.fillRule = kCAFillRuleEvenOdd
+        view.backingLayer()?.addSublayer(iconLayer)
+        
+        return (view, iconLayer)
     }
 }
