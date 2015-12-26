@@ -16,7 +16,7 @@ import UIKit
 
     extension CALayer {
 
-        var image: UIImage? {
+        public func pathMathImage() -> UIImage? {
             let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
             UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
 
@@ -27,15 +27,15 @@ import UIKit
             CGContextFillRect(context, rect)
             renderInContext(context)
 
-            let alphaMask = CGBitmapContextCreateImage(context)
-            CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
-            CGContextClipToMask(context, rect, alphaMask)
-
-            renderInContext(context)
-
             let image = UIGraphicsGetImageFromCurrentImageContext()
             return image
             
+        }
+    }
+
+    extension UIView {
+        public func pathMathImage() ->UIImage? {
+            return layer.pathMathImage()
         }
     }
 #endif
