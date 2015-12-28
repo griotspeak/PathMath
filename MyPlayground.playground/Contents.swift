@@ -28,4 +28,3 @@ let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 
 path.addRoundedRect(rect, cornerRadius: 5)
 path.removeAllPoints()
 path.addRect(rect)
-

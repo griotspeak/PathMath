@@ -28,10 +28,11 @@ public final class Icon<BezierPath: BezierPathType> {
     public static func createView<ViewType : LayerBackedViewType>(frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
         let iconFrame = CGRect(center: frame.center, size: iconSize)
         let size = frame.size
-        let view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
+        var view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
         let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup: pathSetup)
         iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
         iconLayer.position = iconFrame.center
+        view.backingLayer()?.addSublayer(iconLayer)
 
         return (view, iconLayer)
     }
@@ -142,9 +143,8 @@ extension CogIcon {
     public func createView<ViewType : LayerBackedViewType>(frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
         let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
 
-        var (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)
+        let (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)
         iconLayer.fillRule = kCAFillRuleEvenOdd
-        view.backingLayer()?.addSublayer(iconLayer)
         
         return (view, iconLayer)
     }
