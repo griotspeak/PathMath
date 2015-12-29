@@ -58,30 +58,33 @@ extension CGRect {
     public init(size innerSize: CGSize, centeredInSize outerSize: CGSize) {
         self.init(size: innerSize, centeredInRect: CGRect(origin: CGPoint.zero, size: outerSize))
     }
-
-
 }
 
 // MARK: - 2D grid
 
 public struct CGRect2DGrid {
+
+    public typealias Inset = (dX: CGFloat, dY: CGFloat)
+
     public let size: CGSize
     public let columns: Int
     public let rows: Int
     public let originLocation: OriginLocation
+    public let defaultInset:Inset?
     private var _columns: CGFloat { return CGFloat(columns) }
     private var _rows: CGFloat { return CGFloat(rows) }
 
     public var columnWidth: CGFloat { return  size.width / _columns }
     public var rowHeight: CGFloat { return  size.height / _rows }
 
-    public init(size: CGSize, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) throws {
+    public init(size: CGSize, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultInset:Inset? = nil) throws {
         guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw Error.InvalidArgument("all parameters must be greater than 0") }
 
         self.size = size
         self.columns = columns
         self.rows = rows
         self.originLocation = originLocation
+        self.defaultInset = defaultInset
     }
 
     public enum Error : ErrorType {
@@ -89,8 +92,11 @@ public struct CGRect2DGrid {
     }
 
     public subscript(inColumn: Int, inRow: Int) -> CGRect? {
-        guard inColumn < columns && inRow < rows else { return nil }
+        return try? rect(inColumn, inRow: inRow)
+    }
 
+    public func rect(inColumn: Int, inRow: Int, dXdY:Inset? = nil) throws -> CGRect {
+        guard inColumn < columns && inRow < rows else { throw Error.InvalidArgument("(\(inColumn), \(inRow)) is out of bounds (\(columns), \(rows))") }
 
         let point: CGPoint
         switch originLocation {
@@ -107,6 +113,12 @@ public struct CGRect2DGrid {
         let minY: CGFloat = point.y * rHeight
         let size: CGSize = CGSize(width: cWidth, height: rHeight)
 
-        return CGRect(origin: CGPoint(x: minX, y: minY), size: size)
+        let rect = CGRect(origin: CGPoint(x: minX, y: minY), size: size)
+
+        if let (dx, dy) = dXdY ?? defaultInset {
+            return rect.insetBy(dx: dx, dy: dy)
+        } else {
+            return rect
+        }
     }
 }

@@ -28,3 +28,22 @@ let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 
 path.addRoundedRect(rect, cornerRadius: 5)
 path.removeAllPoints()
 path.addRect(rect)
+
+let frame = CGRect(x: 0, y: 0, width: 40, height: 20)
+guard let grid = try? CGRect2DGrid(size: frame.size, columns: 3, rows: 3) else { fatalError() }
+
+let xInset:CGFloat = 1
+let yInset:CGFloat = 1
+
+guard let topRect = grid[0, 2]?.insetBy(dx: xInset, dy: yInset),
+    let middleRect = grid[1, 1]?.insetBy(dx: xInset, dy: yInset),
+    let bottomRect = grid[2, 0]?.insetBy(dx: xInset, dy: yInset) else {
+        fatalError()
+}
+
+var bezierPath = PlatformBezierPath()
+for rect in [topRect, middleRect, bottomRect] {
+    bezierPath.addRect(rect)
+}
+
+bezierPath
