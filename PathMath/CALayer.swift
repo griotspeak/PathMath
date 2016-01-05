@@ -14,11 +14,11 @@ import AppKit
         public func pathMathImage() -> NSImage? {
             let image = NSImage(size: frame.size)
             image.lockFocus()
-            defer { image.unlockFocus() }
 
             guard let context = NSGraphicsContext.currentContext() else { return nil }
             displayRectIgnoringOpacity(frame, inContext: context)
 
+            image.unlockFocus()
             return image
         }
     }
@@ -30,7 +30,6 @@ import UIKit
         public func pathMathImage() -> UIImage? {
             let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
             UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-            defer { UIGraphicsEndImageContext() }
 
             guard let context = UIGraphicsGetCurrentContext() else { return nil }
 
@@ -39,6 +38,7 @@ import UIKit
             renderInContext(context)
 
             let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
             return image
         }
     }
@@ -47,11 +47,11 @@ import UIKit
         public func pathMathImage() -> UIImage {
             let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
             UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-            defer { UIGraphicsEndImageContext() }
 
             drawViewHierarchyInRect(rect, afterScreenUpdates: true)
 
             let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
             return image
         }
     }
