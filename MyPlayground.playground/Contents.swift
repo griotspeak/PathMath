@@ -16,14 +16,19 @@ let theCog = CogIcon<NSBezierPath>()
 let theCog = CogIcon<UIBezierPath>()
 #endif
 
-let (theView, theLayer): (UIView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
-theLayer.strokeColor = UIColor.whiteColor().CGColor
-theLayer.fillColor = UIColor.lightGrayColor().CGColor
-theView.backgroundColor = UIColor.blackColor()
+enum Foo {
+    case First(Bool)
+    case Second(Bool)
+}
+
+let (theView, theLayer): (NSView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
+theLayer.strokeColor = NSColor.whiteColor().CGColor
+theLayer.fillColor = NSColor.lightGrayColor().CGColor
+//theView.backgroundColor = NSColor.blackColor()
 
 theView
 
-var path = UIBezierPath()
+var path = NSBezierPath()
 let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 25))
 path.addRoundedRect(rect, cornerRadius: 5)
 path.removeAllPoints()
@@ -47,3 +52,8 @@ for rect in [topRect, middleRect, bottomRect] {
 }
 
 bezierPath
+
+var newFrame = theView.frame
+newFrame.origin = CGPoint(x: 100, y: 100)
+theView.frame = newFrame
+theView.pathMathImage()

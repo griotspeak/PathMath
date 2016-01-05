@@ -9,19 +9,30 @@
 import QuartzCore
 #if os(OSX)
 import AppKit
+
+    extension NSView {
+        public func pathMathImage() -> NSImage? {
+            let image = NSImage(size: frame.size)
+            image.lockFocus()
+            defer { image.unlockFocus() }
+
+            guard let context = NSGraphicsContext.currentContext() else { return nil }
+            displayRectIgnoringOpacity(frame, inContext: context)
+
+            return image
+        }
+    }
 #endif
 
 #if os(iOS)
 import UIKit
-
     extension CALayer {
-
         public func pathMathImage() -> UIImage? {
             let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
             UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+            defer { UIGraphicsEndImageContext() }
 
             guard let context = UIGraphicsGetCurrentContext() else { return nil }
-            defer { UIGraphicsEndImageContext() }
 
             CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
             CGContextFillRect(context, rect)
@@ -29,13 +40,19 @@ import UIKit
 
             let image = UIGraphicsGetImageFromCurrentImageContext()
             return image
-            
         }
     }
 
     extension UIView {
-        public func pathMathImage() ->UIImage? {
-            return layer.pathMathImage()
+        public func pathMathImage() -> UIImage {
+            let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
+            UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+            defer { UIGraphicsEndImageContext() }
+
+            drawViewHierarchyInRect(rect, afterScreenUpdates: true)
+
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            return image
         }
     }
 #endif
