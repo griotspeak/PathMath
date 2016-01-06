@@ -44,11 +44,11 @@ import UIKit
     }
 
     extension UIView {
-        public func pathMathImage() -> UIImage {
+        public func pathMathImage(afterScrenUpdate: Bool) -> UIImage {
             let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
             UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
 
-            drawViewHierarchyInRect(rect, afterScreenUpdates: true)
+            drawViewHierarchyInRect(rect, afterScreenUpdates: afterScrenUpdate)
 
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
