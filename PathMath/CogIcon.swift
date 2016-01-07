@@ -29,11 +29,12 @@ public final class Icon<BezierPath: BezierPathType> {
         let iconFrame = CGRect(center: frame.center, size: iconSize)
         let size = frame.size
         var view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
+        guard let backingLayer = view.backingLayer() else { fatalError("unable to get or create backing layer for view \(view)") }
+
         let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup: pathSetup)
         iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
         iconLayer.position = iconFrame.center
-        view.backingLayer()?.addSublayer(iconLayer)
-
+        backingLayer.addSublayer(iconLayer)
         return (view, iconLayer)
     }
 }

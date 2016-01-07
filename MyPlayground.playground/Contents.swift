@@ -10,10 +10,12 @@ import PathMath
 
 #if os(OSX)
 let theCog = CogIcon<NSBezierPath>()
+typealias PlatformColor = NSColor
 #endif
 
 #if os(iOS)
 let theCog = CogIcon<UIBezierPath>()
+typealias PlatformColor = UIColor
 #endif
 
 enum Foo {
@@ -21,14 +23,14 @@ enum Foo {
     case Second(Bool)
 }
 
-let (theView, theLayer): (NSView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
-theLayer.strokeColor = NSColor.whiteColor().CGColor
-theLayer.fillColor = NSColor.lightGrayColor().CGColor
+let (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
+theLayer.strokeColor = PlatformColor.whiteColor().CGColor
+theLayer.fillColor = PlatformColor.lightGrayColor().CGColor
 //theView.backgroundColor = NSColor.blackColor()
 
 theView
 
-var path = NSBezierPath()
+var path = PlatformBezierPath()
 let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 25))
 path.addRoundedRect(rect, cornerRadius: 5)
 path.removeAllPoints()
@@ -57,3 +59,6 @@ var newFrame = theView.frame
 newFrame.origin = CGPoint(x: 100, y: 100)
 theView.frame = newFrame
 theView.pathMathImage()
+
+
+theView.frame
