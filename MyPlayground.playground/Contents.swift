@@ -59,6 +59,6 @@ var newFrame = theView.frame
 newFrame.origin = CGPoint(x: 100, y: 100)
 theView.frame = newFrame
 
-let result: UIImage? = theView.pathMathImage()
+let result: NSImage? = theView.renderLayerContents()
 
 result

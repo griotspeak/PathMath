@@ -48,13 +48,20 @@ extension _CALayerBackedType {
 
             guard drawingHandler(quartzContext, size) else { return nil }
 
-            /* TODO: This seems especially wasteful… find something better? 2016-01-07 */
+            /* TODO: This seems wasteful… find something better? 2016-01-07 */
             return imageRep.CGImage.map { self.init(CGImage: $0) }
-
-
         }
     }
 
+    extension NSImage : RenderDrawingType {
+        public static func renderDrawing(size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
+            return self.init(size: size, flipped: false) { (frame) in
+                guard let context = NSGraphicsContext.currentContext() else { return false }
+                let quartzContext = context.CGContext
+                return drawingHandler(quartzContext, frame.size)
+            }
+        }
+    }
 
 #endif
 
@@ -83,7 +90,7 @@ extension _CALayerBackedType {
             let image = UIGraphicsGetImageFromCurrentImageContext()
             guard let imageData = UIImagePNGRepresentation(image) else { return nil }
 
-            /* TODO: This seems especially wasteful… find something better? 2016-01-07 */
+            /* TODO: This seems wasteful… find something better? 2016-01-07 */
             return self.init(data: imageData)
         }
     }
