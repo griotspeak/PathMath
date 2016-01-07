@@ -1,5 +1,5 @@
 //
-//  CALayer.swift
+//  Rendering.swift
 //  PathMath
 //
 //  Created by TJ Usiyan on 12/26/15.
@@ -8,11 +8,30 @@
 
 import QuartzCore
 
+public protocol RenderDrawingType {
+    /* TODO: abstract over the context type 2016-01-07 */
+    static func renderDrawing(size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self?
+}
+
+public protocol _CALayerBackedType {
+    mutating func backingLayer() -> CALayer?
+}
+
+extension _CALayerBackedType {
+    public mutating func renderLayerContents<Output : RenderDrawingType>() -> Output? {
+        guard let containerLayer = backingLayer() else { return nil }
+        return Output.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            containerLayer.renderInContext(context)
+            return true
+        }
+    }
+}
+
 #if os(OSX)
     import AppKit
 
-    extension NSBitmapImageRep {
-        internal static func createPathMathImage(size: NSSize, pathMathDrawingHandler: (CGContext, NSSize) -> Bool) -> NSBitmapImageRep? {
+    extension NSBitmapImageRep : RenderDrawingType {
+        public static func renderDrawing(size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
             guard let convertedBounds = NSScreen.mainScreen()?.convertRectToBacking(NSRect(origin: CGPoint.zero, size: size)).integral,
                 let intermediateImageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(convertedBounds.width), pixelsHigh: Int(convertedBounds.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat: .NSAlphaFirstBitmapFormat, bytesPerRow: 0, bitsPerPixel: 0),
                 let imageRep = intermediateImageRep.bitmapImageRepByRetaggingWithColorSpace(.sRGBColorSpace())
@@ -27,50 +46,45 @@ import QuartzCore
 
             let quartzContext = bitmapContext.CGContext
 
-            if pathMathDrawingHandler(quartzContext, size) {
-                return imageRep
-            } else {
-                return nil
-            }
+            guard drawingHandler(quartzContext, size) else { return nil }
+
+            /* TODO: This seems especially wasteful… find something better? 2016-01-07 */
+            return imageRep.CGImage.map { self.init(CGImage: $0) }
+
 
         }
     }
 
-    extension NSView {
-        public func pathMathImage() -> NSBitmapImageRep? {
 
-            return NSBitmapImageRep.createPathMathImage(bounds.size) { (context, size) in
-                guard let containerLayer = self.layer else { return false }
-
-                containerLayer.renderInContext(context)
-                return true
-            }
-        }
-    }
 #endif
 
 #if os(iOS)
     import UIKit
-    extension CALayer {
-        public func pathMathImage() -> UIImage? {
-            let rect = CGRect(origin: CGPoint.zero, size: bounds.size)
-            UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+
+    extension UIImage : RenderDrawingType {
+        public static func renderDrawing(size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
+            if let oldContext = UIGraphicsGetCurrentContext() {
+                CGContextSaveGState(oldContext)
+                defer { CGContextRestoreGState(oldContext) }
+            }
+
+            let rect = CGRect(origin: CGPoint.zero, size: size)
+
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            defer { UIGraphicsEndImageContext() }
 
             guard let context = UIGraphicsGetCurrentContext() else { return nil }
 
             CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
             CGContextFillRect(context, rect)
-            renderInContext(context)
+
+            drawingHandler(context, size)
 
             let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return image
-        }
-    }
+            guard let imageData = UIImagePNGRepresentation(image) else { return nil }
 
-    extension UIView {
-        public func pathMathImage() ->UIImage? {
-            return layer.pathMathImage()
+            /* TODO: This seems especially wasteful… find something better? 2016-01-07 */
+            return self.init(data: imageData)
         }
     }
 #endif

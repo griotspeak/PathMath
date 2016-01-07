@@ -23,7 +23,7 @@ enum Foo {
     case Second(Bool)
 }
 
-let (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
+var (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
 theLayer.strokeColor = PlatformColor.whiteColor().CGColor
 theLayer.fillColor = PlatformColor.lightGrayColor().CGColor
 //theView.backgroundColor = NSColor.blackColor()
@@ -58,7 +58,7 @@ bezierPath
 var newFrame = theView.frame
 newFrame.origin = CGPoint(x: 100, y: 100)
 theView.frame = newFrame
-theView.pathMathImage()
 
+let result: UIImage? = theView.pathMathImage()
 
-theView.frame
+result

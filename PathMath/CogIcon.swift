@@ -25,10 +25,11 @@ public final class Icon<BezierPath: BezierPathType> {
         return theLayer
     }
 
-    public static func createView<ViewType : LayerBackedViewType>(frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
+    public static func createView<ViewType : CALayerBackedType>(frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
         let iconFrame = CGRect(center: frame.center, size: iconSize)
         let size = frame.size
-        var view = ViewType(frame: CGRect(origin: CGPoint.zero, size: size))
+        var view = ViewType()
+        view.frame = CGRect(origin: CGPoint.zero, size: size)
         guard let backingLayer = view.backingLayer() else { fatalError("unable to get or create backing layer for view \(view)") }
 
         let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup: pathSetup)
@@ -118,21 +119,30 @@ public struct CogIcon<BezierPath: BezierPathType> {
     }
 }
 
-public protocol LayerBackedViewType {
-    init(frame: CGRect)
-    mutating func backingLayer() -> CALayer?
+public protocol CALayerBackedType : _CALayerBackedType {
+    init()
+    var frame: CGRect { get set }
+}
+
+extension CALayer : CALayerBackedType {
+    public func backingLayer() -> CALayer? {
+        return self
+    }
 }
 
 #if os(iOS)
-    extension UIView : LayerBackedViewType {
+    public typealias PlatformBaseLayerBackedView = UIView
+    extension UIView : CALayerBackedType {
         public func backingLayer() -> CALayer? {
             return layer
         }
     }
+
 #endif
 
 #if os(OSX)
-    extension NSView : LayerBackedViewType {
+    public typealias PlatformBaseLayerBackedView = NSView
+    extension NSView : CALayerBackedType {
         public func backingLayer() -> CALayer? {
             wantsLayer = true
             return layer
@@ -141,7 +151,7 @@ public protocol LayerBackedViewType {
 #endif
 
 extension CogIcon {
-    public func createView<ViewType : LayerBackedViewType>(frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
+    public func createView<ViewType : CALayerBackedType>(frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
         let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
 
         let (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)
