@@ -25,8 +25,8 @@
 		324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B291B135DD2007C1B9C /* BezierPath.swift */; };
 		324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B511B13635B007C1B9C /* CogIcon.swift */; };
 		329E57451B155805002B2114 /* CGMutablePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329E57441B155805002B2114 /* CGMutablePath.swift */; };
-		32D37AEA1C2E6EF70074BB91 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* CALayer.swift */; };
-		32D37AEB1C2E6EF70074BB91 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* CALayer.swift */; };
+		32D37AEA1C2E6EF70074BB91 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* Rendering.swift */; };
+		32D37AEB1C2E6EF70074BB91 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* Rendering.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +62,7 @@
 		324D6B511B13635B007C1B9C /* CogIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CogIcon.swift; sourceTree = "<group>"; };
 		329E57441B155805002B2114 /* CGMutablePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMutablePath.swift; sourceTree = "<group>"; };
 		32CD8FFC1C1C975800D3838C /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
-		32D37AE91C2E6EF70074BB91 /* CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
+		32D37AE91C2E6EF70074BB91 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,7 +139,7 @@
 				329E57441B155805002B2114 /* CGMutablePath.swift */,
 				3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */,
 				32059C741C28D28300B9E05B /* OriginLocation.swift */,
-				32D37AE91C2E6EF70074BB91 /* CALayer.swift */,
+				32D37AE91C2E6EF70074BB91 /* Rendering.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -340,7 +340,7 @@
 				3212D6F31BE098B400D175D7 /* ArcLength.swift in Sources */,
 				3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */,
 				3221F4FC1C1C3F350057CCF7 /* CGRect.swift in Sources */,
-				32D37AEB1C2E6EF70074BB91 /* CALayer.swift in Sources */,
+				32D37AEB1C2E6EF70074BB91 /* Rendering.swift in Sources */,
 				3212D6F51BE098B400D175D7 /* CogIcon.swift in Sources */,
 				3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */,
 			);
@@ -362,7 +362,7 @@
 				324D6B281B135DCA007C1B9C /* ArcLength.swift in Sources */,
 				324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */,
 				3221F4FB1C1C3F2F0057CCF7 /* CGRect.swift in Sources */,
-				32D37AEA1C2E6EF70074BB91 /* CALayer.swift in Sources */,
+				32D37AEA1C2E6EF70074BB91 /* Rendering.swift in Sources */,
 				324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */,
 				329E57451B155805002B2114 /* CGMutablePath.swift in Sources */,
 			);
