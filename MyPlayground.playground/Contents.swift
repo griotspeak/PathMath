@@ -1,7 +1,6 @@
 #if os(OSX)
     import AppKit
 #endif
-
 #if os(iOS)
     import UIKit
 #endif
@@ -18,23 +17,24 @@ let theCog = CogIcon<UIBezierPath>()
 typealias PlatformColor = UIColor
 #endif
 
+
 enum Foo {
     case First(Bool)
     case Second(Bool)
 }
 
 var (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
-theLayer.strokeColor = PlatformColor.whiteColor().CGColor
-theLayer.fillColor = PlatformColor.lightGrayColor().CGColor
+theLayer.strokeColor = PlatformColor.white().cgColor
+theLayer.fillColor = PlatformColor.lightGray().cgColor
 //theView.backgroundColor = NSColor.blackColor()
 
 theView
 
 var path = PlatformBezierPath()
 let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 25))
-path.addRoundedRect(rect, cornerRadius: 5)
+path.add(rect, cornerRadius: 5)
 path.removeAllPoints()
-path.addRect(rect)
+path.add(rect)
 
 let frame = CGRect(x: 0, y: 0, width: 40, height: 20)
 guard let grid = try? CGRect2DGrid(size: frame.size, columns: 3, rows: 3) else { fatalError() }
@@ -50,15 +50,17 @@ guard let topRect = grid[0, 2]?.insetBy(dx: xInset, dy: yInset),
 
 var bezierPath = PlatformBezierPath()
 for rect in [topRect, middleRect, bottomRect] {
-    bezierPath.addRect(rect)
+    bezierPath.add(rect)
 }
 
 bezierPath
+
 
 var newFrame = theView.frame
 newFrame.origin = CGPoint(x: 100, y: 100)
 theView.frame = newFrame
 
-let result: NSImage? = theView.renderLayerContents()
+let result: UIImage? = theView.renderLayerContents()
 
 result
+

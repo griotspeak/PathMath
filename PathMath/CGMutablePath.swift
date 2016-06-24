@@ -9,26 +9,26 @@
 import CoreGraphics
 
 extension CGMutablePath {
-    public func moveToPoint(point: CGPoint, transform: CGAffineTransform = CGAffineTransformIdentity) {
+    public func moveToPoint(_ point: CGPoint, transform: CGAffineTransform = CGAffineTransform.identity) {
         var _transform = transform
-        CGPathMoveToPoint(self, &_transform, point.x, point.y)
+        self.moveTo(&_transform, x: point.x, y: point.y)
     }
 
-    public func addLineToPoint(point: CGPoint, transform: CGAffineTransform = CGAffineTransformIdentity) {
+    public func addLineToPoint(_ point: CGPoint, transform: CGAffineTransform = CGAffineTransform.identity) {
         var _transform = transform
-        CGPathAddLineToPoint(self, &_transform, point.x, point.y)
+        self.addLineTo(&_transform, x: point.x, y: point.y)
     }
 
-    public func addArcWithCenter(center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, rightwise: Bool, transform: CGAffineTransform = CGAffineTransformIdentity) {
+    public func addArcWithCenter(_ center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, rightwise: Bool, transform: CGAffineTransform = CGAffineTransform.identity) {
         var _transform = transform
-        CGPathAddArc(self, &_transform, center.x, center.y, radius, startAngle, endAngle, CGMutablePath.convertRightwiseToClockwise(rightwise))
+        self.addArc(&_transform, x: center.x, y: center.y, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: CGMutablePath.convertRightwiseToClockwise(rightwise))
     }
 
     public func closePath() {
-        CGPathCloseSubpath(self)
+        self.closeSubpath()
     }
 
-    public static func convertRightwiseToClockwise(rightwise:Bool) -> Bool {
+    public static func convertRightwiseToClockwise(_ rightwise:Bool) -> Bool {
         #if os(OSX)
             return !rightwise
         #endif

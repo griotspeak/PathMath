@@ -20,29 +20,29 @@
 import QuartzCore
 
 public enum LineJoinStyle {
-    case Miter
-    case Round
-    case Bevel
+    case miter
+    case round
+    case bevel
 
     public var cgLineJoin:CGLineJoin {
         switch self {
-        case .Miter:
-            return .Miter
-        case .Round:
-            return .Round
-        case .Bevel:
-            return .Bevel
+        case .miter:
+            return .miter
+        case .round:
+            return .round
+        case .bevel:
+            return .bevel
         }
     }
 
     public init(cgLineJoin:CGLineJoin) {
         switch cgLineJoin {
-        case .Miter:
-            self = .Miter
-        case .Round:
-            self = .Round
-        case .Bevel:
-            self = .Bevel
+        case .miter:
+            self = .miter
+        case .round:
+            self = .round
+        case .bevel:
+            self = .bevel
         }
     }
 
@@ -50,30 +50,30 @@ public enum LineJoinStyle {
     public init(nsLineJoin:NSLineJoinStyle) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
         switch nsLineJoin {
-        case .MiterLineJoinStyle:
-            self = .Miter
-        case .RoundLineJoinStyle:
-            self = .Round
-        case .BevelLineJoinStyle:
-            self = .Bevel
+        case .miterLineJoinStyle:
+            self = .miter
+        case .roundLineJoinStyle:
+            self = .round
+        case .bevelLineJoinStyle:
+            self = .bevel
         }
     }
 
     public var nsLineJoin:NSLineJoinStyle {
         switch self {
-        case .Miter:
-            return NSLineJoinStyle.MiterLineJoinStyle
-        case .Round:
-            return NSLineJoinStyle.RoundLineJoinStyle
-        case .Bevel:
-            return NSLineJoinStyle.BevelLineJoinStyle
+        case .miter:
+            return NSLineJoinStyle.miterLineJoinStyle
+        case .round:
+            return NSLineJoinStyle.roundLineJoinStyle
+        case .bevel:
+            return NSLineJoinStyle.bevelLineJoinStyle
         }
     }
     #endif
 }
 
 public protocol BezierPathType /* TODO: `class`? since none of these return anything, I am obviously assuming side effects (mutability).  2015-12-22 */ {
-    var quartzPath: CGPathRef? { get }
+    var quartzPath: CGPath? { get }
 
     init()
 
@@ -81,72 +81,80 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
     var bezierLineJoinStyle:LineJoinStyle { get set }
 
     // Path construction
-    mutating func moveToPoint(point: CGPoint)
+    mutating func move(to point: CGPoint)
 
-    mutating func addLineToPoint(point: CGPoint)
-    mutating func addArcWithCenter(center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool)
+    mutating func addLine(to point: CGPoint)
+    mutating func addArc(withCenter center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool)
 
-    mutating func addCircleWithCenter(center: CGPoint, radius: CGFloat, clockwise: Bool)
+    mutating func addCircle(withCenter center: CGPoint, radius: CGFloat, clockwise: Bool)
 
     mutating func closePath()
-    static func scrubClockwiseValue(value:Bool) -> Bool
+    static var shouldNegateClockwiseValue: Bool { get }
     mutating func removeAllPoints()
 }
 
 extension BezierPathType {
-    mutating public func moveToPoint(x x: CGFloat, y: CGFloat) {
-        moveToPoint(CGPoint(x: x, y: y))
+    static func platformClockwiseValue(fromActualClockwiseValue value:Bool) -> Bool {
+        if shouldNegateClockwiseValue {
+            return !value
+        } else {
+            return value
+        }
     }
 
-    mutating public func addLineToPoint(x x: CGFloat, y: CGFloat) {
-        addLineToPoint(CGPoint(x: x, y: y))
+    mutating public func move(toX x: CGFloat, y: CGFloat) {
+        move(to: CGPoint(x: x, y: y))
     }
 
-    mutating public func addCircleWithCenter(center: CGPoint, radius: CGFloat, clockwise: Bool = Self.scrubClockwiseValue(true)) {
+    mutating public func addLine(toX x: CGFloat, y: CGFloat) {
+        addLine(to: CGPoint(x: x, y: y))
+    }
+
+    mutating public func addCircle(withCenter center: CGPoint, radius: CGFloat, clockwise: Bool = Self.platformClockwiseValue(fromActualClockwiseValue: true)) {
         let start = ArcLength(degrees:0)
 
-        moveToPoint(start.pointInCircle(center, radius: radius))
-        addArcWithCenter(center,
-            radius: radius,
-            startAngle: ArcLength(degrees:0).apiValue,
-            endAngle: ArcLength(degrees:360).apiValue,
-            clockwise: clockwise)
+        move(to: start.pointInCircle(center, radius: radius))
+        addArc(withCenter: center,
+               radius: radius,
+               startAngle: ArcLength(degrees:0).apiValue,
+               endAngle: ArcLength(degrees:360).apiValue,
+               clockwise: clockwise)
     }
 }
 extension BezierPathType {
 
-    mutating public func addRect(rect: CGRect, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
+    mutating public func add(_ rect: CGRect, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
         let corners = rect.corners(originLocation)
 
-        moveToPoint(corners.topLeft)
-        addLineToPoint(corners.topRight)
-        addLineToPoint(corners.bottomRight)
-        addLineToPoint(corners.bottomLeft)
+        move(to: corners.topLeft)
+        addLine(to: corners.topRight)
+        addLine(to: corners.bottomRight)
+        addLine(to: corners.bottomLeft)
         closePath()
 
     }
     
-    mutating public func addRoundedRect(rect: CGRect, cornerRadius: CGFloat, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
+    mutating public func add(_ rect: CGRect, cornerRadius: CGFloat, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
         let innerRect = rect.insetBy(dx: cornerRadius, dy: cornerRadius)
         let inner = innerRect.edgeDescription(originLocation)
         let innerCorners = innerRect.corners(originLocation)
         let outer = rect.edgeDescription(originLocation)
 
-        moveToPoint(x: inner.left, y: outer.top)
-        addLineToPoint(x: inner.right, y: outer.top)
-        addArcWithCenter(innerCorners.topRight, radius: cornerRadius, startAngle: ArcLength(degrees: 270).apiValue, endAngle: ArcLength(degrees: 360).apiValue, clockwise: true)
+        move(toX: inner.left, y: outer.top)
+        addLine(toX: inner.right, y: outer.top)
+        addArc(withCenter: innerCorners.topRight, radius: cornerRadius, startAngle: ArcLength(degrees: 270).apiValue, endAngle: ArcLength(degrees: 360).apiValue, clockwise: true)
 
-        addLineToPoint(x: outer.right, y: inner.top)
-        addLineToPoint(x: outer.right, y: inner.bottom)
-        addArcWithCenter(innerCorners.bottomRight, radius: cornerRadius, startAngle: ArcLength(degrees: 0).apiValue, endAngle: ArcLength(degrees: 90).apiValue, clockwise: true)
+        addLine(toX: outer.right, y: inner.top)
+        addLine(toX: outer.right, y: inner.bottom)
+        addArc(withCenter: innerCorners.bottomRight, radius: cornerRadius, startAngle: ArcLength(degrees: 0).apiValue, endAngle: ArcLength(degrees: 90).apiValue, clockwise: true)
 
-        addLineToPoint(x: inner.right, y: outer.bottom)
-        addLineToPoint(x: inner.left, y: outer.bottom)
-        addArcWithCenter(innerCorners.bottomLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 90).apiValue, endAngle: ArcLength(degrees: 180).apiValue, clockwise: true)
+        addLine(toX: inner.right, y: outer.bottom)
+        addLine(toX: inner.left, y: outer.bottom)
+        addArc(withCenter: innerCorners.bottomLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 90).apiValue, endAngle: ArcLength(degrees: 180).apiValue, clockwise: true)
 
-        addLineToPoint(x: outer.left, y: inner.bottom)
-        addLineToPoint(x: outer.left, y: inner.top)
-        addArcWithCenter(innerCorners.topLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 180).apiValue, endAngle: ArcLength(degrees: 270).apiValue, clockwise: true)
+        addLine(toX: outer.left, y: inner.bottom)
+        addLine(toX: outer.left, y: inner.top)
+        addArc(withCenter: innerCorners.topLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 180).apiValue, endAngle: ArcLength(degrees: 270).apiValue, clockwise: true)
 
         closePath()
     }
@@ -155,8 +163,8 @@ extension BezierPathType {
 
 #if os(iOS)
     extension UIBezierPath : BezierPathType {
-        public var quartzPath: CGPathRef? {
-            return self.CGPath
+        public var quartzPath: CGPath? {
+            return self.cgPath
         }
 
         public var bezierLineJoinStyle:LineJoinStyle {
@@ -167,20 +175,24 @@ extension BezierPathType {
             }
         }
 
-        public static func scrubClockwiseValue(value: Bool) -> Bool {
-            return value
+        public static var shouldNegateClockwiseValue: Bool {
+            return false
         }
     }
 #endif
 
 #if os(OSX)
     extension NSBezierPath : BezierPathType {
+        public func addLine(to point: CGPoint) {
+            addLineToPoint(point)
+        }
+
         public var usesEvenOddFillRule:Bool {
             get {
-                return windingRule == NSWindingRule.EvenOddWindingRule
+                return windingRule == NSWindingRule.evenOddWindingRule
             }
             set(value) {
-                windingRule = value ? NSWindingRule.EvenOddWindingRule : NSWindingRule.NonZeroWindingRule
+                windingRule = value ? NSWindingRule.evenOddWindingRule : NSWindingRule.nonZeroWindingRule
             }
         }
         public var bezierLineJoinStyle:LineJoinStyle {
@@ -191,59 +203,59 @@ extension BezierPathType {
             }
         }
 
-        public func addLineToPoint(point: NSPoint) {
-            lineToPoint(point)
+        public func addLineToPoint(_ point: NSPoint) {
+            line(to: point)
         }
 
-        public func addArcWithCenter(center: NSPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool) {
-            appendBezierPathWithArcWithCenter(center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
+        public func addArc(withCenter center: CGPoint, radius: CGFloat, startAngle: CGFloat, endAngle: CGFloat, clockwise: Bool) {
+            appendArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
         }
 
-        public static func scrubClockwiseValue(value: Bool) -> Bool {
-            return !value
+        public static var shouldNegateClockwiseValue: Bool {
+            return true
         }
     }
 
     extension NSBezierPath /* [QuartzUtilities](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CocoaDrawingGuide/Paths/Paths.html#//apple_ref/doc/uid/TP40003290-CH206-SW2) */ {
-        public var quartzPath: CGPathRef? {
+        public var quartzPath: CGPath? {
             let numElements = elementCount
             guard numElements > 0 else { return nil }
 
-            var pointArray = UnsafeMutablePointer<NSPoint>.alloc(3)
+            var pointArray = UnsafeMutablePointer<NSPoint>(allocatingCapacity: 3)
             let arrayPointer = UnsafeBufferPointer<NSPoint>(start: pointArray, count: 3)
-            defer { pointArray.dealloc(3) }
+            defer { pointArray.deallocateCapacity(3) }
 
             var didClosePath:Bool = true
-            let immutablePath: CGPathRef?
-            let mutablePath = CGPathCreateMutable()
+            let immutablePath: CGPath?
+            let mutablePath = CGMutablePath()
 
             for i in 0..<numElements {
-                switch elementAtIndex(i, associatedPoints:pointArray) {
-                case .MoveToBezierPathElement:
+                switch element(at: i, associatedPoints:pointArray) {
+                case .moveToBezierPathElement:
                     if !didClosePath {
-                        CGPathCloseSubpath(mutablePath)
+                        mutablePath.closeSubpath()
                         didClosePath = true
                     }
-                    CGPathMoveToPoint(mutablePath, nil, arrayPointer[0].x, arrayPointer[0].y)
-                case .LineToBezierPathElement:
-                    CGPathAddLineToPoint(mutablePath, nil, arrayPointer[0].x, arrayPointer[0].y)
+                    mutablePath.moveTo(nil, x: arrayPointer[0].x, y: arrayPointer[0].y)
+                case .lineToBezierPathElement:
+                    mutablePath.addLineTo(nil, x: arrayPointer[0].x, y: arrayPointer[0].y)
                     didClosePath = false
-                case .CurveToBezierPathElement:
-                                    CGPathAddCurveToPoint(mutablePath, nil, arrayPointer[0].x, arrayPointer[0].y,
-                                        arrayPointer[1].x, arrayPointer[1].y,
-                                        arrayPointer[2].x, arrayPointer[2].y)
+                case .curveToBezierPathElement:
+                                    mutablePath.addCurve(nil, cp1x: arrayPointer[0].x, cp1y: arrayPointer[0].y,
+                                        cp2x: arrayPointer[1].x, cp2y: arrayPointer[1].y,
+                                        endingAtX: arrayPointer[2].x, y: arrayPointer[2].y)
                                     didClosePath = false
-                case .ClosePathBezierPathElement:
-                    CGPathCloseSubpath(mutablePath)
+                case .closePathBezierPathElement:
+                    mutablePath.closeSubpath()
                     didClosePath = true
                 }
 
             }
             if !didClosePath {
-                CGPathCloseSubpath(mutablePath)
+                mutablePath.closeSubpath()
             }
 
-            immutablePath = CGPathCreateCopy(mutablePath)
+            immutablePath = mutablePath.copy()
             return immutablePath
         }
     }

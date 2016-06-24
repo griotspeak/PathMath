@@ -7,15 +7,15 @@
 //
 
 public enum OriginLocation {
-    case LowerLeft
-    case UpperLeft
+    case lowerLeft
+    case upperLeft
 
     #if os(OSX)
-    public static let defaultPlatformLocation:OriginLocation = .LowerLeft
+    public static let defaultPlatformLocation:OriginLocation = .lowerLeft
     #endif
 
     #if os(iOS)
-    public static let defaultPlatformLocation:OriginLocation = .UpperLeft
+    public static let defaultPlatformLocation:OriginLocation = .upperLeft
     #endif
 
 }

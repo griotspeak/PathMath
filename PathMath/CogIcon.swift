@@ -16,23 +16,23 @@
 import QuartzCore
 
 public final class Icon<BezierPath: BezierPathType> {
-    public typealias PathSetup = Void -> BezierPath
+    public typealias PathSetup = (Void) -> BezierPath
     public typealias FillRule = String
-    public static func createShapeLayer(pathSetup pathSetup:PathSetup) -> CAShapeLayer {
+    public static func createShapeLayer(_ pathSetup:PathSetup) -> CAShapeLayer {
         let theLayer = CAShapeLayer()
         let path = pathSetup()
         theLayer.path = path.quartzPath
         return theLayer
     }
 
-    public static func createView<ViewType : CALayerBackedType>(frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
+    public static func createView<ViewType : CALayerBackedType>(_ frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
         let iconFrame = CGRect(center: frame.center, size: iconSize)
         let size = frame.size
         var view = ViewType()
         view.frame = CGRect(origin: CGPoint.zero, size: size)
         guard let backingLayer = view.backingLayer() else { fatalError("unable to get or create backing layer for view \(view)") }
 
-        let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup: pathSetup)
+        let iconLayer = Icon<BezierPath>.createShapeLayer(pathSetup)
         iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
         iconLayer.position = iconFrame.center
         backingLayer.addSublayer(iconLayer)
@@ -57,7 +57,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
     }
 
     public var center:CGPoint {
-        return CGPointMake(radius, radius)
+        return CGPoint(x: radius, y: radius)
     }
 
     public func createPath()-> BezierPath {
@@ -66,36 +66,36 @@ public struct CogIcon<BezierPath: BezierPathType> {
         let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
 
         var path = BezierPath()
-        path.bezierLineJoinStyle = .Round
+        path.bezierLineJoinStyle = .round
         path.usesEvenOddFillRule = true
 
         let startingPoint = rotation.pointInCircle(center, radius: bodyRadius)
-        path.moveToPoint(startingPoint)
+        path.move(to: startingPoint)
 
         for i in 0..<toothCount {
             let iImageOrigin = ArcLength(degrees: CGFloat(i) * imageArcLength.inDegrees) + rotation
 
             // tooth
-            path.addLineToPoint(iImageOrigin.pointInCircle(center, radius: radius))
-            path.addArcWithCenter(center,
+            path.addLine(to: iImageOrigin.pointInCircle(center, radius: radius))
+            path.addArc(withCenter: center,
                 radius: radius,
                 startAngle: iImageOrigin.apiValue,
                 endAngle: (iImageOrigin + imageHalfArcLength).apiValue,
-                clockwise: BezierPath.scrubClockwiseValue(true))
+                clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
 
             let toothEnd = iImageOrigin + imageHalfArcLength
-            path.addLineToPoint(toothEnd.pointInCircle(center, radius: bodyRadius))
+            path.addLine(to: toothEnd.pointInCircle(center, radius: bodyRadius))
             // trough
-            path.addArcWithCenter(center,
+            path.addArc(withCenter: center,
                 radius: bodyRadius,
                 startAngle: (iImageOrigin + imageHalfArcLength).apiValue,
                 endAngle: (iImageOrigin + imageArcLength).apiValue,
-                clockwise: BezierPath.scrubClockwiseValue(true))
+                clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         }
 
-        path.moveToPoint(startingPoint)
+        path.move(to: startingPoint)
         path.closePath()
-        path.addCircleWithCenter(center, radius: holeRadius)
+        path.addCircle(withCenter: center, radius: holeRadius, clockwise: true)
         return path
     }
 
@@ -151,7 +151,7 @@ extension CALayer : CALayerBackedType {
 #endif
 
 extension CogIcon {
-    public func createView<ViewType : CALayerBackedType>(frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
+    public func createView<ViewType : CALayerBackedType>(_ frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
         let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
 
         let (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)

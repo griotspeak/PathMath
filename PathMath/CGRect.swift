@@ -11,16 +11,16 @@ import QuartzCore
 extension CGRect {
     public typealias EdgeDescription = (top: CGFloat, right: CGFloat, bottom: CGFloat, left: CGFloat)
 
-    func edgeDescription(originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) -> EdgeDescription {
+    func edgeDescription(_ originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) -> EdgeDescription {
         let value: EdgeDescription
         value.left = minX
         value.right = maxX
 
         switch originLocation {
-        case .LowerLeft:
+        case .lowerLeft:
             value.bottom = minY
             value.top = maxY
-        case .UpperLeft:
+        case .upperLeft:
             value.bottom = maxY
             value.top = minY
         }
@@ -29,7 +29,7 @@ extension CGRect {
     }
 
     public typealias CornerDescription = (topLeft: CGPoint, topRight: CGPoint, bottomLeft: CGPoint,bottomRight: CGPoint)
-    func corners(originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) -> CornerDescription {
+    func corners(_ originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) -> CornerDescription {
         let edges = edgeDescription(originLocation)
 
         return (
@@ -78,7 +78,7 @@ public struct CGRect2DGrid {
     public var rowHeight: CGFloat { return  size.height / _rows }
 
     public init(size: CGSize, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultInset:Inset? = nil) throws {
-        guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw Error.InvalidArgument("all parameters must be greater than 0") }
+        guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw Error.invalidArgument("all parameters must be greater than 0") }
 
         self.size = size
         self.columns = columns
@@ -87,22 +87,22 @@ public struct CGRect2DGrid {
         self.defaultInset = defaultInset
     }
 
-    public enum Error : ErrorType {
-        case InvalidArgument(String)
+    public enum Error : ErrorProtocol {
+        case invalidArgument(String)
     }
 
     public subscript(inColumn: Int, inRow: Int) -> CGRect? {
         return try? rect(inColumn, inRow: inRow)
     }
 
-    public func rect(inColumn: Int, inRow: Int, dXdY:Inset? = nil) throws -> CGRect {
-        guard inColumn < columns && inRow < rows else { throw Error.InvalidArgument("(\(inColumn), \(inRow)) is out of bounds (\(columns), \(rows))") }
+    public func rect(_ inColumn: Int, inRow: Int, dXdY:Inset? = nil) throws -> CGRect {
+        guard inColumn < columns && inRow < rows else { throw Error.invalidArgument("(\(inColumn), \(inRow)) is out of bounds (\(columns), \(rows))") }
 
         let point: CGPoint
         switch originLocation {
-        case .UpperLeft:
+        case .upperLeft:
             point = CGPoint(x: inColumn, y: inRow)
-        case .LowerLeft:
+        case .lowerLeft:
             point = CGPoint(x: inColumn, y: rows - inRow - 1)
         }
 
