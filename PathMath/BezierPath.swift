@@ -222,8 +222,8 @@ extension BezierPathType {
             guard numElements > 0 else { return nil }
 
             var pointArray = UnsafeMutablePointer<NSPoint>.allocate(capacity: 3)
-            let arrayPointer = UnsafeBufferPointer<NSPoint>(start: pointArray, count: 3)
             defer { pointArray.deallocate(capacity: 3) }
+            let arrayPointer = UnsafeBufferPointer<NSPoint>(start: pointArray, count: 3)
 
             var didClosePath:Bool = true
             let immutablePath: CGPath?
