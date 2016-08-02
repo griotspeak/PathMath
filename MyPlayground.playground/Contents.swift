@@ -24,8 +24,8 @@ enum Foo {
 }
 
 var (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
-theLayer.strokeColor = PlatformColor.white().cgColor
-theLayer.fillColor = PlatformColor.lightGray().cgColor
+theLayer.strokeColor = PlatformColor.white.cgColor
+theLayer.fillColor = PlatformColor.lightGray.cgColor
 //theView.backgroundColor = NSColor.blackColor()
 
 theView

@@ -78,7 +78,7 @@ public struct CGRect2DGrid {
     public var rowHeight: CGFloat { return  size.height / _rows }
 
     public init(size: CGSize, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultInset:Inset? = nil) throws {
-        guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw Error.invalidArgument("all parameters must be greater than 0") }
+        guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw PathMathError.invalidArgument("all parameters must be greater than 0") }
 
         self.size = size
         self.columns = columns
@@ -87,7 +87,7 @@ public struct CGRect2DGrid {
         self.defaultInset = defaultInset
     }
 
-    public enum Error : ErrorProtocol {
+    public enum PathMathError : Error {
         case invalidArgument(String)
     }
 
@@ -96,7 +96,7 @@ public struct CGRect2DGrid {
     }
 
     public func rect(_ inColumn: Int, inRow: Int, dXdY:Inset? = nil) throws -> CGRect {
-        guard inColumn < columns && inRow < rows else { throw Error.invalidArgument("(\(inColumn), \(inRow)) is out of bounds (\(columns), \(rows))") }
+        guard inColumn < columns && inRow < rows else { throw PathMathError.invalidArgument("(\(inColumn), \(inRow)) is out of bounds (\(columns), \(rows))") }
 
         let point: CGPoint
         switch originLocation {

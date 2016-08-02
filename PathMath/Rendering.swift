@@ -140,7 +140,7 @@ public protocol _CALayerBackedType {
 
             guard let context = UIGraphicsGetCurrentContext() else { return nil }
 
-            context.setFillColor(UIColor.clear().cgColor)
+            context.setFillColor(UIColor.clear.cgColor)
             context.fill(rect)
 
             drawingHandler(context, size)
