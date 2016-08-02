@@ -75,9 +75,8 @@ public protocol _CALayerBackedType {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
             guard let convertedBounds = NSScreen.main()?.convertRectToBacking(NSRect(origin: CGPoint.zero, size: size)).integral,
                 let intermediateImageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(convertedBounds.width), pixelsHigh: Int(convertedBounds.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat: .alphaFirst, bytesPerRow: 0, bitsPerPixel: 0),
-                let imageRep = intermediateImageRep.retagging(with: .sRGB())
+                let imageRep = intermediateImageRep.retagging(with: .sRGB)
                 else { return nil }
-
             imageRep.size = size
             guard let bitmapContext = NSGraphicsContext(bitmapImageRep: imageRep) else { return nil }
             NSGraphicsContext.saveGraphicsState()
