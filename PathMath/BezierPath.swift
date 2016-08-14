@@ -77,7 +77,7 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
 
     init()
 
-    var usesEvenOddFillRule:Bool { get set }
+    var usesEvenOddFillRule: Bool { get set }
     var bezierLineJoinStyle:LineJoinStyle { get set }
 
     // Path construction

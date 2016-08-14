@@ -1,4 +1,4 @@
-#if os(OSX)
+#if os(macOS)
     import AppKit
 #endif
 #if os(iOS)
@@ -7,14 +7,16 @@
 import XCPlayground
 import PathMath
 
-#if os(OSX)
+#if os(macOS)
 let theCog = CogIcon<NSBezierPath>()
-typealias PlatformColor = NSColor
+    typealias PlatformColor = NSColor
+    typealias PlatformImage = NSImage
 #endif
 
 #if os(iOS)
 let theCog = CogIcon<UIBezierPath>()
-typealias PlatformColor = UIColor
+    typealias PlatformColor = UIColor
+    typealias PlatformImage = UIImage
 #endif
 
 
@@ -60,7 +62,7 @@ var newFrame = theView.frame
 newFrame.origin = CGPoint(x: 100, y: 100)
 theView.frame = newFrame
 
-let result: UIImage? = theView.renderLayerContents()
+let result: PlatformImage? = theView.renderLayerContents()
 
 result
 

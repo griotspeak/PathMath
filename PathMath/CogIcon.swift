@@ -36,6 +36,8 @@ public final class Icon<BezierPath: BezierPathType> {
         iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
         iconLayer.position = iconFrame.center
         backingLayer.addSublayer(iconLayer)
+        iconLayer.usesEvenOddFillRule = true
+        
         return (view, iconLayer)
     }
 }
@@ -95,7 +97,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
 
         path.move(to: startingPoint)
         path.closePath()
-        path.addCircle(withCenter: center, radius: holeRadius, clockwise: true)
+        path.addCircle(withCenter: center, radius: holeRadius, clockwise: false)
         return path
     }
 
@@ -124,9 +126,37 @@ public protocol CALayerBackedType : _CALayerBackedType {
     var frame: CGRect { get set }
 }
 
+public protocol CAShapeLayerBackedType : _CALayerBackedType {
+    var usesEvenOddFillRule: Bool { mutating get set }
+    func backingLayer() -> CAShapeLayer?
+}
+
+extension CAShapeLayerBackedType {
+    public var usesEvenOddFillRule: Bool {
+        mutating get {
+            return self.backingLayer()!.fillRule == kCAFillRuleEvenOdd
+        }
+        set(value) {
+            self.backingLayer()!.fillRule = value ? kCAFillRuleEvenOdd : kCAFillRuleNonZero
+        }
+    }
+}
+
+
 extension CALayer : CALayerBackedType {
-    public func backingLayer() -> CALayer? {
+    public func backingLayer() -> Self? {
         return self
+    }
+}
+
+extension CAShapeLayer : CAShapeLayerBackedType {
+    public var usesEvenOddFillRule: Bool {
+        get {
+            return self.fillRule == kCAFillRuleEvenOdd
+        }
+        set(value) {
+            self.fillRule = value ? kCAFillRuleEvenOdd : kCAFillRuleNonZero
+        }
     }
 }
 
@@ -155,8 +185,7 @@ extension CogIcon {
         let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
 
         let (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)
-        iconLayer.fillRule = kCAFillRuleEvenOdd
-        
+
         return (view, iconLayer)
     }
 }
