@@ -24,6 +24,8 @@
 		324D6B281B135DCA007C1B9C /* ArcLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B271B135DCA007C1B9C /* ArcLength.swift */; };
 		324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B291B135DD2007C1B9C /* BezierPath.swift */; };
 		324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B511B13635B007C1B9C /* CogIcon.swift */; };
+		3274CCEA1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */; };
+		3274CCEB1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */; };
 		329E57451B155805002B2114 /* CGMutablePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329E57441B155805002B2114 /* CGMutablePath.swift */; };
 		32D37AEA1C2E6EF70074BB91 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* Rendering.swift */; };
 		32D37AEB1C2E6EF70074BB91 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* Rendering.swift */; };
@@ -60,6 +62,7 @@
 		324D6B271B135DCA007C1B9C /* ArcLength.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcLength.swift; sourceTree = "<group>"; };
 		324D6B291B135DD2007C1B9C /* BezierPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPath.swift; sourceTree = "<group>"; };
 		324D6B511B13635B007C1B9C /* CogIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CogIcon.swift; sourceTree = "<group>"; };
+		3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect2DGrid.swift; sourceTree = "<group>"; };
 		329E57441B155805002B2114 /* CGMutablePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMutablePath.swift; sourceTree = "<group>"; };
 		32D37AE91C2E6EF70074BB91 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,6 +130,7 @@
 				324D6B511B13635B007C1B9C /* CogIcon.swift */,
 				329E57441B155805002B2114 /* CGMutablePath.swift */,
 				3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */,
+				3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */,
 				32059C741C28D28300B9E05B /* OriginLocation.swift */,
 				32D37AE91C2E6EF70074BB91 /* Rendering.swift */,
 				324D6B0E1B135CF8007C1B9C /* Supporting Files */,
@@ -339,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32059C761C28D28300B9E05B /* OriginLocation.swift in Sources */,
+				3274CCEB1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */,
 				3212D6F31BE098B400D175D7 /* ArcLength.swift in Sources */,
 				3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */,
 				3221F4FC1C1C3F350057CCF7 /* CGRect.swift in Sources */,
@@ -361,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32059C751C28D28300B9E05B /* OriginLocation.swift in Sources */,
+				3274CCEA1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */,
 				324D6B281B135DCA007C1B9C /* ArcLength.swift in Sources */,
 				324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */,
 				3221F4FB1C1C3F2F0057CCF7 /* CGRect.swift in Sources */,
@@ -407,7 +413,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.PathMath-iOS";
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = PathMath;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -428,7 +434,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.PathMath-iOS";
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = PathMath;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -567,7 +573,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = PathMath;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -588,7 +594,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buttonsAndLights.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = PathMath;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
