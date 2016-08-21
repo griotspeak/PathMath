@@ -133,7 +133,7 @@ extension BezierPathType {
         closePath()
 
     }
-    
+
     mutating public func add(_ rect: CGRect, cornerRadius: CGFloat, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
         let innerRect = rect.insetBy(dx: cornerRadius, dy: cornerRadius)
         let inner = innerRect.edgeDescription(originLocation)
@@ -236,15 +236,13 @@ extension BezierPathType {
                         mutablePath.closeSubpath()
                         didClosePath = true
                     }
-                    mutablePath.moveTo(nil, x: arrayPointer[0].x, y: arrayPointer[0].y)
+                    mutablePath.move(to: arrayPointer[0])
                 case .lineToBezierPathElement:
-                    mutablePath.addLineTo(nil, x: arrayPointer[0].x, y: arrayPointer[0].y)
+                    mutablePath.addLine(to: arrayPointer[0])
                     didClosePath = false
                 case .curveToBezierPathElement:
-                                    mutablePath.addCurve(nil, cp1x: arrayPointer[0].x, cp1y: arrayPointer[0].y,
-                                        cp2x: arrayPointer[1].x, cp2y: arrayPointer[1].y,
-                                        endingAtX: arrayPointer[2].x, y: arrayPointer[2].y)
-                                    didClosePath = false
+                    mutablePath.addCurve(to: arrayPointer[2], control1: arrayPointer[0], control2: arrayPointer[1])
+                    didClosePath = false
                 case .closePathBezierPathElement:
                     mutablePath.closeSubpath()
                     didClosePath = true
@@ -254,11 +252,11 @@ extension BezierPathType {
             if !didClosePath {
                 mutablePath.closeSubpath()
             }
-
+            
             immutablePath = mutablePath.copy()
             return immutablePath
         }
     }
-
-
+    
+    
 #endif

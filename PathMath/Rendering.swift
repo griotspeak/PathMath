@@ -94,7 +94,7 @@ public protocol _CALayerBackedType {
     }
 
     extension NSImage {
-        @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
+        @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: @escaping (CGContext, CGSize) -> Bool) -> Self? {
             return self.init(size: size, flipped: false) { (frame) in
                 guard let context = NSGraphicsContext.current() else { return false }
                 let quartzContext = context.cgContext
