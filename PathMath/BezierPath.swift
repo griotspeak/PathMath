@@ -77,7 +77,7 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
 
     init()
 
-    var usesEvenOddFillRule: Bool { get set }
+    var usesEvenOddWindingRule: Bool { get set }
     var bezierLineJoinStyle:LineJoinStyle { get set }
 
     // Path construction
@@ -187,7 +187,7 @@ extension BezierPathType {
             addLineToPoint(point)
         }
 
-        public var usesEvenOddFillRule:Bool {
+        public var usesEvenOddWindingRule:Bool {
             get {
                 return windingRule == NSWindingRule.evenOddWindingRule
             }

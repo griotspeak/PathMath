@@ -28,6 +28,7 @@ enum Foo {
 var (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
 theLayer.strokeColor = PlatformColor.white.cgColor
 theLayer.fillColor = PlatformColor.lightGray.cgColor
+theLayer.usesEvenOddFillRule = true
 //theView.backgroundColor = NSColor.blackColor()
 
 theView
@@ -65,4 +66,3 @@ theView.frame = newFrame
 let result: PlatformImage? = theView.renderLayerContents()
 
 result
-

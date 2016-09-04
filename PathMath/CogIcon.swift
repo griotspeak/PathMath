@@ -17,7 +17,6 @@ import QuartzCore
 
 public final class Icon<BezierPath: BezierPathType> {
     public typealias PathSetup = (Void) -> BezierPath
-    public typealias FillRule = String
     public static func createShapeLayer(_ pathSetup:PathSetup) -> CAShapeLayer {
         let theLayer = CAShapeLayer()
         let path = pathSetup()
@@ -36,7 +35,6 @@ public final class Icon<BezierPath: BezierPathType> {
         iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
         iconLayer.position = iconFrame.center
         backingLayer.addSublayer(iconLayer)
-        iconLayer.usesEvenOddFillRule = true
         
         return (view, iconLayer)
     }
@@ -69,7 +67,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
 
         var path = BezierPath()
         path.bezierLineJoinStyle = .round
-        path.usesEvenOddFillRule = true
+        path.usesEvenOddWindingRule = true
 
         let startingPoint = rotation.pointInCircle(center, radius: bodyRadius)
         path.move(to: startingPoint)
@@ -95,9 +93,9 @@ public struct CogIcon<BezierPath: BezierPathType> {
                 clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         }
 
-        path.move(to: startingPoint)
         path.closePath()
-        path.addCircle(withCenter: center, radius: holeRadius, clockwise: false)
+        path.move(to: startingPoint)
+        path.addCircle(withCenter: center, radius: holeRadius, clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         return path
     }
 
