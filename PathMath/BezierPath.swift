@@ -163,6 +163,15 @@ extension BezierPathType {
 
 #if os(iOS)
     extension UIBezierPath : BezierPathType {
+        public var usesEvenOddWindingRule: Bool {
+            get {
+                return self.usesEvenOddFillRule
+            }
+            set {
+                self.usesEvenOddFillRule = newValue
+            }
+        }
+
         public var quartzPath: CGPath? {
             return self.cgPath
         }
