@@ -16,22 +16,24 @@ public struct CGRect2DGrid {
     public let size: CGSize
     public let columns: Int
     public let rows: Int
+    public let origin: CGPoint
     public let originLocation: OriginLocation
-    public let defaultInset:Inset?
+    public let defaultCellInset:Inset?
     private var _columnsAsCGFloat: CGFloat { return CGFloat(columns) }
     private var _rowsAsCGFloat: CGFloat { return CGFloat(rows) }
 
     public var columnWidth: CGFloat { return  size.width / _columnsAsCGFloat }
     public var rowHeight: CGFloat { return  size.height / _rowsAsCGFloat }
 
-    public init(size: CGSize, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultInset:Inset? = nil) throws {
+    public init(size: CGSize, columns: Int, rows: Int, origin: CGPoint = CGPoint.zero, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultCellInset:Inset? = nil) throws {
         guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw PathMathError.invalidArgument("all parameters must be greater than 0") }
 
         self.size = size
         self.columns = columns
         self.rows = rows
+        self.origin = origin
         self.originLocation = originLocation
-        self.defaultInset = defaultInset
+        self.defaultCellInset = defaultCellInset
     }
 
     public enum PathMathError : Error {
@@ -60,9 +62,9 @@ public struct CGRect2DGrid {
         let minY: CGFloat = point.y * rHeight
         let size: CGSize = CGSize(width: cWidth, height: rHeight)
 
-        let rect = CGRect(origin: CGPoint(x: minX, y: minY), size: size)
+        let rect = CGRect(origin: CGPoint(x: minX + origin.x, y: minY + origin.y), size: size)
 
-        if let (dx, dy) = inset ?? defaultInset {
+        if let (dx, dy) = inset ?? defaultCellInset {
             return rect.insetBy(dx: dx, dy: dy)
         } else {
             return rect
