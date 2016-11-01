@@ -11,7 +11,20 @@ import CoreGraphics
 
 public struct CGRect2DGrid {
 
-    public typealias Inset = (dX: CGFloat, dY: CGFloat)
+    public enum Inset {
+        /// 0.0 - 1.0
+        case proportional(dX: CGFloat, dY: CGFloat)
+        case fixed(dX: CGFloat, dY: CGFloat)
+
+        internal func convertToFixed(columnWidth: CGFloat, rowHeight: CGFloat) -> Inset {
+            switch self {
+            case let .proportional(dX: dx, dY: dy):
+                return .fixed(dX: columnWidth * dx , dY: rowHeight * dy)
+            case .fixed:
+                return self
+            }
+        }
+    }
 
     public let size: CGSize
     public let columns: Int
@@ -19,11 +32,17 @@ public struct CGRect2DGrid {
     public let origin: CGPoint
     public let originLocation: OriginLocation
     public let defaultCellInset:Inset?
-    private var _columnsAsCGFloat: CGFloat { return CGFloat(columns) }
-    private var _rowsAsCGFloat: CGFloat { return CGFloat(rows) }
 
-    public var columnWidth: CGFloat { return  size.width / _columnsAsCGFloat }
-    public var rowHeight: CGFloat { return  size.height / _rowsAsCGFloat }
+    static func columnWidth(columnCount: Int, gridWidth: CGFloat) -> CGFloat {
+        return gridWidth / CGFloat(columnCount)
+    }
+
+    static func rowHeight(rowCount: Int, gridHeight: CGFloat) -> CGFloat {
+        return gridHeight / CGFloat(rowCount)
+    }
+
+    public var columnWidth: CGFloat { return  CGRect2DGrid.columnWidth(columnCount: columns, gridWidth: size.width) }
+    public var rowHeight: CGFloat { return  CGRect2DGrid.rowHeight(rowCount: columns, gridHeight: size.height) }
 
     public init(size: CGSize, columns: Int, rows: Int, origin: CGPoint = CGPoint.zero, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultCellInset:Inset? = nil) throws {
         guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw PathMathError.invalidArgument("all parameters must be greater than 0") }
@@ -33,7 +52,7 @@ public struct CGRect2DGrid {
         self.rows = rows
         self.origin = origin
         self.originLocation = originLocation
-        self.defaultCellInset = defaultCellInset
+        self.defaultCellInset = defaultCellInset?.convertToFixed(columnWidth: CGRect2DGrid.columnWidth(columnCount: columns, gridWidth: size.width), rowHeight: CGRect2DGrid.rowHeight(rowCount: rows, gridHeight: size.height))
     }
 
     public enum PathMathError : Error {
@@ -64,7 +83,7 @@ public struct CGRect2DGrid {
 
         let rect = CGRect(origin: CGPoint(x: minX + origin.x, y: minY + origin.y), size: size)
 
-        if let (dx, dy) = inset ?? defaultCellInset {
+        if case let .fixed(dx, dy)? = inset ?? defaultCellInset {
             return rect.insetBy(dx: dx, dy: dy)
         } else {
             return rect
