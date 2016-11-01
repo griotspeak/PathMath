@@ -26,10 +26,9 @@ public struct CGRect2DGrid {
         }
     }
 
-    public let size: CGSize
+    public let frame: CGRect
     public let columns: Int
     public let rows: Int
-    public let origin: CGPoint
     public let originLocation: OriginLocation
     public let defaultCellInset:Inset?
 
@@ -43,16 +42,26 @@ public struct CGRect2DGrid {
 
     public var columnWidth: CGFloat { return  CGRect2DGrid.columnWidth(columnCount: columns, gridWidth: size.width) }
     public var rowHeight: CGFloat { return  CGRect2DGrid.rowHeight(rowCount: columns, gridHeight: size.height) }
+    public var origin: CGPoint {
+        return frame.origin
+    }
+    public var size: CGSize {
+        return frame.size
+    }
 
-    public init(size: CGSize, columns: Int, rows: Int, origin: CGPoint = CGPoint.zero, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultCellInset:Inset? = nil) throws {
-        guard size.width > 0 && size.height > 0 && columns > 0 && rows > 0 else { throw PathMathError.invalidArgument("all parameters must be greater than 0") }
+    public init(frame: CGRect, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultCellInset:Inset? = nil) throws {
+        guard frame.size.width > 0 && frame.size.height > 0 && columns > 0 && rows > 0 else { throw PathMathError.invalidArgument("all parameters must be greater than 0") }
 
-        self.size = size
+        self.frame = frame
         self.columns = columns
         self.rows = rows
-        self.origin = origin
         self.originLocation = originLocation
-        self.defaultCellInset = defaultCellInset?.convertToFixed(columnWidth: CGRect2DGrid.columnWidth(columnCount: columns, gridWidth: size.width), rowHeight: CGRect2DGrid.rowHeight(rowCount: rows, gridHeight: size.height))
+        self.defaultCellInset = defaultCellInset?.convertToFixed(columnWidth: CGRect2DGrid.columnWidth(columnCount: columns, gridWidth: frame.size.width), rowHeight: CGRect2DGrid.rowHeight(rowCount: rows, gridHeight: frame.size.height))
+    }
+
+    public init(origin: CGPoint = CGPoint.zero, size: CGSize, columns: Int, rows: Int, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation, defaultCellInset:Inset? = nil) throws {
+
+        try self.init(frame: CGRect(origin: origin, size: size), columns: columns, rows: rows, originLocation: originLocation, defaultCellInset: defaultCellInset)
     }
 
     public enum PathMathError : Error {
