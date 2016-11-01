@@ -14,7 +14,7 @@
     import UIKit
 #endif
 import XCTest
-@testable import PathMath
+import PathMath
 
 class CGRect2DGridTests: XCTestCase {
     func testIndices() {

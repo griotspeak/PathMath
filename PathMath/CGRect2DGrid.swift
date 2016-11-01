@@ -75,7 +75,7 @@ extension CGRect2DGrid {
         public let column: Int
         public let row: Int
 
-        internal init(column: Int, row: Int) {
+        public init(column: Int, row: Int) {
             self.column = column
             self.row = row
         }
