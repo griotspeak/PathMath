@@ -104,7 +104,7 @@ public func < (lhs: CGRect2DGrid.CoordinatePair, rhs: CGRect2DGrid.CoordinatePai
     }
 }
 
-extension CGRect2DGrid : Collection {
+extension CGRect2DGrid : Collection, BidirectionalCollection {
     public typealias Index = CoordinatePair
     public var startIndex: CoordinatePair {
         return CoordinatePair(column: 0, row: 0)
@@ -128,6 +128,21 @@ extension CGRect2DGrid : Collection {
 
         if newRow <= rows {
             return CoordinatePair(column: 0, row: newRow)
+        } else {
+            fatalError("invalid index \(i)")
+        }
+    }
+
+    public func index(before i: CGRect2DGrid.CoordinatePair) -> CGRect2DGrid.CoordinatePair {
+        let newColumn = i.column - 1
+        if newColumn >= 0 {
+            return CoordinatePair(column: newColumn, row: i.row)
+        }
+
+        let newRow = i.row - 1
+
+        if newRow >= 0 {
+            return CoordinatePair(column: columns - 1, row: newRow)
         } else {
             fatalError("invalid index \(i)")
         }

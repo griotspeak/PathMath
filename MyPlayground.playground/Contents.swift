@@ -65,4 +65,8 @@ theView.frame = newFrame
 
 let result: PlatformImage? = theView.renderLayerContents()
 
-result
+var idx = grid.endIndex
+while idx > grid.startIndex {
+    idx = grid.index(before: idx)
+    print(idx)
+}
