@@ -71,12 +71,21 @@ public struct CGRect2DGrid {
 }
 
 extension CGRect2DGrid {
-    public struct CoordinatePair : Comparable, Hashable {
-        let column: Int
-        let row: Int
+    public struct CoordinatePair : Comparable, Hashable, CustomStringConvertible {
+        public let column: Int
+        public let row: Int
+
+        internal init(column: Int, row: Int) {
+            self.column = column
+            self.row = row
+        }
 
         public var hashValue: Int {
             return column.hashValue &+ row.hashValue
+        }
+
+        public var description: String {
+            return "(\(column), \(row))"
         }
     }
 }
@@ -91,7 +100,7 @@ public func < (lhs: CGRect2DGrid.CoordinatePair, rhs: CGRect2DGrid.CoordinatePai
     } else if lhs.row > rhs.row {
         return false
     } else {
-        return lhs.column < lhs.column
+        return lhs.column < rhs.column
     }
 }
 
@@ -102,7 +111,7 @@ extension CGRect2DGrid : Collection {
     }
 
     public var endIndex: CoordinatePair {
-        return CoordinatePair(column: columns - 1, row: rows - 1)
+        return CoordinatePair(column: 0, row: rows)
     }
 
     public subscript (_ index: CoordinatePair) -> CGRect {
@@ -117,10 +126,10 @@ extension CGRect2DGrid : Collection {
 
         let newRow = i.row + 1
 
-        if newRow < rows {
+        if newRow <= rows {
             return CoordinatePair(column: 0, row: newRow)
         } else {
-            fatalError()
+            fatalError("invalid index \(i)")
         }
     }
 }
