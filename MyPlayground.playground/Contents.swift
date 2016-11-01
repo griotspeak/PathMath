@@ -65,8 +65,8 @@ theView.frame = newFrame
 
 let result: PlatformImage? = theView.renderLayerContents()
 
-var idx = grid.endIndex
-while idx > grid.startIndex {
-    idx = grid.index(before: idx)
-    print(idx)
+let grid_ = try! CGRect2DGrid(frame: CGRect(x: 0, y: 0, width: 20, height: 20), columns: 2, rows: 2)
+var idx = grid_.endIndex
+for cell in grid_ {
+    print(cell)
 }

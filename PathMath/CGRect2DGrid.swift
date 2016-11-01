@@ -41,7 +41,7 @@ public struct CGRect2DGrid {
     }
 
     public var columnWidth: CGFloat { return  CGRect2DGrid.columnWidth(columnCount: columns, gridWidth: size.width) }
-    public var rowHeight: CGFloat { return  CGRect2DGrid.rowHeight(rowCount: columns, gridHeight: size.height) }
+    public var rowHeight: CGFloat { return  CGRect2DGrid.rowHeight(rowCount: rows, gridHeight: size.height) }
     public var origin: CGPoint {
         return frame.origin
     }
