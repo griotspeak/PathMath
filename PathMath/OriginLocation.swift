@@ -11,11 +11,11 @@ public enum OriginLocation {
     case upperLeft
 
     #if os(OSX)
-    public static let defaultPlatformLocation:OriginLocation = .lowerLeft
+    public static let defaultPlatformLocation: OriginLocation = .lowerLeft
     #endif
 
     #if os(iOS)
-    public static let defaultPlatformLocation:OriginLocation = .upperLeft
+    public static let defaultPlatformLocation: OriginLocation = .upperLeft
     #endif
 
 }

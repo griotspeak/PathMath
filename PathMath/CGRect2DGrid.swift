@@ -13,13 +13,13 @@ public struct CGRect2DGrid {
 
     public enum Inset {
         /// 0.0 - 1.0
-        case proportional(dX: CGFloat, dY: CGFloat)
+        case proportional(xScale: CGFloat, yScale: CGFloat)
         case fixed(dX: CGFloat, dY: CGFloat)
 
         internal func convertToFixed(columnWidth: CGFloat, rowHeight: CGFloat) -> Inset {
             switch self {
-            case let .proportional(dX: dx, dY: dy):
-                return .fixed(dX: columnWidth * dx , dY: rowHeight * dy)
+            case let .proportional(xScale: xScale, yScale: yScale):
+                return .fixed(dX: columnWidth * xScale , dY: rowHeight * yScale)
             case .fixed:
                 return self
             }
@@ -33,11 +33,11 @@ public struct CGRect2DGrid {
     public let originLocation: OriginLocation
     public let defaultCellInset:Inset?
 
-    static func columnWidth(columnCount: Int, gridWidth: CGFloat) -> CGFloat {
+    public static func columnWidth(columnCount: Int, gridWidth: CGFloat) -> CGFloat {
         return gridWidth / CGFloat(columnCount)
     }
 
-    static func rowHeight(rowCount: Int, gridHeight: CGFloat) -> CGFloat {
+    public static func rowHeight(rowCount: Int, gridHeight: CGFloat) -> CGFloat {
         return gridHeight / CGFloat(rowCount)
     }
 
