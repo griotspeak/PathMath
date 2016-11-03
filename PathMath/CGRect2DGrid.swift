@@ -17,11 +17,16 @@ public struct CGRect2DGrid {
         case fixed(dX: CGFloat, dY: CGFloat)
 
         internal func convertToFixed(columnWidth: CGFloat, rowHeight: CGFloat) -> Inset {
+            let tuple: (dX: CGFloat, dY: CGFloat) = convertToFixed(columnWidth: columnWidth, rowHeight: rowHeight)
+            return .fixed(dX: tuple.dX, dY: tuple.dY)
+        }
+
+        internal func convertToFixed(columnWidth: CGFloat, rowHeight: CGFloat) -> (dX: CGFloat, dY: CGFloat) {
             switch self {
             case let .proportional(xScale: xScale, yScale: yScale):
-                return .fixed(dX: columnWidth * xScale , dY: rowHeight * yScale)
-            case .fixed:
-                return self
+                return (dX: columnWidth * xScale , dY: rowHeight * yScale)
+            case let .fixed(tuple):
+                return tuple
             }
         }
     }
@@ -69,11 +74,12 @@ public struct CGRect2DGrid {
     }
 
     public subscript(column: Int, row: Int) -> CGRect? {
-        return try? rect(column, row: row)
+        return try? rect(column: column, row: row)
     }
 
-    public func rect(_ column: Int, row: Int, inset: Inset? = nil) throws -> CGRect {
-        guard column < columns && row < rows else { throw PathMathError.invalidArgument("(\(column), \(row)) is out of bounds (\(columns), \(rows))") }
+    public func rect(column: Int, row: Int, inset: Inset? = nil, bounded: Bool = true) throws -> CGRect {
+
+        guard (bounded == false) || (column < columns && row < rows) else { throw PathMathError.invalidArgument("(\(column), \(row)) is out of bounds (\(columns), \(rows))") }
 
         let point: CGPoint
         switch originLocation {
@@ -92,7 +98,7 @@ public struct CGRect2DGrid {
 
         let rect = CGRect(origin: CGPoint(x: minX + origin.x, y: minY + origin.y), size: size)
 
-        if case let .fixed(dx, dy)? = inset ?? defaultCellInset {
+        if case let .fixed(dx, dy)? = inset?.convertToFixed(columnWidth: columnWidth, rowHeight: rowHeight) ?? defaultCellInset {
             return rect.insetBy(dx: dx, dy: dy)
         } else {
             return rect

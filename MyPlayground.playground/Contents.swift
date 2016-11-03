@@ -65,7 +65,9 @@ theView.frame = newFrame
 
 let result: PlatformImage? = theView.renderLayerContents()
 
-let grid_ = try! CGRect2DGrid(frame: CGRect(x: 0, y: 0, width: 20, height: 20), columns: 2, rows: 2)
+let grid_ = try! CGRect2DGrid(frame: CGRect(x: 0, y: 0, width: 20, height: 20), columns: 2, rows: 2, defaultCellInset: .proportional(xScale: 0.0, yScale: 0.0))
+try? grid_.rect(column: -1, row: 1, inset: .proportional(xScale: 0.25, yScale: 0.25), bounded: false)
+
 var idx = grid_.endIndex
 for cell in grid_ {
     print(cell)
