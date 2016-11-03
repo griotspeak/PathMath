@@ -77,6 +77,10 @@ public struct CGRect2DGrid {
         return try? rect(column: column, row: row)
     }
 
+    public func rect(_ index: CoordinatePair, inset: Inset? = nil, bounded: Bool = true) throws -> CGRect {
+        return try rect(column: index.column, row: index.row, inset: inset, bounded: bounded)
+    }
+
     public func rect(column: Int, row: Int, inset: Inset? = nil, bounded: Bool = true) throws -> CGRect {
 
         guard (bounded == false) || (column < columns && row < rows) else { throw PathMathError.invalidArgument("(\(column), \(row)) is out of bounds (\(columns), \(rows))") }
