@@ -53,11 +53,11 @@ public enum ArcLength {
     }
 
     private func degreesToRadians(_ degrees:CGFloat) -> CGFloat {
-        return degrees * (CGFloat(M_PI) / 180.0)
+        return degrees * (.pi / 180.0)
     }
 
     private func radiansToDegrees(_ radians:CGFloat) -> CGFloat {
-        return radians * (180.0 / CGFloat(M_PI))
+        return radians * (180.0 / .pi)
     }
 
     #if os(OSX)
