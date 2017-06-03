@@ -1,5 +1,5 @@
 //
-//  ArcLength.swift
+//  Angle.swift
 //  PathMath
 //
 //  Created by TJ Usiyan on 5/25/15.
@@ -13,11 +13,13 @@
     import UIKit
 #endif
 
-public enum ArcLength {
-    case degrees(CGFloat)
-    case radians(CGFloat)
+public enum Angle {
+    /* TODO: Convert to type parameter 2017-06-02 */
+    public typealias Value = CGFloat
+    case degrees(Value)
+    case radians(Value)
 
-    public var inDegrees:CGFloat {
+    public var inDegrees:Value {
         switch self {
         case let .degrees(value):
             return value
@@ -26,7 +28,7 @@ public enum ArcLength {
         }
     }
 
-    public var inRadians:CGFloat {
+    public var inRadians:Value {
         switch self {
         case let .degrees(value):
             return degreesToRadians(value)
@@ -35,65 +37,65 @@ public enum ArcLength {
         }
     }
 
-    public init(degrees value:CGFloat) {
+    public init(degrees value:Value) {
         self = .degrees(value)
     }
 
-    public init(radians value:CGFloat) {
+    public init(radians value:Value) {
         self = .radians(value)
     }
 
-    private func divide(_ divisor: CGFloat) -> ArcLength {
+    private func divide(_ divisor: Value) -> Angle {
         switch self {
         case let .degrees(value):
-            return ArcLength(degrees: value / divisor)
+            return Angle(degrees: value / divisor)
         case let .radians(value):
-            return ArcLength(radians: value / divisor)
+            return Angle(radians: value / divisor)
         }
     }
 
-    private func degreesToRadians(_ degrees:CGFloat) -> CGFloat {
+    private func degreesToRadians(_ degrees:Value) -> Value {
         return degrees * (.pi / 180.0)
     }
 
-    private func radiansToDegrees(_ radians:CGFloat) -> CGFloat {
+    private func radiansToDegrees(_ radians:Value) -> Value {
         return radians * (180.0 / .pi)
     }
 
     #if os(OSX)
-    public var apiValue:CGFloat {
+    public var apiValue:Value {
         return inDegrees
     }
     #endif
 
     #if os(iOS)
-    public var apiValue:CGFloat {
+    public var apiValue:Value {
         return inRadians
     }
     #endif
 }
 
-extension ArcLength {
-    public func pointInCircle(_ center:CGPoint, radius:CGFloat) -> CGPoint {
-        let angleInRadians:CGFloat = inRadians
+extension Angle {
+    public func pointInCircle(_ center:CGPoint, radius:Value) -> CGPoint {
+        let angleInRadians:Value = inRadians
         return CGPoint(x: center.x + (radius * cos(angleInRadians)), y: center.y + (radius * sin(angleInRadians)))
     }
 }
 
-internal func +(first:ArcLength, second:ArcLength) -> ArcLength {
+internal func +(first:Angle, second:Angle) -> Angle {
     switch first {
     case let .degrees(value):
-        return ArcLength(degrees: value + second.inDegrees)
+        return Angle(degrees: value + second.inDegrees)
     case let .radians(value):
-        return ArcLength(radians: value + second.inRadians)
+        return Angle(radians: value + second.inRadians)
     }
 }
 
-internal func -(first:ArcLength, second:ArcLength) -> ArcLength {
+internal func -(first:Angle, second:Angle) -> Angle {
     switch first {
     case let .degrees(value):
-        return ArcLength(degrees: value - second.inDegrees)
+        return Angle(degrees: value - second.inDegrees)
     case let .radians(value):
-        return ArcLength(radians: value - second.inRadians)
+        return Angle(radians: value - second.inRadians)
     }
 }

@@ -111,13 +111,13 @@ extension BezierPathType {
     }
 
     mutating public func addCircle(withCenter center: CGPoint, radius: CGFloat, clockwise: Bool = Self.platformClockwiseValue(fromActualClockwiseValue: true)) {
-        let start = ArcLength(degrees:0)
+        let start = Angle(degrees:0)
 
         move(to: start.pointInCircle(center, radius: radius))
         addArc(withCenter: center,
                radius: radius,
-               startAngle: ArcLength(degrees:0).apiValue,
-               endAngle: ArcLength(degrees:360).apiValue,
+               startAngle: Angle(degrees:0).apiValue,
+               endAngle: Angle(degrees:360).apiValue,
                clockwise: clockwise)
     }
 }
@@ -142,19 +142,19 @@ extension BezierPathType {
 
         move(toX: inner.left, y: outer.top)
         addLine(toX: inner.right, y: outer.top)
-        addArc(withCenter: innerCorners.topRight, radius: cornerRadius, startAngle: ArcLength(degrees: 270).apiValue, endAngle: ArcLength(degrees: 360).apiValue, clockwise: true)
+        addArc(withCenter: innerCorners.topRight, radius: cornerRadius, startAngle: Angle(degrees: 270).apiValue, endAngle: Angle(degrees: 360).apiValue, clockwise: true)
 
         addLine(toX: outer.right, y: inner.top)
         addLine(toX: outer.right, y: inner.bottom)
-        addArc(withCenter: innerCorners.bottomRight, radius: cornerRadius, startAngle: ArcLength(degrees: 0).apiValue, endAngle: ArcLength(degrees: 90).apiValue, clockwise: true)
+        addArc(withCenter: innerCorners.bottomRight, radius: cornerRadius, startAngle: Angle(degrees: 0).apiValue, endAngle: Angle(degrees: 90).apiValue, clockwise: true)
 
         addLine(toX: inner.right, y: outer.bottom)
         addLine(toX: inner.left, y: outer.bottom)
-        addArc(withCenter: innerCorners.bottomLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 90).apiValue, endAngle: ArcLength(degrees: 180).apiValue, clockwise: true)
+        addArc(withCenter: innerCorners.bottomLeft, radius: cornerRadius, startAngle: Angle(degrees: 90).apiValue, endAngle: Angle(degrees: 180).apiValue, clockwise: true)
 
         addLine(toX: outer.left, y: inner.bottom)
         addLine(toX: outer.left, y: inner.top)
-        addArc(withCenter: innerCorners.topLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 180).apiValue, endAngle: ArcLength(degrees: 270).apiValue, clockwise: true)
+        addArc(withCenter: innerCorners.topLeft, radius: cornerRadius, startAngle: Angle(degrees: 180).apiValue, endAngle: Angle(degrees: 270).apiValue, clockwise: true)
 
         close()
     }

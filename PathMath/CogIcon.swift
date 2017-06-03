@@ -46,7 +46,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
     public let bodyRadius:CGFloat
     public let spokeHeight:CGFloat
     public let toothCount:Int
-    public let rotation:ArcLength
+    public let rotation:Angle
 
     public var radius:CGFloat {
         return bodyRadius + spokeHeight
@@ -62,8 +62,8 @@ public struct CogIcon<BezierPath: BezierPathType> {
 
     public func createPath()-> BezierPath {
 
-        let imageArcLength:ArcLength = ArcLength(degrees: 360.0 / CGFloat(toothCount))
-        let imageHalfArcLength:ArcLength = ArcLength(degrees: imageArcLength.inDegrees * 0.5)
+        let imageAngle:Angle = Angle(degrees: 360.0 / CGFloat(toothCount))
+        let imageHalfAngle:Angle = Angle(degrees: imageAngle.inDegrees * 0.5)
 
         var path = BezierPath()
         path.bezierLineJoinStyle = .round
@@ -73,23 +73,23 @@ public struct CogIcon<BezierPath: BezierPathType> {
         path.move(to: startingPoint)
 
         for i in 0..<toothCount {
-            let iImageOrigin = ArcLength(degrees: CGFloat(i) * imageArcLength.inDegrees) + rotation
+            let iImageOrigin = Angle(degrees: CGFloat(i) * imageAngle.inDegrees) + rotation
 
             // tooth
             path.addLine(to: iImageOrigin.pointInCircle(center, radius: radius))
             path.addArc(withCenter: center,
                 radius: radius,
                 startAngle: iImageOrigin.apiValue,
-                endAngle: (iImageOrigin + imageHalfArcLength).apiValue,
+                endAngle: (iImageOrigin + imageHalfAngle).apiValue,
                 clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
 
-            let toothEnd = iImageOrigin + imageHalfArcLength
+            let toothEnd = iImageOrigin + imageHalfAngle
             path.addLine(to: toothEnd.pointInCircle(center, radius: bodyRadius))
             // trough
             path.addArc(withCenter: center,
                 radius: bodyRadius,
-                startAngle: (iImageOrigin + imageHalfArcLength).apiValue,
-                endAngle: (iImageOrigin + imageArcLength).apiValue,
+                startAngle: (iImageOrigin + imageHalfAngle).apiValue,
+                endAngle: (iImageOrigin + imageAngle).apiValue,
                 clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         }
 
@@ -99,14 +99,14 @@ public struct CogIcon<BezierPath: BezierPathType> {
         return path
     }
 
-    public init(diameter: CGFloat, relativeHoleDiameter: CGFloat, relativeSpokeHeight: CGFloat, toothCount: Int, rotation:ArcLength? = nil) {
+    public init(diameter: CGFloat, relativeHoleDiameter: CGFloat, relativeSpokeHeight: CGFloat, toothCount: Int, rotation:Angle? = nil) {
         let radius = diameter * 0.5
         let holeRadius = radius * relativeHoleDiameter
         let spokeHeight = radius * relativeSpokeHeight
         self.init(holeRadius: holeRadius, bodyRadius: (radius - spokeHeight), spokeHeight: spokeHeight, toothCount: toothCount)
     }
 
-    public init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, toothCount:Int = 6, rotation:ArcLength? = nil) {
+    public init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, toothCount:Int = 6, rotation:Angle? = nil) {
         self.holeRadius = holeRadius
         self.bodyRadius = bodyRadius
         self.spokeHeight = spokeHeight
@@ -114,7 +114,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
         if let theRotation = rotation {
             self.rotation = theRotation
         } else {
-            self.rotation = ArcLength(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
+            self.rotation = Angle(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
         }
     }
 }

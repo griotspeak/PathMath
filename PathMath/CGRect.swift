@@ -58,4 +58,30 @@ extension CGRect {
     public init(size innerSize: CGSize, centeredInSize outerSize: CGSize) {
         self.init(size: innerSize, centeredInRect: CGRect(origin: CGPoint.zero, size: outerSize))
     }
+
+    public init(top: CGFloat, right: CGFloat, bottom: CGFloat, left: CGFloat, originLocation: OriginLocation = .defaultPlatformLocation) {
+
+        self.init(top: top,
+                  right: right,
+                  bottom: bottom,
+                  left: left,
+                  originLocation: originLocation)
+    }
+
+    public init(edges: EdgeDescription, originLocation: OriginLocation = .defaultPlatformLocation) {
+        let originX = edges.left
+        let originY: CGFloat
+        let height: CGFloat
+        let width = edges.right - edges.left
+
+        switch originLocation {
+        case .lowerLeft:
+            originY = edges.bottom
+            height = edges.top - edges.bottom
+        case .upperLeft:
+            originY = edges.top
+            height = edges.bottom - edges.top
+        }
+        self.init(x: originX, y: originY, width: width, height: height)
+    }
 }

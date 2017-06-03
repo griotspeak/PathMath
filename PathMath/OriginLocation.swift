@@ -17,5 +17,4 @@ public enum OriginLocation {
     #if os(iOS)
     public static let defaultPlatformLocation: OriginLocation = .upperLeft
     #endif
-
 }

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='5.0' target-platform='ios' display-mode='raw' timelineScrubberEnabled='true' last-migration='0800'>
-    <timeline fileName='timeline.xctimeline'/>
+<playground version='6.0' target-platform='ios' display-mode='raw' timelineScrubberEnabled='true' last-migration='0800'>
+    <pages>
+        <page name='Untitled Page 2'/>
+        <page name='N-Gon'/>
+        <page name='Untitled Page'/>
+    </pages>
 </playground>

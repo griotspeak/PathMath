@@ -4,7 +4,7 @@
 #if os(iOS)
     import UIKit
 #endif
-import XCPlayground
+import PlaygroundSupport
 import PathMath
 
 #if os(macOS)
@@ -14,7 +14,11 @@ let theCog = CogIcon<NSBezierPath>()
 #endif
 
 #if os(iOS)
-let theCog = CogIcon<UIBezierPath>()
+let theCog = CogIcon<UIBezierPath>(holeRadius: 20,
+                                   bodyRadius: 45,
+                                   spokeHeight: 9,
+                                   toothCount: 6,
+                                   rotation: Angle(degrees: 180))
     typealias PlatformColor = UIColor
     typealias PlatformImage = UIImage
 #endif
@@ -30,8 +34,6 @@ theLayer.strokeColor = PlatformColor.white.cgColor
 theLayer.fillColor = PlatformColor.lightGray.cgColor
 theLayer.usesEvenOddFillRule = true
 //theView.backgroundColor = NSColor.blackColor()
-
-theView
 
 var path = PlatformBezierPath()
 let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 25))
@@ -60,7 +62,7 @@ bezierPath
 
 
 var newFrame = theView.frame
-newFrame.origin = CGPoint(x: 100, y: 100)
+newFrame.origin = CGPoint(x: 300, y: 300)
 theView.frame = newFrame
 
 let result: PlatformImage? = theView.renderLayerContents()
@@ -72,3 +74,7 @@ var idx = grid_.endIndex
 for cell in grid_ {
     print(cell)
 }
+
+theView
+
+
