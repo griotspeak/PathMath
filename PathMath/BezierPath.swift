@@ -88,7 +88,7 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
 
     mutating func addCircle(withCenter center: CGPoint, radius: CGFloat, clockwise: Bool)
 
-    mutating func closePath()
+    mutating func close()
     static var shouldNegateClockwiseValue: Bool { get }
     mutating func removeAllPoints()
 }
@@ -130,7 +130,7 @@ extension BezierPathType {
         addLine(to: corners.topRight)
         addLine(to: corners.bottomRight)
         addLine(to: corners.bottomLeft)
-        closePath()
+        close()
 
     }
 
@@ -156,7 +156,7 @@ extension BezierPathType {
         addLine(toX: outer.left, y: inner.top)
         addArc(withCenter: innerCorners.topLeft, radius: cornerRadius, startAngle: ArcLength(degrees: 180).apiValue, endAngle: ArcLength(degrees: 270).apiValue, clockwise: true)
 
-        closePath()
+        close()
     }
 }
 

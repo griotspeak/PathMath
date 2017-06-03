@@ -16,7 +16,7 @@
 import QuartzCore
 
 public final class Icon<BezierPath: BezierPathType> {
-    public typealias PathSetup = (Void) -> BezierPath
+    public typealias PathSetup = () -> BezierPath
     public static func createShapeLayer(_ pathSetup:PathSetup) -> CAShapeLayer {
         let theLayer = CAShapeLayer()
         let path = pathSetup()
@@ -93,7 +93,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
                 clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         }
 
-        path.closePath()
+        path.close()
         path.move(to: startingPoint)
         path.addCircle(withCenter: center, radius: holeRadius, clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         return path

@@ -9,7 +9,7 @@
 import CoreGraphics
 
 extension CGMutablePath {
-    public func closePath() {
+    public func close() {
         self.closeSubpath()
     }
 
