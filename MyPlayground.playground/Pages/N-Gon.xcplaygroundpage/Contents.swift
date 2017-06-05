@@ -81,17 +81,33 @@ triangle.incentralSliceAngle == 120
 
 // MARK: - Isosceles Triangles
 
-struct IsoscelesTriangleDescription {
-    typealias FloatValue = CGFloat
+public struct IsoscelesTriangleDescription {
+    public typealias FloatValue = CGFloat
 
-    let legLength: FloatValue
-    let baseLength: FloatValue
-    let axisOfSymmetryLength: FloatValue
+    public let legLength: FloatValue
+    public let baseLength: FloatValue
+    public let axisOfSymmetryLength: FloatValue
 
-    let vertexAngle: FloatValue
-    let baseAngle: FloatValue
+    public let vertexAngle: FloatValue
+    public let baseAngle: FloatValue
 
-    init(vertexAngle: FloatValue, legLenth: FloatValue) {
+    private init(legLength: FloatValue,
+                 baseLength: FloatValue,
+                 axisOfSymmetryLength: FloatValue,
+                 vertexAngle: FloatValue,
+                 baseAngle: FloatValue) {
+
+        self.legLength = legLength
+        self.baseLength = baseLength
+        self.axisOfSymmetryLength = axisOfSymmetryLength
+        self.vertexAngle = vertexAngle
+        self.baseAngle = baseAngle
+    }
+}
+
+
+extension IsoscelesTriangleDescription {
+    public init(vertexAngle: FloatValue, legLenth: FloatValue) {
         guard vertexAngle > 0,
             vertexAngle < 180 else {
                 fatalError("invalid vertex angle")
@@ -105,7 +121,7 @@ struct IsoscelesTriangleDescription {
         self.axisOfSymmetryLength = cos(halfVertex.inRadians) * legLenth * 2
     }
 
-    init(baseAngle: FloatValue, legLenth: FloatValue) {
+    public init(baseAngle: FloatValue, legLenth: FloatValue) {
         guard baseAngle > 0,
             baseAngle < 90 else {
                 fatalError("invalid base angle")
@@ -121,7 +137,7 @@ struct IsoscelesTriangleDescription {
         self.axisOfSymmetryLength = cos(halfVertex.inRadians) * legLenth * 2
     }
 
-    init?(baseLength: FloatValue, legLength: FloatValue) {
+    public init?(baseLength: FloatValue, legLength: FloatValue) {
         guard legLength > 0,
             baseLength > 0,
             legLength * 2 < baseLength else {
@@ -140,7 +156,6 @@ struct IsoscelesTriangleDescription {
     }
 }
 
-
 let isoTri = IsoscelesTriangleDescription(vertexAngle: 90, legLenth: 1)
 isoTri.baseLength
 isoTri.baseAngle
@@ -149,3 +164,8 @@ sqrt(2)
 let equTri = IsoscelesTriangleDescription(baseAngle: 60, legLenth: 1)
 equTri.legLength
 equTri.vertexAngle
+
+let oneOneRootTwo = RightTriangle(lengthA: 1,
+                                  lengthB: 1)
+oneOneRootTwo.angleA.inDegrees
+

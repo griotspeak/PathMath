@@ -34,6 +34,10 @@
 		324D6B281B135DCA007C1B9C /* Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B271B135DCA007C1B9C /* Angle.swift */; };
 		324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B291B135DD2007C1B9C /* BezierPath.swift */; };
 		324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324D6B511B13635B007C1B9C /* CogIcon.swift */; };
+		32545FC31EE48F0C00AE4D2C /* RightTriangleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32545FC21EE48F0C00AE4D2C /* RightTriangleTests.swift */; };
+		32545FC41EE48F0C00AE4D2C /* RightTriangleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32545FC21EE48F0C00AE4D2C /* RightTriangleTests.swift */; };
+		32545FC61EE4900300AE4D2C /* RightTriangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32545FC51EE4900300AE4D2C /* RightTriangle.swift */; };
+		32545FC71EE4900300AE4D2C /* RightTriangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32545FC51EE4900300AE4D2C /* RightTriangle.swift */; };
 		3274CCEA1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */; };
 		3274CCEB1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */; };
 		329801751DC843E00085311D /* CGRect2DGridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329801741DC843E00085311D /* CGRect2DGridTests.swift */; };
@@ -41,6 +45,10 @@
 		329E57451B155805002B2114 /* CGMutablePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329E57441B155805002B2114 /* CGMutablePath.swift */; };
 		32D37AEA1C2E6EF70074BB91 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* Rendering.swift */; };
 		32D37AEB1C2E6EF70074BB91 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37AE91C2E6EF70074BB91 /* Rendering.swift */; };
+		32EC2D451EE389BB00F3685D /* Coordinates2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D441EE389BB00F3685D /* Coordinates2D.swift */; };
+		32EC2D461EE389BB00F3685D /* Coordinates2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D441EE389BB00F3685D /* Coordinates2D.swift */; };
+		32EC2D4A1EE38C4C00F3685D /* Coordinates2DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */; };
+		32EC2D4B1EE38C4D00F3685D /* Coordinates2DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,10 +87,14 @@
 		324D6B271B135DCA007C1B9C /* Angle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Angle.swift; sourceTree = "<group>"; };
 		324D6B291B135DD2007C1B9C /* BezierPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierPath.swift; sourceTree = "<group>"; };
 		324D6B511B13635B007C1B9C /* CogIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CogIcon.swift; sourceTree = "<group>"; };
+		32545FC21EE48F0C00AE4D2C /* RightTriangleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightTriangleTests.swift; sourceTree = "<group>"; };
+		32545FC51EE4900300AE4D2C /* RightTriangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightTriangle.swift; sourceTree = "<group>"; };
 		3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect2DGrid.swift; sourceTree = "<group>"; };
 		329801741DC843E00085311D /* CGRect2DGridTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect2DGridTests.swift; sourceTree = "<group>"; };
 		329E57441B155805002B2114 /* CGMutablePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMutablePath.swift; sourceTree = "<group>"; };
 		32D37AE91C2E6EF70074BB91 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
+		32EC2D441EE389BB00F3685D /* Coordinates2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinates2D.swift; sourceTree = "<group>"; };
+		32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinates2DTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +167,8 @@
 				32059C741C28D28300B9E05B /* OriginLocation.swift */,
 				32D37AE91C2E6EF70074BB91 /* Rendering.swift */,
 				324D6B0E1B135CF8007C1B9C /* Supporting Files */,
+				32EC2D441EE389BB00F3685D /* Coordinates2D.swift */,
+				32545FC51EE4900300AE4D2C /* RightTriangle.swift */,
 			);
 			path = PathMath;
 			sourceTree = "<group>";
@@ -170,10 +184,12 @@
 		324D6B1A1B135CF8007C1B9C /* PathMathTests */ = {
 			isa = PBXGroup;
 			children = (
-				324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */,
+				32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */,
+				32545FC21EE48F0C00AE4D2C /* RightTriangleTests.swift */,
+				329801741DC843E00085311D /* CGRect2DGridTests.swift */,
 				320664E91EDF187F00C6A77D /* DiagramTests.swift */,
 				320664EE1EDF18B300C6A77D /* DiagramTests+Circle.swift */,
-				329801741DC843E00085311D /* CGRect2DGridTests.swift */,
+				324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */,
 				324D6B1B1B135CF8007C1B9C /* Supporting Files */,
 			);
 			path = PathMathTests;
@@ -289,7 +305,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Buttons and Lights LLC";
 				TargetAttributes = {
 					3212D6DB1BE0980500D175D7 = {
@@ -368,6 +384,7 @@
 			files = (
 				320664F51EDF2A2400C6A77D /* CGFloat.swift in Sources */,
 				32059C761C28D28300B9E05B /* OriginLocation.swift in Sources */,
+				32545FC71EE4900300AE4D2C /* RightTriangle.swift in Sources */,
 				3274CCEB1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */,
 				3212D6F31BE098B400D175D7 /* Angle.swift in Sources */,
 				3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */,
@@ -377,6 +394,7 @@
 				3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */,
 				320664E81EDF174000C6A77D /* DiagramRenderer.swift in Sources */,
 				320664E51EDF156F00C6A77D /* Diagram.swift in Sources */,
+				32EC2D461EE389BB00F3685D /* Coordinates2D.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +404,9 @@
 			files = (
 				320664ED1EDF189200C6A77D /* DiagramTests.swift in Sources */,
 				3212D6F81BE098BF00D175D7 /* PathMathTests.swift in Sources */,
+				32EC2D4A1EE38C4C00F3685D /* Coordinates2DTests.swift in Sources */,
 				329801761DC843E00085311D /* CGRect2DGridTests.swift in Sources */,
+				32545FC41EE48F0C00AE4D2C /* RightTriangleTests.swift in Sources */,
 				320664F01EDF18B300C6A77D /* DiagramTests+Circle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +417,7 @@
 			files = (
 				320664F41EDF2A2200C6A77D /* CGFloat.swift in Sources */,
 				32059C751C28D28300B9E05B /* OriginLocation.swift in Sources */,
+				32545FC61EE4900300AE4D2C /* RightTriangle.swift in Sources */,
 				3274CCEA1D5FD8A000393896 /* CGRect2DGrid.swift in Sources */,
 				324D6B281B135DCA007C1B9C /* Angle.swift in Sources */,
 				324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */,
@@ -406,6 +427,7 @@
 				329E57451B155805002B2114 /* CGMutablePath.swift in Sources */,
 				320664E71EDF174000C6A77D /* DiagramRenderer.swift in Sources */,
 				320664E41EDF156F00C6A77D /* Diagram.swift in Sources */,
+				32EC2D451EE389BB00F3685D /* Coordinates2D.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +437,9 @@
 			files = (
 				320664EC1EDF189000C6A77D /* DiagramTests.swift in Sources */,
 				324D6B1E1B135CF8007C1B9C /* PathMathTests.swift in Sources */,
+				32EC2D4B1EE38C4D00F3685D /* Coordinates2DTests.swift in Sources */,
 				329801751DC843E00085311D /* CGRect2DGridTests.swift in Sources */,
+				32545FC31EE48F0C00AE4D2C /* RightTriangleTests.swift in Sources */,
 				320664EF1EDF18B300C6A77D /* DiagramTests+Circle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,14 +544,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -570,14 +600,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

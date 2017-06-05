@@ -28,6 +28,7 @@ public enum Angle {
         }
     }
 
+    /* TODO: return Angle 2017-06-04 */
     public var inRadians:Value {
         switch self {
         case let .degrees(value):
@@ -62,17 +63,9 @@ public enum Angle {
         return radians * (180.0 / .pi)
     }
 
-    #if os(OSX)
-    public var apiValue:Value {
-        return inDegrees
+    public var apiValue:CGFloat {
+        return CGFloat(inDegrees)
     }
-    #endif
-
-    #if os(iOS)
-    public var apiValue:Value {
-        return inRadians
-    }
-    #endif
 }
 
 extension Angle {
@@ -99,3 +92,54 @@ internal func -(first:Angle, second:Angle) -> Angle {
         return Angle(radians: value - second.inRadians)
     }
 }
+
+func sine(_ theta: Angle) -> CGFloat {
+    return sin(theta.inRadians)
+}
+
+func cosine(_ theta: Angle) -> CGFloat {
+    return cos(theta.inRadians)
+}
+
+func tangent(_ theta: Angle) -> CGFloat {
+    return tan(theta.inRadians)
+}
+
+func secant(_ theta: Angle) -> CGFloat {
+    return 1 / cosine(theta)
+}
+
+func cosecant(_ theta: Angle) -> CGFloat {
+    return 1 / sine(theta)
+}
+
+func cotangent(_ theta: Angle) -> CGFloat {
+    return 1 / tangent(theta)
+}
+
+// MARK: inverses
+
+func arcSine(_ ratio: Double) -> Angle {
+    /* TODO: do better with parametricity 2017-06-04 */
+    return .radians(CGFloat(asin(ratio)))
+}
+
+func arcSine(_ ratio: CGFloat) -> Angle {
+    return .radians(asin(ratio))
+}
+
+// MARK: - 
+
+extension Angle : Equatable {
+    public static func == (lhs:Angle, rhs:Angle) -> Bool {
+        switch (lhs, rhs) {
+        case (.radians(let left), .radians(let right)):
+            return left == right
+        case (.degrees(let left), .degrees(let right)):
+            return left == right
+        case (.radians, _), (.degrees, _):
+            return lhs.inRadians == rhs.inRadians
+        }
+    }
+}
+
