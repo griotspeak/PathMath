@@ -29,6 +29,7 @@ public enum Angle {
     }
 
     /* TODO: return Angle 2017-06-04 */
+    /* TODO: __sinPi 2017-06-08 */
     public var inRadians:Value {
         switch self {
         case let .degrees(value):

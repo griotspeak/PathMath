@@ -10,4 +10,7 @@ import XCTest
 import PathMath
 
 class Coordinates2DTests: XCTestCase {
+    func testThreeFourFive() {
+        
+    }
 }

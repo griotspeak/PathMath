@@ -94,7 +94,7 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
 }
 
 extension BezierPathType {
-    static func platformClockwiseValue(fromActualClockwiseValue value:Bool) -> Bool {
+    public static func platformClockwiseValue(fromActualClockwiseValue value:Bool) -> Bool {
         if shouldNegateClockwiseValue {
             return !value
         } else {
