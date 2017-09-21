@@ -9,7 +9,7 @@
 import XCTest
 import PathMath
 
-private let __accuracy: Angle.Value = 0.000_000_000_000_001
+private let __accuracy: Angle.Value = 0.000_000_000_000_01
 
 class RightTriangleTests: XCTestCase {
     func testOneOneRootTwoWithOppositeAndAdjacent() {

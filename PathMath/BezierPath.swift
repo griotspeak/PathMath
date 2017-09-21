@@ -47,7 +47,7 @@ public enum LineJoinStyle {
     }
 
     #if os(OSX)
-    public init(nsLineJoin:NSLineJoinStyle) {
+    public init(nsLineJoin:NSBezierPath.LineJoinStyle) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
         switch nsLineJoin {
         case .miterLineJoinStyle:
@@ -59,14 +59,14 @@ public enum LineJoinStyle {
         }
     }
 
-    public var nsLineJoin:NSLineJoinStyle {
+    public var nsLineJoin:NSBezierPath.LineJoinStyle {
         switch self {
         case .miter:
-            return NSLineJoinStyle.miterLineJoinStyle
+            return NSBezierPath.LineJoinStyle.miterLineJoinStyle
         case .round:
-            return NSLineJoinStyle.roundLineJoinStyle
+            return NSBezierPath.LineJoinStyle.roundLineJoinStyle
         case .bevel:
-            return NSLineJoinStyle.bevelLineJoinStyle
+            return NSBezierPath.LineJoinStyle.bevelLineJoinStyle
         }
     }
     #endif
@@ -78,7 +78,7 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
     init()
 
     var usesEvenOddWindingRule: Bool { get set }
-    var bezierLineJoinStyle:LineJoinStyle { get set }
+    var bezierLineJoinStyle: LineJoinStyle { get set }
 
     // Path construction
     mutating func move(to point: CGPoint)
@@ -198,15 +198,15 @@ extension BezierPathType {
 
         public var usesEvenOddWindingRule:Bool {
             get {
-                return windingRule == NSWindingRule.evenOddWindingRule
+                return windingRule == NSBezierPath.WindingRule.evenOddWindingRule
             }
             set(value) {
-                windingRule = value ? NSWindingRule.evenOddWindingRule : NSWindingRule.nonZeroWindingRule
+                windingRule = value ? NSBezierPath.WindingRule.evenOddWindingRule : NSBezierPath.WindingRule.nonZeroWindingRule
             }
         }
-        public var bezierLineJoinStyle:LineJoinStyle {
+        public var bezierLineJoinStyle: PathMath.LineJoinStyle {
             get {
-                return LineJoinStyle(nsLineJoin: lineJoinStyle)
+                return PathMath.LineJoinStyle(nsLineJoin: lineJoinStyle)
             } set(value) {
                 self.lineJoinStyle = value.nsLineJoin
             }

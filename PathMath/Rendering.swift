@@ -73,8 +73,8 @@ public protocol _CALayerBackedType {
 
     extension NSBitmapImageRep {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
-            guard let convertedBounds = NSScreen.main()?.convertRectToBacking(NSRect(origin: CGPoint.zero, size: size)).integral,
-                let intermediateImageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(convertedBounds.width), pixelsHigh: Int(convertedBounds.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSCalibratedRGBColorSpace, bitmapFormat: .alphaFirst, bytesPerRow: 0, bitsPerPixel: 0),
+            guard let convertedBounds = NSScreen.main?.convertRectToBacking(NSRect(origin: CGPoint.zero, size: size)).integral,
+                let intermediateImageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(convertedBounds.width), pixelsHigh: Int(convertedBounds.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.calibratedRGB, bitmapFormat: NSBitmapImageRep.Format.alphaFirst, bytesPerRow: 0, bitsPerPixel: 0),
                 let imageRep = intermediateImageRep.retagging(with: .sRGB)
                 else { return nil }
             imageRep.size = size
@@ -82,7 +82,7 @@ public protocol _CALayerBackedType {
             NSGraphicsContext.saveGraphicsState()
             defer { NSGraphicsContext.restoreGraphicsState() }
 
-            NSGraphicsContext.setCurrent(bitmapContext)
+            NSGraphicsContext.current = bitmapContext
 
             let quartzContext = bitmapContext.cgContext
 
@@ -96,7 +96,7 @@ public protocol _CALayerBackedType {
     extension NSImage {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: @escaping (CGContext, CGSize) -> Bool) -> Self? {
             return self.init(size: size, flipped: false) { (frame) in
-                guard let context = NSGraphicsContext.current() else { return false }
+                guard let context = NSGraphicsContext.current else { return false }
                 let quartzContext = context.cgContext
                 return drawingHandler(quartzContext, frame.size)
             }
