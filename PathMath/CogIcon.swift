@@ -96,6 +96,7 @@ public struct CogIcon<BezierPath: BezierPathType> {
         path.close()
         path.move(to: startingPoint)
         path.addCircle(withCenter: center, radius: holeRadius, clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
+        path.close()
         return path
     }
 

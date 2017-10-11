@@ -31,4 +31,20 @@ extension DiagramTests {
         let expected = CGRect(center: CGPoint(x: 1, y: 1), size: CGSize(width: 2, height: 2))
         XCTAssertEqual(result, expected)
     }
+    
+    func testCogStuff() {
+        let theCog = CogIcon<UIBezierPath>(holeRadius: 20,
+                                           bodyRadius: 45,
+                                           spokeHeight: 9,
+                                           toothCount: 6,
+                                           rotation: Angle(degrees: 180))
+        
+        enum Foo {
+            case First(Bool)
+            case Second(Bool)
+        }
+        
+        var (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.createView(CGRect(x: 0, y: 0, width: 150, height: 150))
+   print(theView)
+    }
 }

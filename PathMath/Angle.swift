@@ -64,9 +64,17 @@ public enum Angle {
         return radians * (180.0 / .pi)
     }
 
-    public var apiValue:CGFloat {
-        return CGFloat(inDegrees)
+    #if os(OSX)
+    public var apiValue:Value {
+        return inDegrees
     }
+    #endif
+
+    #if os(iOS)
+    public var apiValue:Value {
+        return inRadians
+    }
+    #endif
 }
 
 extension Angle {

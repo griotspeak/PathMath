@@ -17,8 +17,8 @@ let theCog = CogIcon<NSBezierPath>()
 let theCog = CogIcon<UIBezierPath>(holeRadius: 20,
                                    bodyRadius: 45,
                                    spokeHeight: 9,
-                                   toothCount: 6,
-                                   rotation: Angle(degrees: 180))
+                                   toothCount: 4,
+                                   rotation: Angle(degrees: 60))
     typealias PlatformColor = UIColor
     typealias PlatformImage = UIImage
 #endif

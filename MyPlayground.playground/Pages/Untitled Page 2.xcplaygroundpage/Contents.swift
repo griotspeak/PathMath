@@ -110,3 +110,4 @@ let provider = RandomCellProvider()
 view?.delegate = provider
 view?.refill()
 view
+

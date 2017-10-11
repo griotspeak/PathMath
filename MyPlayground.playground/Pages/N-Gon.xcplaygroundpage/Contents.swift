@@ -81,7 +81,7 @@ triangle.incentralSliceAngle == 120
 
 // MARK: - Isosceles Triangles
 
-public struct IsoscelesTriang leDescription {
+public struct IsoscelesTriangleDescription {
     public typealias FloatValue = CGFloat
 
     public let legLength: FloatValue
