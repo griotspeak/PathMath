@@ -60,12 +60,21 @@ extension CGRect {
     }
 
     public init(top: CGFloat, right: CGFloat, bottom: CGFloat, left: CGFloat, originLocation: OriginLocation = .defaultPlatformLocation) {
-
-        self.init(top: top,
-                  right: right,
-                  bottom: bottom,
-                  left: left,
-                  originLocation: originLocation)
+        let width = right - left
+        let height: CGFloat
+        let originY: CGFloat
+        switch originLocation {
+        case .lowerLeft:
+            height = top - bottom
+            originY = bottom
+        case .upperLeft:
+            height = bottom - top
+            originY = top
+        }
+        self.init(origin: CGPoint(x: left,
+                                  y: originY),
+                  size: CGSize(width: width,
+                               height: height))
     }
 
     public init(edges: EdgeDescription, originLocation: OriginLocation = .defaultPlatformLocation) {
