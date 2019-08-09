@@ -133,10 +133,10 @@ public protocol CAShapeLayerBackedType : _CALayerBackedType {
 extension CAShapeLayerBackedType {
     public var usesEvenOddFillRule: Bool {
         mutating get {
-            return self.backingLayer()!.fillRule == kCAFillRuleEvenOdd
+            return convertFromCAShapeLayerFillRule(self.backingLayer()!.fillRule) == convertFromCAShapeLayerFillRule(CAShapeLayerFillRule.evenOdd)
         }
         set(value) {
-            self.backingLayer()!.fillRule = value ? kCAFillRuleEvenOdd : kCAFillRuleNonZero
+            self.backingLayer()!.fillRule = convertToCAShapeLayerFillRule(value ? CAShapeLayerFillRule.evenOdd.rawValue : CAShapeLayerFillRule.nonZero.rawValue)
         }
     }
 }
@@ -151,10 +151,10 @@ extension CALayer : CALayerBackedType {
 extension CAShapeLayer : CAShapeLayerBackedType {
     public var usesEvenOddFillRule: Bool {
         get {
-            return self.fillRule == kCAFillRuleEvenOdd
+            return convertFromCAShapeLayerFillRule(self.fillRule) == convertFromCAShapeLayerFillRule(CAShapeLayerFillRule.evenOdd)
         }
         set(value) {
-            self.fillRule = value ? kCAFillRuleEvenOdd : kCAFillRuleNonZero
+            self.fillRule = convertToCAShapeLayerFillRule(value ? CAShapeLayerFillRule.evenOdd.rawValue : CAShapeLayerFillRule.nonZero.rawValue)
         }
     }
 }
@@ -187,4 +187,14 @@ extension CogIcon {
 
         return (view, iconLayer)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAShapeLayerFillRule(_ input: CAShapeLayerFillRule) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAShapeLayerFillRule(_ input: String) -> CAShapeLayerFillRule {
+	return CAShapeLayerFillRule(rawValue: input)
 }

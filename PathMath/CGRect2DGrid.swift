@@ -120,10 +120,6 @@ extension CGRect2DGrid {
             self.row = row
         }
 
-        public var hashValue: Int {
-            return column.hashValue &+ row.hashValue
-        }
-
         public var description: String {
             return "(\(column), \(row))"
         }

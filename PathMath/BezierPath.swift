@@ -43,6 +43,8 @@ public enum LineJoinStyle {
             self = .round
         case .bevel:
             self = .bevel
+        @unknown default:
+            fatalError("Unexpected line join: \(cgLineJoin)")
         }
     }
 
@@ -50,23 +52,25 @@ public enum LineJoinStyle {
     public init(nsLineJoin:NSBezierPath.LineJoinStyle) {
         /* @todo add `==` to CGLineJoin 2015-05-24 */
         switch nsLineJoin {
-        case .miterLineJoinStyle:
+        case .miter:
             self = .miter
-        case .roundLineJoinStyle:
+        case .round:
             self = .round
-        case .bevelLineJoinStyle:
+        case .bevel:
             self = .bevel
+        @unknown default:
+            fatalError("Unexpected line join style: \(nsLineJoin)")
         }
     }
 
     public var nsLineJoin:NSBezierPath.LineJoinStyle {
         switch self {
         case .miter:
-            return NSBezierPath.LineJoinStyle.miterLineJoinStyle
+            return NSBezierPath.LineJoinStyle.miter
         case .round:
-            return NSBezierPath.LineJoinStyle.roundLineJoinStyle
+            return NSBezierPath.LineJoinStyle.round
         case .bevel:
-            return NSBezierPath.LineJoinStyle.bevelLineJoinStyle
+            return NSBezierPath.LineJoinStyle.bevel
         }
     }
     #endif
@@ -198,10 +202,10 @@ extension BezierPathType {
 
         public var usesEvenOddWindingRule:Bool {
             get {
-                return windingRule == NSBezierPath.WindingRule.evenOddWindingRule
+                return windingRule == NSBezierPath.WindingRule.evenOdd
             }
             set(value) {
-                windingRule = value ? NSBezierPath.WindingRule.evenOddWindingRule : NSBezierPath.WindingRule.nonZeroWindingRule
+                windingRule = value ? NSBezierPath.WindingRule.evenOdd : NSBezierPath.WindingRule.nonZero
             }
         }
         public var bezierLineJoinStyle: PathMath.LineJoinStyle {
@@ -240,22 +244,25 @@ extension BezierPathType {
             let mutablePath = CGMutablePath()
 
             for i in 0..<numElements {
-                switch element(at: i, associatedPoints:pointArray) {
-                case .moveToBezierPathElement:
+                let theElement = element(at: i, associatedPoints:pointArray)
+                switch theElement {
+                case .moveTo:
                     if !didClosePath {
                         mutablePath.closeSubpath()
                         didClosePath = true
                     }
                     mutablePath.move(to: arrayPointer[0])
-                case .lineToBezierPathElement:
+                case .lineTo:
                     mutablePath.addLine(to: arrayPointer[0])
                     didClosePath = false
-                case .curveToBezierPathElement:
+                case .curveTo:
                     mutablePath.addCurve(to: arrayPointer[2], control1: arrayPointer[0], control2: arrayPointer[1])
                     didClosePath = false
-                case .closePathBezierPathElement:
+                case .closePath:
                     mutablePath.closeSubpath()
                     didClosePath = true
+                @unknown default:
+                    fatalError("Unexpected path element of type: \(theElement)")
                 }
 
             }
