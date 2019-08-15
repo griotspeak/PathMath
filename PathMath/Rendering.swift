@@ -127,10 +127,6 @@ public protocol _CALayerBackedType {
 
     extension UIImage {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: (CGContext, CGSize) -> Void) -> UIImage? {
-            if let oldContext = UIGraphicsGetCurrentContext() {
-                oldContext.saveGState()
-                defer { oldContext.restoreGState() }
-            }
 
             let rect = CGRect(origin: CGPoint.zero, size: size)
 
