@@ -49,6 +49,10 @@
 		32EC2D461EE389BB00F3685D /* Coordinates2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D441EE389BB00F3685D /* Coordinates2D.swift */; };
 		32EC2D4A1EE38C4C00F3685D /* Coordinates2DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */; };
 		32EC2D4B1EE38C4D00F3685D /* Coordinates2DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */; };
+		B3597D802365045B00DA2F75 /* CGSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D7F2365045B00DA2F75 /* CGSizeTests.swift */; };
+		B3597D812365045B00DA2F75 /* CGSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D7F2365045B00DA2F75 /* CGSizeTests.swift */; };
+		B3597D842365059800DA2F75 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D832365059800DA2F75 /* CGSize.swift */; };
+		B3597D852365059800DA2F75 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D832365059800DA2F75 /* CGSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +99,8 @@
 		32D37AE91C2E6EF70074BB91 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
 		32EC2D441EE389BB00F3685D /* Coordinates2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinates2D.swift; sourceTree = "<group>"; };
 		32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinates2DTests.swift; sourceTree = "<group>"; };
+		B3597D7F2365045B00DA2F75 /* CGSizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSizeTests.swift; sourceTree = "<group>"; };
+		B3597D832365059800DA2F75 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +169,7 @@
 				324D6B511B13635B007C1B9C /* CogIcon.swift */,
 				329E57441B155805002B2114 /* CGMutablePath.swift */,
 				3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */,
+				B3597D832365059800DA2F75 /* CGSize.swift */,
 				3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */,
 				32059C741C28D28300B9E05B /* OriginLocation.swift */,
 				32D37AE91C2E6EF70074BB91 /* Rendering.swift */,
@@ -191,6 +198,7 @@
 				320664EE1EDF18B300C6A77D /* DiagramTests+Circle.swift */,
 				324D6B1D1B135CF8007C1B9C /* PathMathTests.swift */,
 				324D6B1B1B135CF8007C1B9C /* Supporting Files */,
+				B3597D7F2365045B00DA2F75 /* CGSizeTests.swift */,
 			);
 			path = PathMathTests;
 			sourceTree = "<group>";
@@ -393,6 +401,7 @@
 				32D37AEB1C2E6EF70074BB91 /* Rendering.swift in Sources */,
 				3212D6F51BE098B400D175D7 /* CogIcon.swift in Sources */,
 				3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */,
+				B3597D852365059800DA2F75 /* CGSize.swift in Sources */,
 				320664E81EDF174000C6A77D /* DiagramRenderer.swift in Sources */,
 				320664E51EDF156F00C6A77D /* Diagram.swift in Sources */,
 				32EC2D461EE389BB00F3685D /* Coordinates2D.swift in Sources */,
@@ -408,6 +417,7 @@
 				32EC2D4A1EE38C4C00F3685D /* Coordinates2DTests.swift in Sources */,
 				329801761DC843E00085311D /* CGRect2DGridTests.swift in Sources */,
 				32545FC41EE48F0C00AE4D2C /* RightTriangleTests.swift in Sources */,
+				B3597D812365045B00DA2F75 /* CGSizeTests.swift in Sources */,
 				320664F01EDF18B300C6A77D /* DiagramTests+Circle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +436,7 @@
 				32D37AEA1C2E6EF70074BB91 /* Rendering.swift in Sources */,
 				324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */,
 				329E57451B155805002B2114 /* CGMutablePath.swift in Sources */,
+				B3597D842365059800DA2F75 /* CGSize.swift in Sources */,
 				320664E71EDF174000C6A77D /* DiagramRenderer.swift in Sources */,
 				320664E41EDF156F00C6A77D /* Diagram.swift in Sources */,
 				32EC2D451EE389BB00F3685D /* Coordinates2D.swift in Sources */,
@@ -441,6 +452,7 @@
 				32EC2D4B1EE38C4D00F3685D /* Coordinates2DTests.swift in Sources */,
 				329801751DC843E00085311D /* CGRect2DGridTests.swift in Sources */,
 				32545FC31EE48F0C00AE4D2C /* RightTriangleTests.swift in Sources */,
+				B3597D802365045B00DA2F75 /* CGSizeTests.swift in Sources */,
 				320664EF1EDF18B300C6A77D /* DiagramTests+Circle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
