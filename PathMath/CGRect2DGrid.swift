@@ -31,11 +31,11 @@ public struct CGRect2DGrid {
         }
     }
 
-    public let frame: CGRect
-    public let columns: Int
-    public let rows: Int
-    public let originLocation: OriginLocation
-    public let defaultCellInset:Inset?
+    public var frame: CGRect
+    public var columns: Int
+    public var rows: Int
+    public var originLocation: OriginLocation
+    public var defaultCellInset:Inset?
 
     public static func columnWidth(columnCount: Int, gridWidth: CGFloat) -> CGFloat {
         return gridWidth / CGFloat(columnCount)
