@@ -336,11 +336,11 @@
 			};
 			buildConfigurationList = 324D6B051B135CF8007C1B9C /* Build configuration list for PBXProject "PathMath" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = 324D6B011B135CF8007C1B9C;
 			productRefGroup = 324D6B0C1B135CF8007C1B9C /* Products */;
