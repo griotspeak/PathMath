@@ -53,6 +53,10 @@
 		B3597D812365045B00DA2F75 /* CGSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D7F2365045B00DA2F75 /* CGSizeTests.swift */; };
 		B3597D842365059800DA2F75 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D832365059800DA2F75 /* CGSize.swift */; };
 		B3597D852365059800DA2F75 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3597D832365059800DA2F75 /* CGSize.swift */; };
+		B3F6AF0C23F34B33004E9B79 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F6AF0B23F34B33004E9B79 /* Color.swift */; };
+		B3F6AF0D23F34B33004E9B79 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F6AF0B23F34B33004E9B79 /* Color.swift */; };
+		B3F6AF1023F34BB3004E9B79 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F6AF0F23F34BB3004E9B79 /* Font.swift */; };
+		B3F6AF1123F34BB3004E9B79 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F6AF0F23F34BB3004E9B79 /* Font.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +105,8 @@
 		32EC2D471EE38C4800F3685D /* Coordinates2DTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinates2DTests.swift; sourceTree = "<group>"; };
 		B3597D7F2365045B00DA2F75 /* CGSizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSizeTests.swift; sourceTree = "<group>"; };
 		B3597D832365059800DA2F75 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
+		B3F6AF0B23F34B33004E9B79 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		B3F6AF0F23F34BB3004E9B79 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,22 +166,24 @@
 		324D6B0D1B135CF8007C1B9C /* PathMath */ = {
 			isa = PBXGroup;
 			children = (
-				324D6B101B135CF8007C1B9C /* PathMath.h */,
 				324D6B271B135DCA007C1B9C /* Angle.swift */,
-				320664E31EDF156F00C6A77D /* Diagram.swift */,
-				320664E61EDF174000C6A77D /* DiagramRenderer.swift */,
-				320664F11EDF2A1900C6A77D /* CGFloat.swift */,
 				324D6B291B135DD2007C1B9C /* BezierPath.swift */,
-				324D6B511B13635B007C1B9C /* CogIcon.swift */,
+				320664F11EDF2A1900C6A77D /* CGFloat.swift */,
 				329E57441B155805002B2114 /* CGMutablePath.swift */,
 				3221F4FA1C1C3F2F0057CCF7 /* CGRect.swift */,
-				B3597D832365059800DA2F75 /* CGSize.swift */,
 				3274CCE91D5FD8A000393896 /* CGRect2DGrid.swift */,
-				32059C741C28D28300B9E05B /* OriginLocation.swift */,
-				32D37AE91C2E6EF70074BB91 /* Rendering.swift */,
-				324D6B0E1B135CF8007C1B9C /* Supporting Files */,
+				B3597D832365059800DA2F75 /* CGSize.swift */,
+				324D6B511B13635B007C1B9C /* CogIcon.swift */,
+				B3F6AF0B23F34B33004E9B79 /* Color.swift */,
 				32EC2D441EE389BB00F3685D /* Coordinates2D.swift */,
+				320664E31EDF156F00C6A77D /* Diagram.swift */,
+				320664E61EDF174000C6A77D /* DiagramRenderer.swift */,
+				B3F6AF0F23F34BB3004E9B79 /* Font.swift */,
+				32059C741C28D28300B9E05B /* OriginLocation.swift */,
+				324D6B101B135CF8007C1B9C /* PathMath.h */,
+				32D37AE91C2E6EF70074BB91 /* Rendering.swift */,
 				32545FC51EE4900300AE4D2C /* RightTriangle.swift */,
+				324D6B0E1B135CF8007C1B9C /* Supporting Files */,
 			);
 			path = PathMath;
 			sourceTree = "<group>";
@@ -399,9 +407,11 @@
 				3212D6F41BE098B400D175D7 /* BezierPath.swift in Sources */,
 				3221F4FC1C1C3F350057CCF7 /* CGRect.swift in Sources */,
 				32D37AEB1C2E6EF70074BB91 /* Rendering.swift in Sources */,
+				B3F6AF0D23F34B33004E9B79 /* Color.swift in Sources */,
 				3212D6F51BE098B400D175D7 /* CogIcon.swift in Sources */,
 				3212D6F61BE098B400D175D7 /* CGMutablePath.swift in Sources */,
 				B3597D852365059800DA2F75 /* CGSize.swift in Sources */,
+				B3F6AF1123F34BB3004E9B79 /* Font.swift in Sources */,
 				320664E81EDF174000C6A77D /* DiagramRenderer.swift in Sources */,
 				320664E51EDF156F00C6A77D /* Diagram.swift in Sources */,
 				32EC2D461EE389BB00F3685D /* Coordinates2D.swift in Sources */,
@@ -434,9 +444,11 @@
 				324D6B2A1B135DD2007C1B9C /* BezierPath.swift in Sources */,
 				3221F4FB1C1C3F2F0057CCF7 /* CGRect.swift in Sources */,
 				32D37AEA1C2E6EF70074BB91 /* Rendering.swift in Sources */,
+				B3F6AF0C23F34B33004E9B79 /* Color.swift in Sources */,
 				324D6B521B13635B007C1B9C /* CogIcon.swift in Sources */,
 				329E57451B155805002B2114 /* CGMutablePath.swift in Sources */,
 				B3597D842365059800DA2F75 /* CGSize.swift in Sources */,
+				B3F6AF1023F34BB3004E9B79 /* Font.swift in Sources */,
 				320664E71EDF174000C6A77D /* DiagramRenderer.swift in Sources */,
 				320664E41EDF156F00C6A77D /* Diagram.swift in Sources */,
 				32EC2D451EE389BB00F3685D /* Coordinates2D.swift in Sources */,
