@@ -235,7 +235,7 @@ extension BezierPathType {
             guard numElements > 0 else { return nil }
 
             let arraySize = 3
-            var pointArray = UnsafeMutablePointer<NSPoint>.allocate(capacity: arraySize)
+            let pointArray = UnsafeMutablePointer<NSPoint>.allocate(capacity: arraySize)
             defer { pointArray.deallocate() }
             let arrayPointer = UnsafeBufferPointer<NSPoint>(start: pointArray, count: arraySize)
 

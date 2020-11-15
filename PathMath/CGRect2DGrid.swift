@@ -25,8 +25,8 @@ public struct CGRect2DGrid {
             switch self {
             case let .proportional(xScale: xScale, yScale: yScale):
                 return (dX: columnWidth * xScale , dY: rowHeight * yScale)
-            case let .fixed(tuple):
-                return tuple
+            case .fixed(let dx, let dy):
+                return (dx, dy)
             }
         }
     }
