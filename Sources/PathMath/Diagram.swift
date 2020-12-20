@@ -20,7 +20,7 @@ public struct Diagram {
 // convenience initializers
 extension Diagram {
     public static func circle(radius: CGFloat, center: CGPoint) -> Diagram {
-        return Diagram(algebra: .circle(radius: radius, center: center))
+        Diagram(algebra: .circle(radius: radius, center: center))
     }
 }
 

@@ -8,21 +8,20 @@ import PlaygroundSupport
 import PathMath
 
 #if os(macOS)
-let theCog = CogIcon<NSBezierPath>()
+    let theCog = CogIcon<NSBezierPath>()
     typealias PlatformColor = NSColor
     typealias PlatformImage = NSImage
 #endif
 
 #if os(iOS)
-let theCog = CogIcon<UIBezierPath>(holeRadius: 20,
-                                   bodyRadius: 45,
-                                   spokeHeight: 9,
-                                   toothCount: 4,
-                                   rotation: Angle(degrees: 60))
+    let theCog = CogIcon<UIBezierPath>(holeRadius: 20,
+                                       bodyRadius: 45,
+                                       spokeHeight: 9,
+                                       toothCount: 4,
+                                       rotation: Angle(degrees: 60))
     typealias PlatformColor = UIColor
     typealias PlatformImage = UIImage
 #endif
-
 
 enum Foo {
     case First(Bool)
@@ -33,7 +32,7 @@ var (theView, theLayer): (PlatformBaseLayerBackedView, CAShapeLayer) = theCog.cr
 theLayer.strokeColor = PlatformColor.white.cgColor
 theLayer.fillColor = PlatformColor.lightGray.cgColor
 theLayer.usesEvenOddFillRule = true
-//theView.backgroundColor = NSColor.blackColor()
+// theView.backgroundColor = NSColor.blackColor()
 
 var path = PlatformBezierPath()
 let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 100, height: 25))
@@ -44,13 +43,13 @@ path.add(rect)
 let frame = CGRect(x: 0, y: 0, width: 40, height: 20)
 guard let grid = try? CGRect2DGrid(size: frame.size, columns: 3, rows: 3) else { fatalError() }
 
-let xInset:CGFloat = 1
-let yInset:CGFloat = 1
+let xInset: CGFloat = 1
+let yInset: CGFloat = 1
 
 guard let topRect = grid[0, 2]?.insetBy(dx: xInset, dy: yInset),
-    let middleRect = grid[1, 1]?.insetBy(dx: xInset, dy: yInset),
-    let bottomRect = grid[2, 0]?.insetBy(dx: xInset, dy: yInset) else {
-        fatalError()
+      let middleRect = grid[1, 1]?.insetBy(dx: xInset, dy: yInset),
+      let bottomRect = grid[2, 0]?.insetBy(dx: xInset, dy: yInset) else {
+    fatalError()
 }
 
 var bezierPath = PlatformBezierPath()
@@ -59,7 +58,6 @@ for rect in [topRect, middleRect, bottomRect] {
 }
 
 bezierPath
-
 
 var newFrame = theView.frame
 newFrame.origin = CGPoint(x: 300, y: 300)
@@ -76,5 +74,3 @@ for cell in grid_ {
 }
 
 theView
-
-

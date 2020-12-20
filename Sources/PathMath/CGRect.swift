@@ -28,7 +28,7 @@ extension CGRect {
         return value
     }
 
-    public typealias CornerDescription = (topLeft: CGPoint, topRight: CGPoint, bottomLeft: CGPoint,bottomRight: CGPoint)
+    public typealias CornerDescription = (topLeft: CGPoint, topRight: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint)
     func corners(_ originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) -> CornerDescription {
         let edges = edgeDescription(originLocation)
 
@@ -43,7 +43,7 @@ extension CGRect {
 
 extension CGRect {
     public var center: CGPoint {
-        return CGPoint(x: origin.x + (size.width * 0.5), y: origin.y + (size.height * 0.5))
+        CGPoint(x: origin.x + (size.width * 0.5), y: origin.y + (size.height * 0.5))
     }
 
     public init(center: CGPoint, size: CGSize) {

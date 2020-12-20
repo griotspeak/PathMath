@@ -15,6 +15,4 @@
 #endif
 import XCTest
 
-class DiagramTests: XCTestCase {
-    
-}
+class DiagramTests: XCTestCase {}

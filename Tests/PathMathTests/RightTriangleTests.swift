@@ -31,11 +31,11 @@ class RightTriangleTests: XCTestCase {
 
         XCTAssertEqual(instance.angleA.inDegrees, Angle.radians(asin(3 / 5)).inDegrees, accuracy: __accuracy)
         XCTAssertEqual(instance.angleB.inDegrees, Angle.radians(asin(4 / 5)).inDegrees, accuracy: __accuracy)
-        XCTAssertEqual(instance.angleC.inDegrees, Angle.degrees(90).inDegrees,          accuracy: __accuracy)
+        XCTAssertEqual(instance.angleC.inDegrees, Angle.degrees(90).inDegrees, accuracy: __accuracy)
 
-        XCTAssertEqual(instance.angleA.inRadians, asin(3 / 5),  accuracy: __accuracy)
-        XCTAssertEqual(instance.angleB.inRadians, asin(4 / 5),  accuracy: __accuracy)
-        XCTAssertEqual(instance.angleC.inRadians, .pi / 2,      accuracy: __accuracy)
+        XCTAssertEqual(instance.angleA.inRadians, asin(3 / 5), accuracy: __accuracy)
+        XCTAssertEqual(instance.angleB.inRadians, asin(4 / 5), accuracy: __accuracy)
+        XCTAssertEqual(instance.angleC.inRadians, .pi / 2, accuracy: __accuracy)
     }
 
     func testThirtySixtyNinetyWithAngleAndOpposite() {

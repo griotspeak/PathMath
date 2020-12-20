@@ -10,10 +10,10 @@ import CoreGraphics
 
 extension CGMutablePath {
     public func close() {
-        self.closeSubpath()
+        closeSubpath()
     }
 
-    public static func convertRightwiseToClockwise(_ rightwise:Bool) -> Bool {
+    public static func convertRightwiseToClockwise(_ rightwise: Bool) -> Bool {
         #if os(OSX)
             return !rightwise
         #endif

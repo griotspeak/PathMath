@@ -15,12 +15,11 @@
 #endif
 
 extension Diagram {
-    struct Renderer {
-    }
+    struct Renderer {}
 }
 
-//extension Diagram.Renderer {
+// extension Diagram.Renderer {
 //    func render(diagram: Diagram) -> PlatformBaseLayerBackedView {
-//        
+//
 //    }
-//}
+// }

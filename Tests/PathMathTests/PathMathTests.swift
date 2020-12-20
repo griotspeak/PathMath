@@ -14,6 +14,4 @@
 #endif
 import XCTest
 
-class PathMathTests: XCTestCase {
-
-}
+class PathMathTests: XCTestCase {}
