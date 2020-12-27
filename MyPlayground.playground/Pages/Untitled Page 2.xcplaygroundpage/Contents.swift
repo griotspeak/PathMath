@@ -2,11 +2,11 @@ import UIKit
 import PlaygroundSupport
 import PathMath
 
-protocol Match3GridViewDelegate: class {
+protocol Match3GridViewDelegate: AnyObject {
     func cellForItemAt(_ coordinate: CGRect2DGrid.CoordinatePair) -> UIView
 }
 
-class RandomCellProvider : Match3GridViewDelegate {
+class RandomCellProvider: Match3GridViewDelegate {
     func cellForItemAt(_ coordinate: CGRect2DGrid.CoordinatePair) -> UIView {
         let cell = UIView()
         let color: UIColor
@@ -29,26 +29,27 @@ class RandomCellProvider : Match3GridViewDelegate {
     }
 }
 
-class Match3GridView : UIView {
+class Match3GridView: UIView {
     var queues: [String: (class: UIView.Type, [UIView])]
     let grid: CGRect2DGrid
     weak var delegate: Match3GridViewDelegate?
 
     init!(rowCount: Int,
-         columnCount: Int,
-         frame: CGRect = Match3GridView.defaultFrame) {
+          columnCount: Int,
+          frame: CGRect = Match3GridView.defaultFrame) {
         guard let _grid = try? CGRect2DGrid(frame: frame,
                                             columns: rowCount,
                                             rows: columnCount,
                                             originLocation: .upperLeft,
                                             defaultCellInset: nil) else {
-                                                return nil
+            return nil
         }
-        self.queues = [:]
-        self.grid = _grid
+        queues = [:]
+        grid = _grid
         super.init(frame: frame)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("\(#function) has no implimentation")
     }
@@ -59,9 +60,7 @@ class Match3GridView : UIView {
                   frame: frame)!
     }
 
-    func registerClass(_ cellClass: UIView, forCellReuseIdentifier identifier: String) {
-
-    }
+    func registerClass(_ cellClass: UIView, forCellReuseIdentifier identifier: String) {}
 
     func refill() {
         print("please")
@@ -92,7 +91,6 @@ class Match3GridView : UIView {
         for cellRect in grid {
             context.stroke(cellRect)
         }
-
     }
 
     static var defaultRowCount = 6
@@ -110,4 +108,3 @@ let provider = RandomCellProvider()
 view?.delegate = provider
 view?.refill()
 view
-

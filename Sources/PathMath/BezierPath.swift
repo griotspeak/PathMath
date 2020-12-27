@@ -16,7 +16,6 @@
     public typealias PlatformBezierPath = UIBezierPath
 #endif
 
-
 import QuartzCore
 
 public enum LineJoinStyle {
@@ -24,7 +23,7 @@ public enum LineJoinStyle {
     case round
     case bevel
 
-    public var cgLineJoin:CGLineJoin {
+    public var cgLineJoin: CGLineJoin {
         switch self {
         case .miter:
             return .miter
@@ -35,7 +34,7 @@ public enum LineJoinStyle {
         }
     }
 
-    public init(cgLineJoin:CGLineJoin) {
+    public init(cgLineJoin: CGLineJoin) {
         switch cgLineJoin {
         case .miter:
             self = .miter
@@ -49,30 +48,30 @@ public enum LineJoinStyle {
     }
 
     #if os(OSX)
-    public init(nsLineJoin:NSBezierPath.LineJoinStyle) {
-        /* @todo add `==` to CGLineJoin 2015-05-24 */
-        switch nsLineJoin {
-        case .miter:
-            self = .miter
-        case .round:
-            self = .round
-        case .bevel:
-            self = .bevel
-        @unknown default:
-            fatalError("Unexpected line join style: \(nsLineJoin)")
+        public init(nsLineJoin: NSBezierPath.LineJoinStyle) {
+            /* @todo add `==` to CGLineJoin 2015-05-24 */
+            switch nsLineJoin {
+            case .miter:
+                self = .miter
+            case .round:
+                self = .round
+            case .bevel:
+                self = .bevel
+            @unknown default:
+                fatalError("Unexpected line join style: \(nsLineJoin)")
+            }
         }
-    }
 
-    public var nsLineJoin:NSBezierPath.LineJoinStyle {
-        switch self {
-        case .miter:
-            return NSBezierPath.LineJoinStyle.miter
-        case .round:
-            return NSBezierPath.LineJoinStyle.round
-        case .bevel:
-            return NSBezierPath.LineJoinStyle.bevel
+        public var nsLineJoin: NSBezierPath.LineJoinStyle {
+            switch self {
+            case .miter:
+                return NSBezierPath.LineJoinStyle.miter
+            case .round:
+                return NSBezierPath.LineJoinStyle.round
+            case .bevel:
+                return NSBezierPath.LineJoinStyle.bevel
+            }
         }
-    }
     #endif
 }
 
@@ -98,7 +97,7 @@ public protocol BezierPathType /* TODO: `class`? since none of these return anyt
 }
 
 extension BezierPathType {
-    public static func platformClockwiseValue(fromActualClockwiseValue value:Bool) -> Bool {
+    public static func platformClockwiseValue(fromActualClockwiseValue value: Bool) -> Bool {
         if shouldNegateClockwiseValue {
             return !value
         } else {
@@ -106,28 +105,28 @@ extension BezierPathType {
         }
     }
 
-    mutating public func move(toX x: CGFloat, y: CGFloat) {
+    public mutating func move(toX x: CGFloat, y: CGFloat) {
         move(to: CGPoint(x: x, y: y))
     }
 
-    mutating public func addLine(toX x: CGFloat, y: CGFloat) {
+    public mutating func addLine(toX x: CGFloat, y: CGFloat) {
         addLine(to: CGPoint(x: x, y: y))
     }
 
-    mutating public func addCircle(withCenter center: CGPoint, radius: CGFloat, clockwise: Bool = Self.platformClockwiseValue(fromActualClockwiseValue: true)) {
-        let start = Angle(degrees:0)
+    public mutating func addCircle(withCenter center: CGPoint, radius: CGFloat, clockwise: Bool = Self.platformClockwiseValue(fromActualClockwiseValue: true)) {
+        let start = Angle(degrees: 0)
 
         move(to: start.pointInCircle(center, radius: radius))
         addArc(withCenter: center,
                radius: radius,
-               startAngle: Angle(degrees:0).apiValue,
-               endAngle: Angle(degrees:360).apiValue,
+               startAngle: Angle(degrees: 0).apiValue,
+               endAngle: Angle(degrees: 360).apiValue,
                clockwise: clockwise)
     }
 }
-extension BezierPathType {
 
-    mutating public func add(_ rect: CGRect, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
+extension BezierPathType {
+    public mutating func add(_ rect: CGRect, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
         let corners = rect.corners(originLocation)
 
         move(to: corners.topLeft)
@@ -135,10 +134,9 @@ extension BezierPathType {
         addLine(to: corners.bottomRight)
         addLine(to: corners.bottomLeft)
         close()
-
     }
 
-    mutating public func add(_ rect: CGRect, cornerRadius: CGFloat, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
+    public mutating func add(_ rect: CGRect, cornerRadius: CGFloat, originLocation: OriginLocation = OriginLocation.defaultPlatformLocation) {
         let innerRect = rect.insetBy(dx: cornerRadius, dy: cornerRadius)
         let inner = innerRect.edgeDescription(originLocation)
         let innerCorners = innerRect.corners(originLocation)
@@ -164,55 +162,55 @@ extension BezierPathType {
     }
 }
 
-
 #if os(iOS)
-    extension UIBezierPath : BezierPathType {
+    extension UIBezierPath: BezierPathType {
         public var usesEvenOddWindingRule: Bool {
             get {
-                return self.usesEvenOddFillRule
+                usesEvenOddFillRule
             }
             set {
-                self.usesEvenOddFillRule = newValue
+                usesEvenOddFillRule = newValue
             }
         }
 
         public var quartzPath: CGPath? {
-            return self.cgPath
+            cgPath
         }
 
-        public var bezierLineJoinStyle:LineJoinStyle {
+        public var bezierLineJoinStyle: LineJoinStyle {
             get {
-                return LineJoinStyle(cgLineJoin: lineJoinStyle)
+                LineJoinStyle(cgLineJoin: lineJoinStyle)
             } set(value) {
-                self.lineJoinStyle = value.cgLineJoin
+                lineJoinStyle = value.cgLineJoin
             }
         }
 
         public static var shouldNegateClockwiseValue: Bool {
-            return false
+            false
         }
     }
 #endif
 
 #if os(OSX)
-    extension NSBezierPath : BezierPathType {
+    extension NSBezierPath: BezierPathType {
         public func addLine(to point: CGPoint) {
             addLineToPoint(point)
         }
 
-        public var usesEvenOddWindingRule:Bool {
+        public var usesEvenOddWindingRule: Bool {
             get {
-                return windingRule == NSBezierPath.WindingRule.evenOdd
+                windingRule == NSBezierPath.WindingRule.evenOdd
             }
             set(value) {
                 windingRule = value ? NSBezierPath.WindingRule.evenOdd : NSBezierPath.WindingRule.nonZero
             }
         }
+
         public var bezierLineJoinStyle: PathMath.LineJoinStyle {
             get {
-                return PathMath.LineJoinStyle(nsLineJoin: lineJoinStyle)
+                PathMath.LineJoinStyle(nsLineJoin: lineJoinStyle)
             } set(value) {
-                self.lineJoinStyle = value.nsLineJoin
+                lineJoinStyle = value.nsLineJoin
             }
         }
 
@@ -225,7 +223,7 @@ extension BezierPathType {
         }
 
         public static var shouldNegateClockwiseValue: Bool {
-            return true
+            true
         }
     }
 
@@ -239,12 +237,12 @@ extension BezierPathType {
             defer { pointArray.deallocate() }
             let arrayPointer = UnsafeBufferPointer<NSPoint>(start: pointArray, count: arraySize)
 
-            var didClosePath:Bool = true
+            var didClosePath: Bool = true
             let immutablePath: CGPath?
             let mutablePath = CGMutablePath()
 
-            for i in 0..<numElements {
-                let theElement = element(at: i, associatedPoints:pointArray)
+            for i in 0 ..< numElements {
+                let theElement = element(at: i, associatedPoints: pointArray)
                 switch theElement {
                 case .moveTo:
                     if !didClosePath {
@@ -264,16 +262,14 @@ extension BezierPathType {
                 @unknown default:
                     fatalError("Unexpected path element of type: \(theElement)")
                 }
-
             }
             if !didClosePath {
                 mutablePath.closeSubpath()
             }
-            
+
             immutablePath = mutablePath.copy()
             return immutablePath
         }
     }
-    
-    
+
 #endif

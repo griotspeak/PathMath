@@ -1,0 +1,10 @@
+--disable sortedImports, wrapMultilineStatementBraces, unusedArguments, wrapArguments
+
+--patternlet inline
+--extensionacl on-declarations
+
+--swiftversion 5.3 --verbose
+
+
+# Look in to making my own version of organizeDeclarations
+--enable wrapEnumCases, wrapSwitchCases, isEmpty

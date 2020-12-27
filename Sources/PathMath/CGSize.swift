@@ -13,7 +13,6 @@ extension CGSize {
         let fullXRange = exterior.width - width
         let fullYRange = exterior.height - height
 
-
         let back = CGRect(
             origin: CGPoint(
                 x: exterior.minX + (relativeCenter.x * fullXRange),

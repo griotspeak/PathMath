@@ -8,7 +8,7 @@
 
 import QuartzCore
 
-enum Coordinate2D : CustomStringConvertible {
+enum Coordinate2D: CustomStringConvertible {
     public typealias Value = CGFloat
     case cartesian(x: Value, y: Value)
     case polar(radius: Value, azimuth: Value)

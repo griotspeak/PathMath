@@ -1,5 +1,5 @@
 //
-//  DiagramTests.swift
+//  DiagramRenderer.swift
 //  PathMath
 //
 //  Created by TJ Usiyan on 2017/05/31.
@@ -13,8 +13,13 @@
 #if os(iOS)
     import UIKit
 #endif
-import XCTest
 
-class DiagramTests: XCTestCase {
-    
+extension Diagram {
+    struct Renderer {}
 }
+
+// extension Diagram.Renderer {
+//    func render(diagram: Diagram) -> PlatformBaseLayerBackedView {
+//
+//    }
+// }

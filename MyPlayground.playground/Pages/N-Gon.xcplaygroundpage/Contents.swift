@@ -9,21 +9,20 @@ struct RegularPolygonDescription {
     init?(n: Int, radius: FloatValue = 1) {
         guard n > 2 else { return nil }
         self.n = n
-        self.circumradius = radius
+        circumradius = radius
     }
 }
 
-extension RegularPolygonDescription : CustomStringConvertible {
+extension RegularPolygonDescription: CustomStringConvertible {
     var description: String {
-
         let name: String
 
         switch n {
-        case Int.min..<3:
+        case Int.min ..< 3:
             fatalError("polygon with \(n) sides is invalid")
-            //        case 1:
-            //            name = "Regular monogon"
-            //        case 2:
+        //        case 1:
+        //            name = "Regular monogon"
+        //        case 2:
         //            name = "Regular digon"
         case 3:
             name = "Regular triangle"
@@ -64,12 +63,13 @@ extension RegularPolygonDescription : CustomStringConvertible {
 extension RegularPolygonDescription {
     var incentralSliceAngle: FloatValue {
         /* TODO: use `exactly` 2017-06-02 */
-        return 360 / FloatValue(n)
+        360 / FloatValue(n)
     }
 
     var something: FloatValue {
-        return (180 - incentralSliceAngle) / 2
+        (180 - incentralSliceAngle) / 2
     }
+
     //    var apothem: FloatValue {
     //        cen
     //    }
@@ -77,7 +77,6 @@ extension RegularPolygonDescription {
 
 let triangle = RegularPolygonDescription(n: 3)!
 triangle.incentralSliceAngle == 120
-
 
 // MARK: - Isosceles Triangles
 
@@ -96,7 +95,6 @@ public struct IsoscelesTriangleDescription {
                  axisOfSymmetryLength: FloatValue,
                  vertexAngle: FloatValue,
                  baseAngle: FloatValue) {
-
         self.legLength = legLength
         self.baseLength = baseLength
         self.axisOfSymmetryLength = axisOfSymmetryLength
@@ -105,54 +103,53 @@ public struct IsoscelesTriangleDescription {
     }
 }
 
-
 extension IsoscelesTriangleDescription {
     public init(vertexAngle: FloatValue, legLenth: FloatValue) {
         guard vertexAngle > 0,
-            vertexAngle < 180 else {
-                fatalError("invalid vertex angle")
+              vertexAngle < 180 else {
+            fatalError("invalid vertex angle")
         }
         let halfVertex: Angle = .degrees(vertexAngle * 0.5)
 
         self.vertexAngle = vertexAngle
-        self.baseAngle = (180 - vertexAngle) / 2
-        self.legLength = legLenth
-        self.baseLength = sin(halfVertex.inRadians) * legLenth * 2
-        self.axisOfSymmetryLength = cos(halfVertex.inRadians) * legLenth * 2
+        baseAngle = (180 - vertexAngle) / 2
+        legLength = legLenth
+        baseLength = sin(halfVertex.inRadians) * legLenth * 2
+        axisOfSymmetryLength = cos(halfVertex.inRadians) * legLenth * 2
     }
 
     public init(baseAngle: FloatValue, legLenth: FloatValue) {
         guard baseAngle > 0,
-            baseAngle < 90 else {
-                fatalError("invalid base angle")
+              baseAngle < 90 else {
+            fatalError("invalid base angle")
         }
 
         let vertex = 180 - (baseAngle * 2)
         let halfVertex: Angle = .degrees(vertex * 0.5)
 
         self.baseAngle = baseAngle
-        self.vertexAngle = vertex
-        self.legLength = legLenth
-        self.baseLength = sin(halfVertex.inRadians) * legLenth * 2
-        self.axisOfSymmetryLength = cos(halfVertex.inRadians) * legLenth * 2
+        vertexAngle = vertex
+        legLength = legLenth
+        baseLength = sin(halfVertex.inRadians) * legLenth * 2
+        axisOfSymmetryLength = cos(halfVertex.inRadians) * legLenth * 2
     }
 
     public init?(baseLength: FloatValue, legLength: FloatValue) {
         guard legLength > 0,
-            baseLength > 0,
-            legLength * 2 < baseLength else {
-                return nil
+              baseLength > 0,
+              legLength * 2 < baseLength else {
+            return nil
         }
 
         let halfBase = baseLength / 2
         let axisLength = sqrt(pow(legLength, 2) - pow(halfBase, 2))
-        let vertex = asin(halfBase/axisLength) * 2
+        let vertex = asin(halfBase / axisLength) * 2
 
         self.baseLength = baseLength
         self.legLength = legLength
-        self.baseAngle = (180 - vertex) / 2
-        self.vertexAngle = vertex
-        self.axisOfSymmetryLength = axisLength
+        baseAngle = (180 - vertex) / 2
+        vertexAngle = vertex
+        axisOfSymmetryLength = axisLength
     }
 }
 
@@ -168,4 +165,3 @@ equTri.vertexAngle
 let oneOneRootTwo = RightTriangle(lengthA: 1,
                                   lengthB: 1)
 oneOneRootTwo.angleA.inDegrees
-

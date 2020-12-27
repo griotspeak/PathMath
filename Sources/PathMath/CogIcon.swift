@@ -17,14 +17,14 @@ import QuartzCore
 
 public final class Icon<BezierPath: BezierPathType> {
     public typealias PathSetup = () -> BezierPath
-    public static func createShapeLayer(_ pathSetup:PathSetup) -> CAShapeLayer {
+    public static func createShapeLayer(_ pathSetup: PathSetup) -> CAShapeLayer {
         let theLayer = CAShapeLayer()
         let path = pathSetup()
         theLayer.path = path.quartzPath
         return theLayer
     }
 
-    public static func createView<ViewType : CALayerBackedType>(_ frame: CGRect, iconSize: CGSize, pathSetup:PathSetup) -> (ViewType, CAShapeLayer) {
+    public static func createView<ViewType: CALayerBackedType>(_ frame: CGRect, iconSize: CGSize, pathSetup: PathSetup) -> (ViewType, CAShapeLayer) {
         let iconFrame = CGRect(center: frame.center, size: iconSize)
         let size = frame.size
         var view = ViewType()
@@ -35,35 +35,33 @@ public final class Icon<BezierPath: BezierPathType> {
         iconLayer.frame = CGRect(origin: CGPoint.zero, size: iconFrame.size)
         iconLayer.position = iconFrame.center
         backingLayer.addSublayer(iconLayer)
-        
+
         return (view, iconLayer)
     }
 }
 
 public struct CogIcon<BezierPath: BezierPathType> {
+    public let holeRadius: CGFloat
+    public let bodyRadius: CGFloat
+    public let spokeHeight: CGFloat
+    public let toothCount: Int
+    public let rotation: Angle
 
-    public let holeRadius:CGFloat
-    public let bodyRadius:CGFloat
-    public let spokeHeight:CGFloat
-    public let toothCount:Int
-    public let rotation:Angle
-
-    public var radius:CGFloat {
-        return bodyRadius + spokeHeight
+    public var radius: CGFloat {
+        bodyRadius + spokeHeight
     }
 
     public var diameter: CGFloat {
-        return radius * 2
+        radius * 2
     }
 
-    public var center:CGPoint {
-        return CGPoint(x: radius, y: radius)
+    public var center: CGPoint {
+        CGPoint(x: radius, y: radius)
     }
 
-    public func createPath()-> BezierPath {
-
-        let imageAngle:Angle = Angle(degrees: 360.0 / CGFloat(toothCount))
-        let imageHalfAngle:Angle = Angle(degrees: imageAngle.inDegrees * 0.5)
+    public func createPath() -> BezierPath {
+        let imageAngle = Angle(degrees: 360.0 / CGFloat(toothCount))
+        let imageHalfAngle = Angle(degrees: imageAngle.inDegrees * 0.5)
 
         var path = BezierPath()
         path.bezierLineJoinStyle = .round
@@ -72,25 +70,25 @@ public struct CogIcon<BezierPath: BezierPathType> {
         let startingPoint = rotation.pointInCircle(center, radius: bodyRadius)
         path.move(to: startingPoint)
 
-        for i in 0..<toothCount {
+        for i in 0 ..< toothCount {
             let iImageOrigin = Angle(degrees: CGFloat(i) * imageAngle.inDegrees) + rotation
 
             // tooth
             path.addLine(to: iImageOrigin.pointInCircle(center, radius: radius))
             path.addArc(withCenter: center,
-                radius: radius,
-                startAngle: iImageOrigin.apiValue,
-                endAngle: (iImageOrigin + imageHalfAngle).apiValue,
-                clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
+                        radius: radius,
+                        startAngle: iImageOrigin.apiValue,
+                        endAngle: (iImageOrigin + imageHalfAngle).apiValue,
+                        clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
 
             let toothEnd = iImageOrigin + imageHalfAngle
             path.addLine(to: toothEnd.pointInCircle(center, radius: bodyRadius))
             // trough
             path.addArc(withCenter: center,
-                radius: bodyRadius,
-                startAngle: (iImageOrigin + imageHalfAngle).apiValue,
-                endAngle: (iImageOrigin + imageAngle).apiValue,
-                clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
+                        radius: bodyRadius,
+                        startAngle: (iImageOrigin + imageHalfAngle).apiValue,
+                        endAngle: (iImageOrigin + imageAngle).apiValue,
+                        clockwise: BezierPath.platformClockwiseValue(fromActualClockwiseValue: true))
         }
 
         path.close()
@@ -100,14 +98,14 @@ public struct CogIcon<BezierPath: BezierPathType> {
         return path
     }
 
-    public init(diameter: CGFloat, relativeHoleDiameter: CGFloat, relativeSpokeHeight: CGFloat, toothCount: Int, rotation:Angle? = nil) {
+    public init(diameter: CGFloat, relativeHoleDiameter: CGFloat, relativeSpokeHeight: CGFloat, toothCount: Int, rotation: Angle? = nil) {
         let radius = diameter * 0.5
         let holeRadius = radius * relativeHoleDiameter
         let spokeHeight = radius * relativeSpokeHeight
-        self.init(holeRadius: holeRadius, bodyRadius: (radius - spokeHeight), spokeHeight: spokeHeight, toothCount: toothCount)
+        self.init(holeRadius: holeRadius, bodyRadius: radius - spokeHeight, spokeHeight: spokeHeight, toothCount: toothCount)
     }
 
-    public init(holeRadius:CGFloat = 20, bodyRadius:CGFloat = 45, spokeHeight:CGFloat = 15, toothCount:Int = 6, rotation:Angle? = nil) {
+    public init(holeRadius: CGFloat = 20, bodyRadius: CGFloat = 45, spokeHeight: CGFloat = 15, toothCount: Int = 6, rotation: Angle? = nil) {
         self.holeRadius = holeRadius
         self.bodyRadius = bodyRadius
         self.spokeHeight = spokeHeight
@@ -115,17 +113,17 @@ public struct CogIcon<BezierPath: BezierPathType> {
         if let theRotation = rotation {
             self.rotation = theRotation
         } else {
-            self.rotation = Angle(degrees:  -(360.0 / CGFloat(toothCount) * 0.25 - 90))
+            self.rotation = Angle(degrees: -(360.0 / CGFloat(toothCount) * 0.25 - 90))
         }
     }
 }
 
-public protocol CALayerBackedType : _CALayerBackedType {
+public protocol CALayerBackedType: _CALayerBackedType {
     init()
     var frame: CGRect { get set }
 }
 
-public protocol CAShapeLayerBackedType : _CALayerBackedType {
+public protocol CAShapeLayerBackedType: _CALayerBackedType {
     var usesEvenOddFillRule: Bool { mutating get set }
     func backingLayer() -> CAShapeLayer?
 }
@@ -133,7 +131,7 @@ public protocol CAShapeLayerBackedType : _CALayerBackedType {
 extension CAShapeLayerBackedType {
     public var usesEvenOddFillRule: Bool {
         mutating get {
-            return convertFromCAShapeLayerFillRule(self.backingLayer()!.fillRule) == convertFromCAShapeLayerFillRule(CAShapeLayerFillRule.evenOdd)
+            convertFromCAShapeLayerFillRule(self.backingLayer()!.fillRule) == convertFromCAShapeLayerFillRule(CAShapeLayerFillRule.evenOdd)
         }
         set(value) {
             self.backingLayer()!.fillRule = convertToCAShapeLayerFillRule(value ? CAShapeLayerFillRule.evenOdd.rawValue : CAShapeLayerFillRule.nonZero.rawValue)
@@ -141,29 +139,28 @@ extension CAShapeLayerBackedType {
     }
 }
 
-
-extension CALayer : CALayerBackedType {
+extension CALayer: CALayerBackedType {
     public func backingLayer() -> Self? {
-        return self
+        self
     }
 }
 
-extension CAShapeLayer : CAShapeLayerBackedType {
+extension CAShapeLayer: CAShapeLayerBackedType {
     public var usesEvenOddFillRule: Bool {
         get {
-            return convertFromCAShapeLayerFillRule(self.fillRule) == convertFromCAShapeLayerFillRule(CAShapeLayerFillRule.evenOdd)
+            convertFromCAShapeLayerFillRule(fillRule) == convertFromCAShapeLayerFillRule(CAShapeLayerFillRule.evenOdd)
         }
         set(value) {
-            self.fillRule = convertToCAShapeLayerFillRule(value ? CAShapeLayerFillRule.evenOdd.rawValue : CAShapeLayerFillRule.nonZero.rawValue)
+            fillRule = convertToCAShapeLayerFillRule(value ? CAShapeLayerFillRule.evenOdd.rawValue : CAShapeLayerFillRule.nonZero.rawValue)
         }
     }
 }
 
 #if os(iOS)
     public typealias PlatformBaseLayerBackedView = UIView
-    extension UIView : CALayerBackedType {
+    extension UIView: CALayerBackedType {
         public func backingLayer() -> CALayer? {
-            return layer
+            layer
         }
     }
 
@@ -171,7 +168,7 @@ extension CAShapeLayer : CAShapeLayerBackedType {
 
 #if os(OSX)
     public typealias PlatformBaseLayerBackedView = NSView
-    extension NSView : CALayerBackedType {
+    extension NSView: CALayerBackedType {
         public func backingLayer() -> CALayer? {
             wantsLayer = true
             return layer
@@ -180,7 +177,7 @@ extension CAShapeLayer : CAShapeLayerBackedType {
 #endif
 
 extension CogIcon {
-    public func createView<ViewType : CALayerBackedType>(_ frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
+    public func createView<ViewType: CALayerBackedType>(_ frame: CGRect? = nil) -> (ViewType, CAShapeLayer) {
         let viewFrame = frame ?? CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
 
         let (view, iconLayer): (ViewType, CAShapeLayer) = Icon<BezierPath>.createView(viewFrame, iconSize: CGSize(width: diameter, height: diameter), pathSetup: createPath)
@@ -190,11 +187,11 @@ extension CogIcon {
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromCAShapeLayerFillRule(_ input: CAShapeLayerFillRule) -> String {
-	return input.rawValue
+private func convertFromCAShapeLayerFillRule(_ input: CAShapeLayerFillRule) -> String {
+    input.rawValue
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToCAShapeLayerFillRule(_ input: String) -> CAShapeLayerFillRule {
-	return CAShapeLayerFillRule(rawValue: input)
+private func convertToCAShapeLayerFillRule(_ input: String) -> CAShapeLayerFillRule {
+    CAShapeLayerFillRule(rawValue: input)
 }

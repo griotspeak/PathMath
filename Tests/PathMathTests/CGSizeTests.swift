@@ -60,5 +60,3 @@ class CGSizeTests: XCTestCase {
         XCTAssertEqual(inner.positionedWithin(outerWith3040Shift, relativeCenter: .init(x: 0.25, y: 0.25), invertY: true), CGRect(x: 52.5, y: 107.5, width: 10, height: 10))
     }
 }
-
-

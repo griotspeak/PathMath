@@ -8,18 +8,17 @@
 
 import QuartzCore
 
-
 public protocol _CALayerBackedType {
     mutating func backingLayer() -> CALayer?
 }
 
 /* TODO: appease the gods 2016-01-07 */
-//public protocol RenderDrawingType {
+// public protocol RenderDrawingType {
 //    /* TODO: abstract over the context type 2016-01-07 */
 //    static func renderDrawing(size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self?
-//}
+// }
 //
-//extension _CALayerBackedType {
+// extension _CALayerBackedType {
 //    public mutating func renderLayerContents<Output : RenderDrawingType>() -> Output? {
 //        guard let containerLayer = backingLayer() else { return nil }
 //        return Output.renderDrawing(containerLayer.bounds.size) { (context, size) in
@@ -27,14 +26,14 @@ public protocol _CALayerBackedType {
 //            return true
 //        }
 //    }
-//}
+// }
 
 #if os(OSX)
     import AppKit
     extension CALayer {
         @nonobjc public func renderLayerContents() -> NSBitmapImageRep? {
             guard let containerLayer = backingLayer() else { return nil }
-            return NSBitmapImageRep.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            return NSBitmapImageRep.renderDrawing(containerLayer.bounds.size) { context, size in
                 containerLayer.render(in: context)
                 return true
             }
@@ -44,7 +43,7 @@ public protocol _CALayerBackedType {
     extension CALayer {
         @nonobjc public func renderLayerContents() -> NSImage? {
             guard let containerLayer = backingLayer() else { return nil }
-            return NSImage.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            return NSImage.renderDrawing(containerLayer.bounds.size) { context, size in
                 containerLayer.render(in: context)
                 return true
             }
@@ -54,7 +53,7 @@ public protocol _CALayerBackedType {
     extension NSView {
         @nonobjc public func renderLayerContents() -> NSBitmapImageRep? {
             guard let containerLayer = backingLayer() else { return nil }
-            return NSBitmapImageRep.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            return NSBitmapImageRep.renderDrawing(containerLayer.bounds.size) { context, size in
                 containerLayer.render(in: context)
                 return true
             }
@@ -64,7 +63,7 @@ public protocol _CALayerBackedType {
     extension NSView {
         @nonobjc public func renderLayerContents() -> NSImage? {
             guard let containerLayer = backingLayer() else { return nil }
-            return NSImage.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            return NSImage.renderDrawing(containerLayer.bounds.size) { context, size in
                 containerLayer.render(in: context)
                 return true
             }
@@ -74,9 +73,9 @@ public protocol _CALayerBackedType {
     extension NSBitmapImageRep {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: (CGContext, CGSize) -> Bool) -> Self? {
             guard let convertedBounds = NSScreen.main?.convertRectToBacking(NSRect(origin: CGPoint.zero, size: size)).integral,
-                let intermediateImageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(convertedBounds.width), pixelsHigh: Int(convertedBounds.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.calibratedRGB, bitmapFormat: NSBitmapImageRep.Format.alphaFirst, bytesPerRow: 0, bitsPerPixel: 0),
-                let imageRep = intermediateImageRep.retagging(with: .sRGB)
-                else { return nil }
+                  let intermediateImageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(convertedBounds.width), pixelsHigh: Int(convertedBounds.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.calibratedRGB, bitmapFormat: NSBitmapImageRep.Format.alphaFirst, bytesPerRow: 0, bitsPerPixel: 0),
+                  let imageRep = intermediateImageRep.retagging(with: .sRGB)
+            else { return nil }
             imageRep.size = size
             guard let bitmapContext = NSGraphicsContext(bitmapImageRep: imageRep) else { return nil }
             NSGraphicsContext.saveGraphicsState()
@@ -95,7 +94,7 @@ public protocol _CALayerBackedType {
 
     extension NSImage {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: @escaping (CGContext, CGSize) -> Bool) -> Self? {
-            return self.init(size: size, flipped: false) { (frame) in
+            self.init(size: size, flipped: false) { frame in
                 guard let context = NSGraphicsContext.current else { return false }
                 let quartzContext = context.cgContext
                 return drawingHandler(quartzContext, frame.size)
@@ -110,7 +109,7 @@ public protocol _CALayerBackedType {
     extension CALayer {
         @nonobjc public func renderLayerContents() -> UIImage? {
             guard let containerLayer = backingLayer() else { return nil }
-            return UIImage.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            return UIImage.renderDrawing(containerLayer.bounds.size) { context, size in
                 containerLayer.render(in: context)
             }
         }
@@ -119,7 +118,7 @@ public protocol _CALayerBackedType {
     extension UIView {
         @nonobjc public func renderLayerContents() -> UIImage? {
             guard let containerLayer = backingLayer() else { return nil }
-            return UIImage.renderDrawing(containerLayer.bounds.size) { (context, size) in
+            return UIImage.renderDrawing(containerLayer.bounds.size) { context, size in
                 containerLayer.render(in: context)
             }
         }
@@ -127,7 +126,6 @@ public protocol _CALayerBackedType {
 
     extension UIImage {
         @nonobjc public static func renderDrawing(_ size: CGSize, drawingHandler: (CGContext, CGSize) -> Void) -> UIImage? {
-
             let rect = CGRect(origin: CGPoint.zero, size: size)
 
             UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
@@ -149,4 +147,3 @@ public protocol _CALayerBackedType {
         }
     }
 #endif
-

@@ -19,136 +19,136 @@ public enum Angle {
     case degrees(Value)
     case radians(Value)
 
-    public var inDegrees:Value {
+    public var inDegrees: Value {
         switch self {
-        case let .degrees(value):
+        case .degrees(let value):
             return value
-        case let .radians(value):
+        case .radians(let value):
             return radiansToDegrees(value)
         }
     }
 
     /* TODO: return Angle 2017-06-04 */
     /* TODO: __sinPi 2017-06-08 */
-    public var inRadians:Value {
+    public var inRadians: Value {
         switch self {
-        case let .degrees(value):
+        case .degrees(let value):
             return degreesToRadians(value)
-        case let .radians(value):
+        case .radians(let value):
             return value
         }
     }
 
-    public init(degrees value:Value) {
+    public init(degrees value: Value) {
         self = .degrees(value)
     }
 
-    public init(radians value:Value) {
+    public init(radians value: Value) {
         self = .radians(value)
     }
 
     private func divide(_ divisor: Value) -> Angle {
         switch self {
-        case let .degrees(value):
+        case .degrees(let value):
             return Angle(degrees: value / divisor)
-        case let .radians(value):
+        case .radians(let value):
             return Angle(radians: value / divisor)
         }
     }
 
-    private func degreesToRadians(_ degrees:Value) -> Value {
-        return degrees * (.pi / 180.0)
+    private func degreesToRadians(_ degrees: Value) -> Value {
+        degrees * (.pi / 180.0)
     }
 
-    private func radiansToDegrees(_ radians:Value) -> Value {
-        return radians * (180.0 / .pi)
+    private func radiansToDegrees(_ radians: Value) -> Value {
+        radians * (180.0 / .pi)
     }
 
     #if os(OSX)
-    public var apiValue:Value {
-        return inDegrees
-    }
+        public var apiValue: Value {
+            inDegrees
+        }
     #endif
 
     #if os(iOS)
-    public var apiValue:Value {
-        return inRadians
-    }
+        public var apiValue: Value {
+            inRadians
+        }
     #endif
 }
 
 extension Angle {
-    public func pointInCircle(_ center:CGPoint, radius:Value) -> CGPoint {
-        let angleInRadians:Value = inRadians
+    public func pointInCircle(_ center: CGPoint, radius: Value) -> CGPoint {
+        let angleInRadians: Value = inRadians
         return CGPoint(x: center.x + (radius * cos(angleInRadians)), y: center.y + (radius * sin(angleInRadians)))
     }
 }
 
-internal func +(first:Angle, second:Angle) -> Angle {
+internal func + (first: Angle, second: Angle) -> Angle {
     switch first {
-    case let .degrees(value):
+    case .degrees(let value):
         return Angle(degrees: value + second.inDegrees)
-    case let .radians(value):
+    case .radians(let value):
         return Angle(radians: value + second.inRadians)
     }
 }
 
-internal func -(first:Angle, second:Angle) -> Angle {
+internal func - (first: Angle, second: Angle) -> Angle {
     switch first {
-    case let .degrees(value):
+    case .degrees(let value):
         return Angle(degrees: value - second.inDegrees)
-    case let .radians(value):
+    case .radians(let value):
         return Angle(radians: value - second.inRadians)
     }
 }
 
 func sine(_ theta: Angle) -> CGFloat {
-    return sin(theta.inRadians)
+    sin(theta.inRadians)
 }
 
 func cosine(_ theta: Angle) -> CGFloat {
-    return cos(theta.inRadians)
+    cos(theta.inRadians)
 }
 
 func tangent(_ theta: Angle) -> CGFloat {
-    return tan(theta.inRadians)
+    tan(theta.inRadians)
 }
 
 func secant(_ theta: Angle) -> CGFloat {
-    return 1 / cosine(theta)
+    1 / cosine(theta)
 }
 
 func cosecant(_ theta: Angle) -> CGFloat {
-    return 1 / sine(theta)
+    1 / sine(theta)
 }
 
 func cotangent(_ theta: Angle) -> CGFloat {
-    return 1 / tangent(theta)
+    1 / tangent(theta)
 }
 
 // MARK: inverses
 
 func arcSine(_ ratio: Double) -> Angle {
     /* TODO: do better with parametricity 2017-06-04 */
-    return .radians(CGFloat(asin(ratio)))
+    .radians(CGFloat(asin(ratio)))
 }
 
 func arcSine(_ ratio: CGFloat) -> Angle {
-    return .radians(asin(ratio))
+    .radians(asin(ratio))
 }
 
-// MARK: - 
+// MARK: -
 
-extension Angle : Equatable {
-    public static func == (lhs:Angle, rhs:Angle) -> Bool {
+extension Angle: Equatable {
+    public static func == (lhs: Angle, rhs: Angle) -> Bool {
         switch (lhs, rhs) {
         case (.radians(let left), .radians(let right)):
             return left == right
         case (.degrees(let left), .degrees(let right)):
             return left == right
-        case (.radians, _), (.degrees, _):
+        case (.radians, _),
+             (.degrees, _):
             return lhs.inRadians == rhs.inRadians
         }
     }
 }
-
